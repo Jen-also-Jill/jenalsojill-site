@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>澳洲履歷暖心健檢站 · jen.alsojill</title>
+<meta name="description" content="澳洲履歷自助健檢站 — 聯絡資訊、個人簡介、工作經驗、學歷證照、技能、推薦人，一步步檢查你的履歷。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+#jhc * { box-sizing: border-box; margin: 0; padding: 0; }
+#jhc a { text-decoration: none; }
+#jhc button { font-family: inherit; cursor: pointer; }
+body { margin: 0; background: #f4f7fb; }
+#jhc {
+  --p: #3b7dd8; --pl: #dbeafe; --pd: #2563b0;
+  --s: #fff; --s2: #eef3fa; --bg: #f4f7fb;
+  --t: #1e293b; --m: #64748b; --b: #e2e8f0;
+  --r: 12px; --sh: 0 4px 20px rgba(59,125,216,.08);
+  font-family: 'Plus Jakarta Sans','Noto Sans TC',sans-serif;
+  color: var(--t);
+  background: var(--bg);
+  width: 100%;
+  line-height: 2.0;
+}
+/* ── TOP NAV ── */
+#jhc-nav {
+  background: var(--s) !important;
+  border-bottom: 1px solid var(--b) !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 50 !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05) !important;
+}
+#jhc-nav-inner {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-around !important;
+  gap: 0 !important;
+  padding: 0 8px !important;
+  max-width: 440px !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+  height: 64px !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+#jhc-nav-inner::-webkit-scrollbar { display: none !important; }
+.jhc-nl {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 48px !important;
+  height: 48px !important;
+  border-radius: 10px !important;
+  color: var(--m) !important;
+  transition: all .15s !important;
+  flex-shrink: 0 !important;
+  position: relative !important;
+}
+.jhc-nl:hover { background: var(--pl); color: var(--p); }
+.jhc-nl.active { color: var(--p); background: var(--pl); }
+.jhc-nl svg { flex-shrink: 0 !important; display: block !important; width: 22px !important; height: 22px !important; }
+.jhc-nl span { display: none !important; }
+/* ── BACK LINK ── */
+#jhc-back {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 18px 20px 0;
+}
+#jhc-back a {
+  font-size: 13px;
+  color: var(--m);
+}
+#jhc-back a:hover { color: var(--p); }
+/* ── PAGE ── */
+#jhc-page { max-width: 800px !important; margin: 0 auto !important; padding: 10px 20px 60px !important; }
+/* ── HERO ── */
+.jhc-hero {
+  text-align: center;
+  padding: 36px 20px 32px;
+  background: linear-gradient(160deg,#dbeafe 0%,#f0f7ff 60%,#e0f2fe 100%);
+  border-radius: var(--r);
+  margin-bottom: 48px !important;
+}
+.jhc-hero h1 { font-size: clamp(19px,3.5vw,30px); font-weight: 800; color: var(--t); letter-spacing: -.3px; margin-bottom: 6px; }
+.jhc-hero > p { font-size: 13px; color: var(--m); margin-bottom: 22px; }
+.jhc-dd { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 16px !important; max-width: 640px !important; width: 100% !important; margin: 28px auto 0 !important; text-align: left !important; }
+.jhc-do  { background: #e8f2fb !important; border: 1.5px solid #c2d9f0 !important; border-radius: 9px !important; padding: 22px 22px !important; }
+.jhc-dont{ background: #f3f4f6 !important; border: 1.5px solid #d1d5db !important; border-radius: 9px !important; padding: 22px 22px !important; }
+.jhc-bt  { font-weight: 700 !important; font-size: 10.5px !important; margin-bottom: 14px !important; letter-spacing: .6px !important; text-transform: uppercase !important; }
+.jhc-do .jhc-bt { color: #2563b0; }
+.jhc-dont .jhc-bt { color: #4b5563; }
+.jhc-bul { list-style: none; }
+.jhc-bul li { font-size: 12.5px !important; color: #374151 !important; padding: 5px 0 !important; display: flex !important; align-items: flex-start !important; gap: 6px !important; line-height: 1.8 !important; }
+.jhc-bul li::before { flex-shrink: 0; margin-top: 1px; font-weight: 700; }
+.jhc-do .jhc-bul li::before  { content:'✓'; color:#2563b0; }
+.jhc-dont .jhc-bul li::before { content:'✗'; color:#6b7280; }
+/* ── CARD ── */
+.jhc-card { background: var(--s) !important; border-radius: var(--r) !important; border: 1px solid var(--b) !important; box-shadow: var(--sh) !important; margin-bottom: 48px !important; overflow: hidden !important; }
+.jhc-hd { padding: 26px 20px 0 !important; }
+.jhc-hd h2 { display: flex !important; align-items: center !important; flex-wrap: nowrap !important; }
+.jhc-sn { display: inline-flex !important; align-items: center !important; justify-content: center !important; width: 26px !important; height: 26px !important; background: var(--p) !important; color: #fff !important; font-size: 10px !important; font-weight: 700 !important; border-radius: 5px !important; margin-right: 12px !important; vertical-align: middle !important; flex-shrink: 0 !important; }
+.jhc-st { font-size: 15px; font-weight: 700; color: var(--t); }
+.jhc-en { font-size: 12px !important; font-weight: 400 !important; color: var(--m) !important; margin-left: 10px !important; white-space: nowrap !important; }
+.jhc-sub { font-size: 13.5px !important; color: var(--m) !important; margin-top: 8px !important; padding-bottom: 16px !important; padding-left: 38px !important; line-height: 2.0 !important; }
+#jhc-checklist .jhc-sub { padding-left: 0 !important; }
+/* ── TABS ── */
+.jhc-tabs { display: flex !important; border-bottom: 1px solid var(--b) !important; padding: 0 20px !important; margin-top: 8px !important; }
+.jhc-tb { padding: 12px 20px !important; font-size: 13px !important; font-weight: 500 !important; color: var(--p) !important; background: none !important; border: none !important; border-bottom: 2.5px solid transparent !important; white-space: nowrap !important; margin-bottom: -1px !important; transition: all .15s !important; opacity: 0.55 !important; }
+.jhc-tb:hover:not(.active) { color: var(--p) !important; opacity: 0.85 !important; }
+.jhc-tb.active { color: var(--p) !important; border-bottom-color: var(--p) !important; font-weight: 700 !important; opacity: 1 !important; }
+.jhc-tp { display: none !important; padding: 24px 20px 30px !important; }
+.jhc-tp.active { display: block !important; }
+/* ── GUIDANCE ── */
+.jhc-gl { list-style: none; }
+.jhc-gl li { padding: 14px 0 !important; border-bottom: 1px solid var(--b) !important; font-size: 13px !important; color: var(--t) !important; display: flex !important; align-items: flex-start !important; gap: 8px !important; line-height: 2.0 !important; }
+.jhc-gl li:last-child { border-bottom: none; }
+.jhc-gl li::before { content:'→'; color: var(--p); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+.jhc-gl li strong { color: var(--pd); }
+/* ── EXAMPLE ── */
+.jhc-ex { background: #f0f7ff !important; border: 1.5px solid #bfdbfe !important; border-radius: 8px !important; padding: 24px 24px !important; overflow: visible !important; word-break: break-word !important; overflow-wrap: break-word !important; }
+.jhc-ex p { font-size: 13px !important; line-height: 2.0 !important; color: var(--t) !important; word-break: break-word !important; overflow-wrap: break-word !important; }
+.jhc-el { font-size: 10px !important; font-weight: 700 !important; text-transform: uppercase !important; letter-spacing: .8px !important; color: var(--p) !important; margin-bottom: 12px !important; display: block !important; }
+.jhc-nm { font-size: 17px; font-weight: 700; text-align: center; margin-bottom: 3px; }
+.jhc-ec { text-align: center; font-size: 12px; color: var(--m); }
+.jhc-jt { font-weight: 700 !important; font-size: 13.5px !important; color: var(--t) !important; margin-bottom: 4px !important; display: block !important; }
+.jhc-jm { font-size: 12px !important; color: var(--m) !important; margin-bottom: 12px !important; display: block !important; }
+.jhc-jb { list-style: disc !important; padding-left: 20px !important; margin-top: 4px !important; }
+.jhc-jb li { font-size: 12.5px !important; color: var(--t) !important; padding: 7px 0 !important; line-height: 2.0 !important; word-break: break-word !important; overflow-wrap: break-word !important; }
+/* ── SKILLS ── */
+.jhc-sk { display: grid; grid-template-columns: repeat(auto-fill,minmax(150px,1fr)); gap: 8px; }
+.jhc-chip { background: #eff6ff !important; border: 1px solid #bfdbfe !important; border-radius: 6px !important; padding: 14px 18px !important; font-size: 12px !important; font-weight: 500 !important; color: var(--pd) !important; display: flex !important; align-items: flex-start !important; gap: 7px !important; word-break: break-word !important; }
+.jhc-chip::before { content:'·' !important; color: var(--p) !important; font-size: 18px !important; line-height: 1 !important; margin-top: 2px !important; flex-shrink: 0 !important; }
+/* ── REFS ── */
+.jhc-ref { background: var(--s2) !important; border-radius: 8px !important; padding: 24px 26px !important; }
+.jhc-ref h3 { font-size: 13.5px; font-weight: 700; margin-bottom: 7px; }
+.jhc-rn { font-size: 12.5px !important; color: var(--m) !important; margin-bottom: 16px !important; line-height: 2.0 !important; }
+.jhc-rul { list-style: none; }
+.jhc-rul li { padding: 13px 0 !important; font-size: 13px !important; color: var(--t) !important; display: flex !important; align-items: center !important; gap: 7px !important; border-bottom: 1px solid var(--b) !important; }
+.jhc-rul li:last-child { border: none; }
+.jhc-rul li::before { content:'—'; font-size: 11px; color: var(--m); }
+/* ── LAYOUT SAMPLES ── */
+#jhc-layouts { margin-bottom: 48px !important; }
+#jhc-layouts .jhc-hd { padding: 26px 20px 0 !important; }
+#jhc-layouts .jhc-sub { padding-left: 0 !important; padding-bottom: 0 !important; }
+.jhc-lyw { padding: 18px 20px 22px !important; }
+.jhc-lyb { display: block !important; width: 100% !important; padding: 0 !important; margin: 0 !important; border: 1px solid var(--b) !important; border-radius: 10px !important; background: #fff !important; overflow: hidden !important; line-height: 0 !important; cursor: zoom-in !important; transition: box-shadow .2s, transform .2s !important; -webkit-appearance: none !important; }
+.jhc-lyb:hover { box-shadow: 0 8px 24px rgba(59,125,216,.18) !important; transform: translateY(-2px) !important; }
+.jhc-lyb:focus { outline: none !important; }
+.jhc-lyb:focus-visible { outline: 2px solid var(--p) !important; outline-offset: 2px !important; }
+.jhc-lyb img { display: block !important; width: 100% !important; height: auto !important; }
+.jhc-lyt { display: flex !important; align-items: center !important; justify-content: center !important; gap: 6px !important; margin-top: 12px !important; font-size: 12px !important; color: var(--m) !important; line-height: 1.8 !important; text-align: center !important; }
+.jhc-lyt svg { width: 14px !important; height: 14px !important; flex-shrink: 0 !important; color: var(--p) !important; }
+.jhc-lyl { display: grid !important; grid-template-columns: repeat(3,1fr) !important; gap: 10px !important; margin-top: 16px !important; }
+.jhc-lyi { background: #f0f7ff !important; border: 1px solid #bfdbfe !important; border-radius: 8px !important; padding: 12px 12px !important; text-align: center !important; }
+.jhc-lyi b { display: block !important; font-size: 12.5px !important; font-weight: 700 !important; color: var(--pd) !important; line-height: 1.6 !important; }
+.jhc-lyi span { display: block !important; font-size: 11.5px !important; color: var(--m) !important; line-height: 1.7 !important; margin-top: 2px !important; }
+/* ── LIGHTBOX ── */
+#jhc-lb { position: fixed !important; top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; background: rgba(15,23,42,.94) !important; z-index: 10000 !important; display: none !important; align-items: center !important; justify-content: center !important; padding: 56px 12px 20px !important; }
+#jhc-lb.open { display: flex !important; }
+#jhc-lb-in { max-width: 100% !important; max-height: 100% !important; overflow: auto !important; -webkit-overflow-scrolling: touch !important; border-radius: 8px !important; }
+#jhc-lb-in img { display: block !important; width: 1400px !important; max-width: none !important; height: auto !important; background: #fff !important; border-radius: 8px !important; }
+#jhc-lb-x { position: fixed !important; top: 12px !important; right: 14px !important; width: 40px !important; height: 40px !important; border: none !important; border-radius: 50% !important; background: rgba(255,255,255,.94) !important; color: #1e293b !important; font-size: 20px !important; line-height: 1 !important; display: flex !important; align-items: center !important; justify-content: center !important; z-index: 10001 !important; box-shadow: 0 2px 10px rgba(0,0,0,.25) !important; }
+#jhc-lb-h { position: fixed !important; top: 20px !important; left: 0 !important; right: 0 !important; text-align: center !important; color: rgba(255,255,255,.8) !important; font-size: 12px !important; z-index: 10001 !important; pointer-events: none !important; }
+@media (min-width: 901px) {
+  #jhc-lb-in img { width: auto !important; max-width: 90vw !important; max-height: 84vh !important; }
+  #jhc-lb-h { display: none !important; }
+}
+/* ── CHECKLIST ── */
+.jhc-clw { padding: 16px 20px 26px !important; }
+.jhc-cl { display: flex !important; align-items: flex-start !important; gap: 12px !important; padding: 15px 0 !important; border-bottom: 1px solid var(--b) !important; margin-left: 0 !important; }
+.jhc-cl:last-child { border-bottom: none; }
+.jhc-cl input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--p); flex-shrink: 0; margin-top: 2px; }
+.jhc-cl label { font-size: 13px !important; color: var(--t) !important; line-height: 2.0 !important; transition: all .2s !important; }
+.jhc-cl input:checked+label { text-decoration: line-through; color: #9ca3af; }
+/* ── CTA ── */
+.jhc-cta { background: #e8f2fb !important; border: 1.5px solid #c2d9f0 !important; border-radius: var(--r) !important; padding: 40px 32px !important; text-align: center !important; margin-bottom: 20px !important; }
+.jhc-cta h2 { font-size: 18px; font-weight: 800; margin-bottom: 6px; color: var(--t); }
+.jhc-cta p { font-size: 13px; color: var(--m); margin-bottom: 18px; }
+.jhc-ctab { display: flex !important; flex-direction: column !important; align-items: center !important; gap: 16px !important; width: 100% !important; margin-top: 8px !important; }
+.jhc-cb { display: flex !important; align-items: center !important; justify-content: center !important; background: #586D97 !important; color: #fff !important; border: none !important; outline: none !important; border-radius: 10px !important; padding: 13px 24px !important; font-size: 14px !important; font-weight: 600 !important; text-decoration: none !important; transition: all .2s !important; width: auto !important; max-width: 100% !important; align-self: center !important; box-shadow: none !important; -webkit-appearance: none !important; }
+.jhc-cb:hover { background: #475c82 !important; transform: translateY(-1px) !important; box-shadow: 0 4px 12px rgba(88,109,151,.28) !important; }
+.jhc-cb:focus { outline: none !important; box-shadow: none !important; }
+.jhc-cb:focus-visible { outline: none !important; box-shadow: none !important; }
+/* ── FOOTER ── */
+.jhc-foot { text-align: center !important; padding: 48px 16px 32px !important; color: var(--m) !important; font-size: 12.5px !important; line-height: 2.0 !important; }
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .jhc-nl { width: 40px !important; height: 44px !important; padding: 0 !important; flex-shrink: 0 !important; }
+  #jhc-nav-inner { max-width: 100% !important; justify-content: space-evenly !important; padding: 0 4px !important; }
+  .jhc-nl svg { width: 20px !important; height: 20px !important; }
+  #jhc-page { padding: 10px 14px 50px !important; }
+  #jhc-back { padding: 14px 14px 0; }
+  .jhc-dd { grid-template-columns: 1fr !important; max-width: 100% !important; gap: 12px !important; }
+  .jhc-do, .jhc-dont { width: 100% !important; }
+  .jhc-hero { padding: 26px 14px 22px !important; }
+  .jhc-tabs { padding: 0 14px !important; }
+  .jhc-tp { padding: 16px 14px 20px !important; }
+  .jhc-hd { padding: 16px 14px 0 !important; }
+  #jhc-layouts .jhc-hd { padding: 18px 14px 0 !important; }
+  .jhc-sub { padding-left: 0 !important; }
+  .jhc-clw { padding: 14px 14px 18px !important; }
+  .jhc-lyw { padding: 14px 14px 18px !important; }
+  .jhc-lyl { grid-template-columns: 1fr !important; gap: 8px !important; }
+  .jhc-lyi { display: flex !important; align-items: baseline !important; justify-content: flex-start !important; gap: 8px !important; text-align: left !important; padding: 10px 14px !important; }
+  .jhc-lyi b { display: inline !important; white-space: nowrap !important; }
+  .jhc-lyi span { display: inline !important; }
+  .jhc-ctab { flex-direction: column !important; align-items: center !important; }
+  .jhc-cb { width: 100% !important; max-width: 260px !important; }
+}
+.jhc-cl-note { display: inline; }
+@media (max-width: 600px) {
+  .jhc-cl-note { display: block !important; padding-left: 0 !important; }
+}
+</style>
+</head>
+<body>
+<div id="jhc">
+  <!-- TOP NAV -->
+  <nav id="jhc-nav">
+    <div id="jhc-nav-inner">
+      <a href="#jhc-intro"      class="jhc-nl active" title="基本概念"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>基本概念</span></a>
+      <a href="#jhc-layouts"    class="jhc-nl" title="履歷版型"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg><span>履歷版型</span></a>
+      <a href="#jhc-contact"    class="jhc-nl" title="聯絡資訊"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 11.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2H6.6a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.12 6.12l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>聯絡資訊</span></a>
+      <a href="#jhc-summary"    class="jhc-nl" title="個人簡介"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>個人簡介</span></a>
+      <a href="#jhc-experience" class="jhc-nl" title="工作經驗"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><span>工作經驗</span></a>
+      <a href="#jhc-education"  class="jhc-nl" title="學歷與證照"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg><span>學歷與證照</span></a>
+      <a href="#jhc-skills"     class="jhc-nl" title="個人技能"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><span>個人技能</span></a>
+      <a href="#jhc-references" class="jhc-nl" title="推薦人"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>推薦人</span></a>
+      <a href="#jhc-checklist"  class="jhc-nl" title="履歷健檢"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>履歷健檢</span></a>
+      <a href="#jhc-template"   class="jhc-nl" title="履歷模板"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span>履歷模板</span></a>
+    </div>
+  </nav>
+
+  <div id="jhc-back"><a href="/guides/">← 回指南站</a></div>
+
+  <div id="jhc-page">
+    <section id="jhc-intro">
+      <div class="jhc-hero">
+        <h1>澳洲履歷x自助健檢站</h1>
+        <p>簡單自助健檢，讓你的履歷被澳洲雇主看見</p>
+        <div class="jhc-dd">
+          <div class="jhc-do">
+            <div class="jhc-bt">DO</div>
+            <ul class="jhc-bul">
+              <li><strong>簡潔有力</strong>：1–2頁是標準長度</li>
+              <li><strong>格式清晰</strong>：專業、易於閱讀</li>
+              <li><strong>澳洲手機</strong>：這是獲得回覆的關鍵</li>
+            </ul>
+          </div>
+          <div class="jhc-dont">
+            <div class="jhc-bt">DO NOT</div>
+            <ul class="jhc-bul">
+              <li>附上個人照片</li>
+              <li>提供年齡、婚姻等個資</li>
+              <li>留國際電話號碼</li>
+              <li>長篇大論、不精簡</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="jhc-layouts" class="jhc-card">
+      <div class="jhc-hd">
+        <h2 class="jhc-st">三種推薦履歷版型<span class="jhc-en">Resume Layouts</span></h2>
+        <p class="jhc-sub">澳洲雇主平均只花 30 秒看一份履歷，選一個能讓優勢被快速看見的版型（頁面最下方按鈕下載版型）</p>
+      </div>
+      <div class="jhc-lyw">
+        <button type="button" class="jhc-lyb" data-zoom aria-label="放大檢視三種履歷版型">
+          <img src="images/resume-layouts.png" alt="三種澳打履歷版型範例：左欄式、雙欄式、側欄摘要式" loading="lazy">
+        </button>
+        <div class="jhc-lyt">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          <span>點擊圖片可放大檢視細節</span>
+        </div>
+        <div class="jhc-lyl">
+          <div class="jhc-lyi"><b>左欄式</b><span>適合經驗單純、想突顯證照</span></div>
+          <div class="jhc-lyi"><b>雙欄式</b><span>適合多段餐飲、服務業經歷</span></div>
+          <div class="jhc-lyi"><b>側欄摘要式</b><span>適合技術工、有專業背景</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="jhc-contact" class="jhc-card">
+      <div class="jhc-hd"><h2 class="jhc-st"><span class="jhc-sn">1</span>聯絡資訊<span class="jhc-en">Contact</span></h2><p class="jhc-sub">聯絡資訊應放在最頂端或最明顯處</p></div>
+      <div class="jhc-tabs"><button class="jhc-tb active" data-t="jhc-cg">重點指引</button><button class="jhc-tb" data-t="jhc-ce">參考範例</button></div>
+      <div id="jhc-cg" class="jhc-tp active">
+        <ul class="jhc-gl">
+          <li><div><strong>姓名</strong>：建議不使用全中譯拼音，可英文名 + 姓氏拼音</div></li>
+          <li><div><strong>電話</strong>：請填澳洲電話，若沒有可先留空</div></li>
+          <li><div><strong>Email</strong>：使用專業的 Email 地址</div></li>
+          <li><div><strong>地點</strong>：只需寫城市和州，例如：Perth, WA</div></li>
+          <li><div><strong>LinkedIn</strong>（選填）</div></li>
+        </ul>
+      </div>
+      <div id="jhc-ce" class="jhc-tp">
+        <div class="jhc-ex"><div class="jhc-nm">Jen Chang</div><div class="jhc-ec">Perth, WA &nbsp;|&nbsp; 0400 123 456</div><div class="jhc-ec" style="margin-top:3px">linkedin.com/in/jenchangprofile</div></div>
+      </div>
+    </section>
+
+    <section id="jhc-summary" class="jhc-card">
+      <div class="jhc-hd"><h2 class="jhc-st"><span class="jhc-sn">2</span>個人簡介<span class="jhc-en">About Me</span></h2><p class="jhc-sub">一段 2–3 句的簡短介紹</p></div>
+      <div class="jhc-tabs"><button class="jhc-tb active" data-t="jhc-sg">重點指引</button><button class="jhc-tb" data-t="jhc-se">參考範例</button></div>
+      <div id="jhc-sg" class="jhc-tp active"><ul class="jhc-gl"><li><div><strong>保持簡潔</strong>：專注於你最相關的技能和經驗</div></li></ul></div>
+      <div id="jhc-se" class="jhc-tp"><div class="jhc-ex"><div class="jhc-el">餐飲服務業範例</div><p>Enthusiastic and reliable hospitality professional with over two years of experience in fast-paced cafe environments. Skilled in customer service, POS systems, and maintaining a high standard of cleanliness. Seeking a challenging role where I can contribute to a positive team atmosphere.</p></div></div>
+    </section>
+
+    <section id="jhc-experience" class="jhc-card">
+      <div class="jhc-hd"><h2 class="jhc-st"><span class="jhc-sn">3</span>工作經驗<span class="jhc-en">Work Experience</span></h2><p class="jhc-sub">履歷核心，最新或最相關的工作經驗放最前面</p></div>
+      <div class="jhc-tabs"><button class="jhc-tb active" data-t="jhc-eg">重點指引</button><button class="jhc-tb" data-t="jhc-ee">參考範例</button></div>
+      <div id="jhc-eg" class="jhc-tp active">
+        <ul class="jhc-gl">
+          <li><div><strong>使用動詞</strong>：例如「Manage」、「Create」、「Improve」、「Train」</div></li>
+          <li><div><strong>條列式說明</strong>：清楚說明你的職責和成就</div></li>
+          <li><div><strong>具體描述</strong>：列出餐飲、零售、服務業或志工經驗</div></li>
+        </ul>
+      </div>
+      <div id="jhc-ee" class="jhc-tp"><div class="jhc-ex"><p class="jhc-jt">All Rounder</p><p class="jhc-jm">Sunrise Cafe, Tainan, Taiwan &nbsp;|&nbsp; Mar 2022 – Feb 2024</p><ul class="jhc-jb"><li>Provided friendly and efficient service to a high volume of customers daily.</li><li>Managed cash and card transactions accurately using a POS system.</li><li>Maintained a clean and organised environment in the dining and service areas.</li></ul></div></div>
+    </section>
+
+    <section id="jhc-education" class="jhc-card">
+      <div class="jhc-hd"><h2 class="jhc-st"><span class="jhc-sn">4</span>學歷與證照<span class="jhc-en">Education &amp; Certificates</span></h2><p class="jhc-sub">簡潔列出你的學歷和任何澳洲相關證照</p></div>
+      <div class="jhc-tabs"><button class="jhc-tb active" data-t="jhc-edg">重點指引</button><button class="jhc-tb" data-t="jhc-ede">參考範例</button></div>
+      <div id="jhc-edg" class="jhc-tp active"><ul class="jhc-gl"><li><div><strong>澳洲證照優先</strong>：如 RSA、白卡等，請放最上面</div></li><li><div><strong>有所取捨</strong>：台灣學歷可選填，填的話列最高學位即可</div></li></ul></div>
+      <div id="jhc-ede" class="jhc-tp"><div class="jhc-ex" style="display:flex !important;flex-direction:column !important;gap:16px !important;"><div><p class="jhc-jt">Responsible Service of Alcohol (RSA) Certificate</p><p class="jhc-jm">Western Australia (WA) &nbsp;|&nbsp; 2025</p></div><div><p class="jhc-jt">Bachelor of Commerce</p><p class="jhc-jm">National Cheng Kung University, Taiwan &nbsp;|&nbsp; 2022</p></div></div></div>
+    </section>
+
+    <section id="jhc-skills" class="jhc-card">
+      <div class="jhc-hd"><h2 class="jhc-st"><span class="jhc-sn">5</span>個人技能<span class="jhc-en">Skills</span></h2><p class="jhc-sub">列出最相關的技能，依據招聘內容進行調整</p></div>
+      <div class="jhc-tabs"><button class="jhc-tb active" data-t="jhc-skg">重點指引</button><button class="jhc-tb" data-t="jhc-ske">參考範例</button></div>
+      <div id="jhc-skg" class="jhc-tp active"><ul class="jhc-gl"><li><div><strong>條列式</strong>：列出軟實力（溝通）或硬實力（設備操作）</div></li><li><div><strong>具體說明</strong>：例如「Proficient in Microsoft Office Suite」</div></li><li><div><strong>放關鍵字</strong>：對方要求什麼，就使用相應的詞</div></li></ul></div>
+      <div id="jhc-ske" class="jhc-tp"><div class="jhc-sk"><div class="jhc-chip">Customer Service</div><div class="jhc-chip">POS Systems (Square)</div><div class="jhc-chip">Teamwork &amp; Collaboration</div><div class="jhc-chip">Fluent in Mandarin &amp; English</div><div class="jhc-chip">Problem Solving</div><div class="jhc-chip">Manual Handling (20kg)</div></div></div>
+    </section>
+
+    <section id="jhc-references" class="jhc-card">
+      <div class="jhc-hd"><h2 class="jhc-st"><span class="jhc-sn">6</span>推薦人<span class="jhc-en">References</span></h2></div>
+      <div style="padding:18px 20px 22px"><div class="jhc-ref"><h3>怎麼寫？誰適合當推薦人？</h3><p class="jhc-rn">可在履歷最下方寫：<em>References available upon request.</em><br>另外準備一份 2–3 位推薦人的聯絡方式文件，記得事先徵得同意。</p><ul class="jhc-rul"><li>前主管 / 老闆</li><li>同事 / 團隊領導</li><li>實習或志工的指導人</li><li>學校老師 / 輔導員</li></ul></div></div>
+    </section>
+
+    <section id="jhc-checklist" class="jhc-card">
+      <div class="jhc-hd"><h2 class="jhc-st">Final Checklist</h2><p class="jhc-sub">投遞履歷前，做最後的確認</p></div>
+      <div class="jhc-clw">
+        <div class="jhc-cl"><input type="checkbox" id="jc1"><label for="jc1">履歷是否在 1–2 頁之間<span class="jhc-cl-note">（Resume 1 頁，Cover Letter 1 頁）</span></label></div>
+        <div class="jhc-cl"><input type="checkbox" id="jc2"><label for="jc2">是否已移除照片和個人資料（年齡等）</label></div>
+        <div class="jhc-cl"><input type="checkbox" id="jc3"><label for="jc3">是否包含你的澳洲電話號碼</label></div>
+        <div class="jhc-cl"><input type="checkbox" id="jc4"><label for="jc4">個人簡介是否針對申請職位進行客製化</label></div>
+        <div class="jhc-cl"><input type="checkbox" id="jc5"><label for="jc5">描述經驗時是否使用動詞開頭</label></div>
+        <div class="jhc-cl"><input type="checkbox" id="jc6"><label for="jc6">是否已仔細校對拼字和語法錯誤</label></div>
+      </div>
+    </section>
+
+    <section id="jhc-template">
+      <div class="jhc-cta">
+        <h2>Aus Resume Template</h2>
+        <p>Email 領取履歷</p>
+        <div class="jhc-ctab">
+          <a href="https://jenalsojill.kit.com/0e63bbae66" target="_blank" rel="noopener noreferrer" class="jhc-cb">領取澳洲履歷模板</a>
+          <a href="/job-coaching/" class="jhc-cb">預約 15 分鐘求職諮詢</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="jhc-foot">
+      <p>祝福 在澳洲找工作順利</p>
+    </footer>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div id="jhc-lb" role="dialog" aria-modal="true" aria-label="履歷版型放大檢視">
+    <button type="button" id="jhc-lb-x" aria-label="關閉">✕</button>
+    <div id="jhc-lb-h">可左右滑動檢視細節</div>
+    <div id="jhc-lb-in"><img id="jhc-lb-img" src="" alt="三種澳打履歷版型範例放大檢視"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // Tabs
+  document.querySelectorAll('.jhc-tb').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var card = btn.closest('.jhc-card');
+      if (!card) return;
+      var tid = btn.getAttribute('data-t');
+      card.querySelectorAll('.jhc-tb').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+      card.querySelectorAll('.jhc-tp').forEach(function(p){ p.classList.remove('active'); });
+      var pane = document.getElementById(tid);
+      if (pane) pane.classList.add('active');
+    });
+  });
+  // Lightbox
+  var lb = document.getElementById('jhc-lb');
+  var lbIn = document.getElementById('jhc-lb-in');
+  var lbImg = document.getElementById('jhc-lb-img');
+  var prevOverflow = '';
+  function openLb(src, alt){
+    if (!lb) return;
+    lbImg.src = src;
+    if (alt) lbImg.alt = alt;
+    lb.classList.add('open');
+    prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    if (lbIn) { lbIn.scrollTop = 0; lbIn.scrollLeft = 0; }
+  }
+  function closeLb(){
+    if (!lb) return;
+    lb.classList.remove('open');
+    document.body.style.overflow = prevOverflow;
+  }
+  document.querySelectorAll('[data-zoom]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var img = btn.querySelector('img');
+      if (img) openLb(img.currentSrc || img.src, img.alt);
+    });
+  });
+  var lbX = document.getElementById('jhc-lb-x');
+  if (lbX) lbX.addEventListener('click', closeLb);
+  if (lb) lb.addEventListener('click', function(e){ if (e.target === lb || e.target === lbIn) closeLb(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeLb(); });
+  // Active nav on scroll
+  var links = document.querySelectorAll('.jhc-nl');
+  var secs  = document.querySelectorAll('section[id]');
+  secs.forEach(function(s){
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting) {
+          links.forEach(function(l){
+            l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id);
+          });
+        }
+      });
+    }, {rootMargin:'-20% 0px -70% 0px', threshold:0}).observe(s);
+  });
+})();
+</script>
+
+</body>
+</html>

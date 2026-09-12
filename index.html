@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>jen.alsojill</title>
+<meta name="description" content="Jen 的求職與職涯輔導服務 — 履歷模板、澳洲求職生活指南、求職規劃輔導、咖啡課。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500&family=Noto+Serif+TC:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:       #304873;
+    --navy-mid:   #3d5a8f;
+    --navy-soft:  #4e6ea8;
+    --navy-pale:  #e8edf5;
+    --navy-tint:  #f3f5fa;
+    --white:      #FFFFFF;
+    --ink:        #111111;
+    --ink-soft:   #6B6B6B;
+    --border:     #DDE3E9;
+    --border-soft:#EEF1F4;
+    --radius:     10px;
+    --radius-sm:  5px;
+  }
+
+  body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: 'Noto Sans TC', 'DM Sans', sans-serif;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    color: #fff;
+    padding: 5rem 2rem 4.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 60px;
+    background: var(--white);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+  .hero-inner { max-width: 640px; margin: 0 auto; position: relative; }
+  .brand {
+    font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+    font-weight: 500;
+    font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+    line-height: 1.4;
+    letter-spacing: 0.04em;
+    margin: 1.6rem 0 1rem;
+    max-width: 18ch;
+  }
+  .hero .intro {
+    color: rgba(255,255,255,0.6);
+    font-size: 1rem;
+    font-weight: 300;
+    max-width: 44ch;
+    margin-bottom: 1rem;
+  }
+  .hero .intro:last-of-type { margin-bottom: 0; }
+
+  /* ── SERVICES ── */
+  .services-section { padding: 3.5rem 2rem 4.5rem; }
+  .services {
+    max-width: 640px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .service {
+    display: block;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.6rem 1.75rem;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+  }
+  .service:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(48,72,115,0.12);
+    border-color: var(--navy-soft);
+  }
+  .service:focus-visible {
+    outline: 2px solid var(--navy);
+    outline-offset: 2px;
+  }
+
+  .service:nth-child(odd) { background: var(--navy-tint); }
+
+  .service h2 {
+    font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+    font-weight: 500;
+    font-size: 1.45rem;
+    color: var(--navy);
+    letter-spacing: 0.02em;
+    margin-bottom: 2px;
+  }
+  .service .zh-subtitle {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    margin-bottom: 0.7rem;
+  }
+  .service h2 + p.desc { margin-top: 0.7rem; }
+  .service p.desc {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    margin-bottom: 0.9rem;
+  }
+  .service .cta {
+    color: var(--navy-mid);
+    font-weight: 500;
+    font-size: 0.92rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #1c2c47;
+    padding: 2rem;
+    text-align: center;
+  }
+  footer p { font-size: 0.8rem; color: rgba(255,255,255,0.3); }
+  footer a { color: rgba(255,255,255,0.45); text-decoration: none; }
+  footer a:hover { color: rgba(255,255,255,0.7); }
+
+  @media (max-width: 600px) {
+    .hero { padding: 3.5rem 1.25rem 4rem; }
+    .services-section { padding: 2.5rem 1.25rem 3.5rem; }
+    .service { padding: 1.4rem 1.4rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .service { transition: none; }
+    .service:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-inner">
+    <a class="brand" href="/">jen.alsojill</a>
+    <h1>從打工度假到穩定職涯，一步一步來。</h1>
+    <p class="intro">嗨我是 J 今今 👋🏻 我在下方整理出<br>澳洲履歷、礦區求職、職涯輔導</p>
+    <p class="intro">希望能幫助你們在澳洲求職順利 ✨</p>
+  </div>
+</section>
+
+<section class="services-section">
+  <div class="services">
+
+    <a class="service" href="https://jenalsojill.kit.com/0e63bbae66" target="_blank" rel="noopener">
+      <h2>Resume Template</h2>
+      <p class="zh-subtitle">履歷模板下載</p>
+      <p class="desc">符合澳洲規格的履歷範本，訂閱電子報即可免費取得。</p>
+      <span class="cta">領取履歷模板 →</span>
+    </a>
+
+    <a class="service" href="/guides/">
+      <h2>Job &amp; Life Guides</h2>
+      <p class="zh-subtitle">澳洲求職/生活指南站</p>
+      <p class="desc">整理給打工度假背包客與新移民的求職與生活資訊，點進來逛逛。</p>
+      <span class="cta">查看指南站 →</span>
+    </a>
+
+    <a class="service" href="/job-coaching/">
+      <h2>Career Coaching</h2>
+      <p class="zh-subtitle">求職規劃輔導</p>
+      <p class="desc">礦區（FIFO）或銀行金融方向的求職策略與履歷諮詢，一對一討論你的下一步。</p>
+      <span class="cta">了解輔導內容 →</span>
+    </a>
+
+    <a class="service" href="https://www.instagram.com/hi.jen.co/" target="_blank" rel="noopener">
+      <h2>Aus Barista Coffee Class</h2>
+      <p class="desc">1 對 1 澳洲咖啡基礎課，進階咖啡拉花課。</p>
+      <span class="cta">私訊 Instagram 詢問 →</span>
+    </a>
+
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 jen.alsojill · <a href="mailto:hi@jenalsojill.com">hi@jenalsojill.com</a></p>
+</footer>
+
+</body>
+</html>

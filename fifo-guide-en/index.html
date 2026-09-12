@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Your FIFO Starter Guide · jen.alsojill</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Noto+Serif+TC:wght@300;400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:       #304873;
+    --navy-mid:   #3d5a8f;
+    --navy-soft:  #4e6ea8;
+    --navy-pale:  #e8edf5;
+    --navy-tint:  #f3f5fa;
+    --white:      #FFFFFF;
+    --black:      #111111;
+    --gray-dark:  #3A3A3A;
+    --gray-mid:   #6B6B6B;
+    --gray-light: #B0B0B0;
+    --border:     #DDE3E9;
+    --border-soft:#EEF1F4;
+    --radius:     10px;
+    --radius-sm:  5px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    line-height: 1.75;
+    font-size: 16px;
+  }
+
+  body.zh {
+    font-family: 'Noto Sans TC', sans-serif;
+    line-height: 1.85;
+  }
+
+  /* ── LANG VISIBILITY ─────────────── */
+  .en { display: block; }
+  .zh-content { display: none; }
+  body.zh .en { display: none; }
+  body.zh .zh-content { display: block; }
+  span.en { display: inline; }
+  span.zh-content { display: none; }
+  body.zh span.en { display: none; }
+  body.zh span.zh-content { display: inline; }
+
+  /* ── LANG TOGGLE BUTTON ─────────────── */
+  .lang-btn {
+    position: fixed;
+    top: 72px;
+    right: 1.5rem;
+    z-index: 200;
+    background: #4B81B4;
+    color: #fff;
+    border: none;
+    outline: none;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    box-shadow: 0 3px 16px rgba(75,129,180,0.35);
+    transition: background 0.18s, transform 0.15s, box-shadow 0.15s;
+    white-space: nowrap;
+    min-width: 110px;
+    justify-content: center;
+  }
+  .lang-btn:hover {
+    background: #3a6d9e;
+    transform: translateY(-1px);
+    box-shadow: 0 5px 20px rgba(75,129,180,0.45);
+  }
+  .lang-icon { font-size: 0.9rem; }
+
+  /* ── FLOATING STORY BUTTON ───────── */
+  .float-story-btn {
+    position: fixed;
+    top: 116px;
+    right: 1.5rem;
+    z-index: 200;
+    background: #111111;
+    color: rgba(255,255,255,0.85);
+    border: none;
+    outline: none;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    transition: background 0.18s, transform 0.15s;
+    white-space: nowrap;
+    text-decoration: none;
+    min-width: 110px;
+  }
+  .float-story-btn:hover {
+    background: #000000;
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  /* ── BACK TO TOP BUTTON ──────────── */
+  .back-top-btn {
+    position: fixed;
+    bottom: 1.75rem;
+    left: 1.5rem;
+    z-index: 200;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.18);
+    transition: background 0.18s, transform 0.15s, opacity 0.3s;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .back-top-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .back-top-btn:hover {
+    background: var(--navy-mid);
+    transform: translateY(-2px);
+  }
+  .back-top-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke: #fff;
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* ── NAV ─────────────────────────── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .nav-inner {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--navy);
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--gray-mid);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.18s;
+  }
+  .nav-links a:hover { color: var(--navy); }
+
+  /* ── HERO ─────────────────────────── */
+  .hero {
+    background: var(--navy);
+    color: #fff;
+    padding: 6rem 2rem 5.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0; right: 0;
+    height: 60px;
+    background: var(--white);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+  .hero-inner { max-width: 700px; margin: 0 auto; position: relative; }
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.38);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 6.5vw, 4.6rem);
+    line-height: 1.1;
+    margin-bottom: 1.4rem;
+    color: #fff;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+  body.zh .hero h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+    line-height: 1.25;
+    letter-spacing: 0.04em;
+  }
+  .hero h1 em { font-style: italic; color: rgba(255,255,255,0.55); }
+  body.zh .hero h1 em { font-style: normal; }
+  .hero-sub {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.55);
+    max-width: 520px;
+    margin-bottom: 2.5rem;
+    line-height: 1.85;
+  }
+  .hero-actions { display: flex; gap: 0.85rem; flex-wrap: wrap; }
+  .btn-white {
+    background: #fff; color: var(--navy);
+    padding: 0.75rem 1.65rem; border-radius: var(--radius-sm);
+    font-weight: 600; font-size: 0.85rem;
+    text-decoration: none; transition: opacity 0.18s; display: inline-block;
+  }
+  .btn-white:hover { opacity: 0.85; }
+  .btn-ghost {
+    background: transparent; color: rgba(255,255,255,0.55);
+    padding: 0.75rem 1.65rem; border-radius: var(--radius-sm);
+    font-weight: 400; font-size: 0.85rem;
+    text-decoration: none; border: 1px solid rgba(255,255,255,0.18);
+    transition: border-color 0.18s, color 0.18s; display: inline-block;
+  }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.45); color: #fff; }
+
+  /* ── PAGE WRAP ───────────────────── */
+  .page-wrap { max-width: 980px; margin: 0 auto; padding: 0 2rem; }
+
+  /* ── SECTION COMMONS ─────────────── */
+  section { padding: 4.5rem 0; }
+  .section-eyebrow {
+    font-size: 0.67rem; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--navy-soft); margin-bottom: 0.55rem;
+  }
+  .section-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.7rem, 3.5vw, 2.3rem);
+    color: var(--navy); line-height: 1.2;
+    margin-bottom: 0.9rem; font-weight: 500;
+  }
+  body.zh .section-heading {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    line-height: 1.4; letter-spacing: 0.05em;
+  }
+  .section-lead {
+    font-size: 0.95rem; color: var(--gray-mid);
+    max-width: 560px; line-height: 1.85; margin-bottom: 2.75rem;
+  }
+  .rule { border: none; border-top: 1px solid var(--border-soft); }
+
+  /* ── STEPS ───────────────────────── */
+  .steps-list { display: flex; flex-direction: column; }
+  .step {
+    display: grid; grid-template-columns: 48px 1fr;
+    gap: 0 1.5rem; padding: 2.25rem 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .step:last-child { border-bottom: none; }
+  .step-left { display: flex; flex-direction: column; align-items: center; }
+  .step-dot {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: var(--navy); color: #fff;
+    font-family: 'Cormorant Garamond', serif; font-size: 1.05rem;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  body.zh .step-dot { font-family: 'Noto Serif TC', serif; font-size: 1rem; }
+  .step-vline { flex: 1; width: 1px; background: var(--border); margin-top: 10px; }
+  .step:last-child .step-vline { display: none; }
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; color: var(--navy);
+    margin-bottom: 0.55rem; font-weight: 500; padding-top: 7px;
+  }
+  body.zh .step-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1.1rem; letter-spacing: 0.04em;
+  }
+  .step-body { font-size: 0.92rem; color: var(--gray-mid); line-height: 1.85; }
+  .step-body strong { color: var(--black); font-weight: 500; }
+
+  /* ── CERTS ───────────────────────── */
+  .certs-section { background: var(--navy-tint); }
+  .cert-group { margin-bottom: 2.75rem; }
+  .cert-group:last-child { margin-bottom: 0; }
+  .group-label { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1.1rem; }
+  .group-label-text {
+    font-size: 0.68rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--gray-mid);
+  }
+  .badge { padding: 3px 11px; border-radius: 999px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; }
+  .badge-req { background: var(--navy); color: #fff; }
+  .badge-des { background: var(--navy-pale); color: var(--navy-mid); }
+  .certs-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+    gap: 1px; background: var(--border);
+    border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden;
+  }
+  .cert-card { background: var(--white); padding: 1.4rem 1.5rem; transition: background 0.15s; }
+  .cert-card:hover { background: var(--navy-tint); }
+  .cert-card h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; color: var(--navy); margin-bottom: 0.45rem; font-weight: 500;
+  }
+  body.zh .cert-card h4 { font-family: 'Noto Serif TC', serif; font-size: 0.975rem; letter-spacing: 0.03em; }
+  .cert-card p { font-size: 0.855rem; color: var(--gray-mid); line-height: 1.75; margin-bottom: 0.75rem; }
+  .cert-card p strong { color: var(--black); font-weight: 500; }
+  .cert-cost {
+    font-size: 0.76rem; font-weight: 600; color: var(--navy-mid);
+    border: 1px solid var(--border); display: inline-block;
+    padding: 2px 10px; border-radius: 999px; background: var(--navy-pale);
+  }
+
+  /* ── TABLE ───────────────────────── */
+  .positions-section { background: var(--white); }
+  .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+  thead th {
+    text-align: left; padding: 0.9rem 1.15rem;
+    background: var(--navy); color: rgba(255,255,255,0.65);
+    font-size: 0.67rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; white-space: nowrap;
+  }
+  tbody tr { border-bottom: 1px solid var(--border-soft); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--navy-tint); }
+  td { padding: 1rem 1.15rem; color: var(--gray-dark); vertical-align: top; }
+  td:first-child { font-weight: 500; color: var(--navy); }
+  .tag { display: inline-block; padding: 2px 9px; border-radius: 999px; font-size: 0.67rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; }
+  .tag-entry { background: var(--navy-pale); color: var(--navy-mid); }
+  .tag-skilled { background: var(--navy-mid); color: #fff; }
+  .note-text { font-size: 0.78rem; color: var(--gray-light); margin-top: 0.9rem; line-height: 1.65; }
+
+  /* ── FAQ ─────────────────────────── */
+  .faq-section { background: var(--navy-tint); }
+  .faq-list { display: flex; flex-direction: column; }
+  .faq-item { border-bottom: 1px solid var(--border); padding: 1.75rem 0; }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-q {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; color: var(--navy); margin-bottom: 0.7rem;
+    font-weight: 500; display: flex; gap: 0.8rem; align-items: baseline;
+  }
+  body.zh .faq-q { font-family: 'Noto Serif TC', serif; font-size: 1.05rem; letter-spacing: 0.03em; }
+  .faq-n {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--navy); color: #fff;
+    font-family: 'DM Sans', sans-serif; font-size: 0.7rem; font-weight: 600;
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 3px;
+  }
+  .faq-a { font-size: 0.92rem; color: var(--gray-mid); line-height: 1.85; padding-left: 2rem; }
+  .faq-a p { margin-bottom: 0.5rem; }
+  .faq-a p:last-child { margin-bottom: 0; }
+  .faq-a strong { color: var(--black); font-weight: 500; }
+  .faq-a ul { margin: 0.5rem 0 0.5rem 1.2rem; }
+  .faq-a li { font-size: 0.9rem; margin-bottom: 0.3rem; }
+  .faq-disclaimer {
+    font-size: 0.8rem; color: var(--gray-light);
+    margin-top: 1.1rem; padding-top: 0.9rem;
+    border-top: 1px solid var(--border-soft); line-height: 1.85;
+  }
+  .faq-disclaimer strong { color: var(--gray-mid); font-weight: 500; }
+
+  /* ── AUTHOR STRIP ────────────────── */
+  .author-strip {
+    border-top: 1px solid var(--border-soft);
+    border-bottom: 1px solid var(--border-soft);
+    padding: 4.5rem 2rem;
+    background: var(--white);
+  }
+  .author-strip-top { margin-bottom: 1.75rem; }
+  .author-list { display: flex; flex-direction: column; }
+  .author-row {
+    display: grid; grid-template-columns: 200px 1fr;
+    gap: 0 2rem; padding: 1.35rem 0;
+    border-top: 1px solid var(--border-soft); align-items: baseline;
+  }
+  .author-row:last-child { border-bottom: 1px solid var(--border-soft); }
+  .author-ident { display: flex; align-items: center; gap: 0.75rem; }
+  .author-circle {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--navy); color: #fff;
+    font-family: 'Cormorant Garamond', serif; font-size: 0.95rem;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .author-role { font-size: 0.72rem; color: var(--gray-light); margin-top: 2px; }
+  .author-role-main { font-size: 0.78rem; color: var(--gray-dark); }
+  .author-card-text { font-size: 0.875rem; color: var(--gray-mid); line-height: 1.85; }
+  .author-card-text strong { color: var(--black); font-weight: 500; }
+
+  /* ── CTA ─────────────────────────── */
+  .cta-section { background: var(--navy); padding: 5.5rem 2rem; text-align: center; }
+  .cta-inner { max-width: 560px; margin: 0 auto; }
+  .cta-eyebrow {
+    font-size: 0.67rem; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3); margin-bottom: 1rem;
+  }
+  .cta-section h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    color: #fff; font-weight: 500; margin-bottom: 1rem; line-height: 1.2;
+  }
+  body.zh .cta-section h2 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+    line-height: 1.4; letter-spacing: 0.04em;
+  }
+  .cta-section p { font-size: 0.925rem; color: rgba(255,255,255,0.45); margin-bottom: 2.25rem; line-height: 1.85; }
+  .cta-btns { display: flex; gap: 0.85rem; justify-content: center; flex-wrap: wrap; }
+  .btn-cta-solid {
+    background: #fff; color: var(--navy);
+    padding: 0.85rem 1.85rem; border-radius: var(--radius-sm);
+    font-weight: 600; font-size: 0.875rem;
+    text-decoration: none; transition: opacity 0.18s; display: inline-block;
+  }
+  .btn-cta-solid:hover { opacity: 0.85; }
+  .btn-cta-border {
+    background: transparent; color: rgba(255,255,255,0.55);
+    padding: 0.85rem 1.85rem; border-radius: var(--radius-sm);
+    font-weight: 400; font-size: 0.875rem; text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.18);
+    transition: border-color 0.18s, color 0.18s; display: inline-block;
+  }
+  .btn-cta-border:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+
+  /* ── FOOTER ──────────────────────── */
+  footer { background: #1c2c47; padding: 1.75rem 2rem; text-align: center; }
+  footer p { font-size: 0.77rem; color: rgba(255,255,255,0.22); }
+  footer a { color: rgba(255,255,255,0.38); text-decoration: none; transition: color 0.15s; }
+  footer a:hover { color: rgba(255,255,255,0.65); }
+
+  .cta-btns span.en { display: flex; gap: 0.85rem; justify-content: center; flex-wrap: wrap; }
+  .cta-btns span.zh-content { display: none; gap: 0.85rem; justify-content: center; flex-wrap: wrap; }
+  body.zh .cta-btns span.en { display: none !important; }
+  body.zh .cta-btns span.zh-content { display: flex !important; }
+
+  /* ── HAMBURGER ───────────────────── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 1.5px;
+    background: var(--navy);
+    border-radius: 2px;
+    transition: all 0.22s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .nav-dropdown {
+    display: none;
+    position: absolute;
+    top: 56px;
+    left: 0;
+    right: 0;
+    background: rgba(255,255,255,0.98);
+    border-bottom: 1px solid var(--border-soft);
+    padding: 0.5rem 0 1rem;
+    z-index: 99;
+  }
+  .nav-dropdown.open { display: block; }
+  .nav-dropdown a {
+    display: block;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--gray-mid);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .nav-dropdown a:last-child { border-bottom: none; }
+  .nav-dropdown a:hover { color: var(--navy); background: var(--navy-tint); }
+
+  /* ── RESPONSIVE ──────────────────── */
+  @media (max-width: 600px) {
+    .lang-btn { top: 62px; right: 1rem; font-size: 0.8rem; padding: 8px 18px; min-width: 100px; }
+    .float-story-btn { top: 106px; right: 1rem; font-size: 0.8rem; padding: 8px 18px; min-width: 100px; }
+    .back-top-btn { bottom: 1.25rem; left: 1rem; width: 38px; height: 38px; }
+    .hero { padding: 4rem 1.25rem 4.5rem; }
+    .page-wrap { padding: 0 1.25rem; }
+    .nav-inner { padding: 0 1.25rem; }
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    section { padding: 3.5rem 0; }
+    .step { grid-template-columns: 42px 1fr; gap: 0 1rem; }
+    .step-dot { width: 34px; height: 34px; font-size: 0.9rem; }
+    .author-row { grid-template-columns: 1fr; gap: 0.75rem 0; }
+    .author-strip { padding: 3rem 1.25rem; }
+    .cta-section { padding: 4rem 1.25rem; }
+  }
+</style>
+</head>
+<body class="zh">
+
+<!-- LANG TOGGLE -->
+<button class="lang-btn" onclick="toggleLang()" id="langBtn">
+  <span id="langLabel">English</span>
+</button>
+
+<!-- FLOAT: 求職故事 -->
+<a href="#stories" class="float-story-btn">
+  <span class="en">Job Stories</span>
+  <span class="zh-content">求職故事</span>
+</a>
+
+<!-- BACK TO TOP -->
+<button class="back-top-btn" id="backTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"></polyline></svg>
+</button>
+
+<!-- NAV -->
+<nav style="position:sticky;top:0;z-index:100;">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">jen.alsojill</a>
+    <ul class="nav-links">
+      <li><a href="#steps"><span class="en">The List</span><span class="zh-content">申請步驟</span></a></li>
+      <li><a href="#certs"><span class="en">Certs</span><span class="zh-content">證照清單</span></a></li>
+      <li><a href="#positions"><span class="en">Positions</span><span class="zh-content">職位薪資</span></a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#cta"><span class="en">Get Help</span><span class="zh-content">諮詢服務</span></a></li>
+    </ul>
+    <button class="nav-hamburger" onclick="toggleMenu()" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-dropdown" id="navDropdown">
+    <a href="#steps" onclick="closeMenu()"><span class="en">The List</span><span class="zh-content">申請步驟</span></a>
+    <a href="#certs" onclick="closeMenu()"><span class="en">Certs</span><span class="zh-content">證照清單</span></a>
+    <a href="#positions" onclick="closeMenu()"><span class="en">Positions</span><span class="zh-content">職位薪資</span></a>
+    <a href="#faq" onclick="closeMenu()">FAQ</a>
+    <a href="#cta" onclick="closeMenu()"><span class="en">Get Help</span><span class="zh-content">諮詢服務</span></a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <span class="en">FIFO Guide · WA & Queensland · 2026</span>
+      <span class="zh-content">FIFO 礦區求職攻略 · 西澳 & 昆士蘭 · 2026</span>
+    </div>
+    <h1>
+      <span class="en">Your Complete Guide to<br><em>Breaking Into FIFO</em></span>
+      <span class="zh-content">礦區求職完整攻略<br><em>從零開始進入 FIFO</em></span>
+    </h1>
+    <p class="hero-sub">
+      <span class="en">Want to break into mining camp work in WA or Queensland, but not sure where to begin? This guide covers the key search terms and certification requirements, so you have a clear picture before you take your first step.</span>
+      <span class="zh-content">想進入西澳或昆士蘭的礦區工作，卻不知道從哪裡開始？這裡整理了申請 FIFO 前你需要了解的方向，包含搜尋方式與常見的證照要求，讓你在正式踏出第一步前，先有一個清楚的輪廓。</span>
+    </p>
+    <div class="hero-actions">
+      <a href="#steps" class="btn-white"><span class="en">See the Full List</span><span class="zh-content">查看完整清單</span></a>
+      <a href="#faq" class="btn-ghost"><span class="en">Read the FAQ</span><span class="zh-content">常見問答</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section id="steps">
+  <div class="page-wrap">
+    <div class="section-eyebrow">Step by step</div>
+    <h2 class="section-heading">
+      <span class="en">How to approach your FIFO application</span>
+      <span class="zh-content">FIFO 申請四步驟</span>
+    </h2>
+    <p class="section-lead">
+      <span class="en">Landing a mining camp role is more straightforward than most people assume, provided you take the right steps in the right order.</span>
+      <span class="zh-content">進入礦區工作比大多數人想像的更有跡可循，只要依照正確順序，一步一步來。</span>
+    </p>
+    <div class="steps-list">
+      <div class="step">
+        <div class="step-left"><div class="step-dot">1</div><div class="step-vline"></div></div>
+        <div>
+          <h3 class="step-title"><span class="en">Search the right keyword on Seek</span><span class="zh-content">在 Seek 輸入正確關鍵字</span></h3>
+          <p class="step-body"><span class="en">Head straight to <strong>seek.com.au</strong> and type <strong>"FIFO Utility"</strong> into the search bar. This is a broad, high-demand role category — precisely the entry point you want as a newcomer. Avoid narrowing the search too early; casting a wider net at this stage works in your favour.</span><span class="zh-content">直接前往 <strong>seek.com.au</strong>，在搜尋欄輸入 <strong>「FIFO Utility」</strong>。這是一個需求量大且門檻相對友善的職位類型，非常適合作為新手的切入點。不要太早縮小搜尋範圍，廣撒網在這個階段對你有利。</span></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left"><div class="step-dot">2</div><div class="step-vline"></div></div>
+        <div>
+          <h3 class="step-title"><span class="en">Read every job listing carefully</span><span class="zh-content">認真閱讀每一則招聘廣告</span></h3>
+          <p class="step-body"><span class="en">Resist the urge to mass-apply without reading. Go through each listing, whether posted directly by a company or through a recruitment agency, and note the precise qualifications required. Understanding the criteria before you apply means your resume reaches the shortlist instead of the bin.</span><span class="zh-content">不要急著亂投。無論是直接雇主還是人力仲介 Agency，都要仔細讀完每則廣告的要求。在投遞前先理解條件，才能確保你的履歷不會第一關就被刷掉。</span></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left"><div class="step-dot">3</div><div class="step-vline"></div></div>
+        <div>
+          <h3 class="step-title"><span class="en">Obtain your essential certifications</span><span class="zh-content">備齊必要證照</span></h3>
+          <p class="step-body"><span class="en">Think of these as your entry ticket. Without them, your application is almost certain to be filtered out before a hiring manager ever sees it. See the full breakdown below, including costs, where to enrol, and which to prioritise first.</span><span class="zh-content">把這些證照想成你的「入場券」。沒有它們，你的申請幾乎在人資看到之前就會被過濾掉。下方有完整的證照清單，包含費用、哪裡可以報名，以及哪張要優先取得。</span></p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-left"><div class="step-dot">4</div><div class="step-vline"></div></div>
+        <div>
+          <h3 class="step-title"><span class="en">Make your resume work as hard as you do</span><span class="zh-content">讓你的履歷和你一樣努力</span></h3>
+          <p class="step-body"><span class="en">Your certifications are your hard skills, and your resume is the packaging. Recruiters process hundreds of applications daily, and a poorly formatted resume gets rejected within seconds. A clean, Australia-standard layout ensures that all the effort you've invested in obtaining your licences is actually seen.</span><span class="zh-content">證照是你的硬實力，履歷是你的軟實力。人資每天要處理幾百份申請，格式混亂的履歷幾秒內就會被淘汰。一份清晰、符合澳洲規格的履歷，才能確保你努力考來的證照真正被看見。</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- CERTS -->
+<section class="certs-section" id="certs">
+  <div class="page-wrap">
+    <div class="section-eyebrow">Certifications</div>
+    <h2 class="section-heading"><span class="en">Build your credential portfolio</span><span class="zh-content">FIFO 證照清單</span></h2>
+    <p class="section-lead"><span class="en">There are two tiers: the non-negotiables you must have before applying, and the optional extras that meaningfully increase your competitiveness.</span><span class="zh-content">分成兩個層級：申請前非拿不可的基本款，以及能讓你在眾多競爭者中脫穎而出的加分項。</span></p>
+
+    <p style="font-size:0.82rem;color:var(--gray-mid);line-height:1.75;margin-top:-1.75rem;margin-bottom:2.25rem;padding:0.85rem 1.1rem;background:var(--navy-tint);border-left:3px solid var(--navy);border-radius:0 var(--radius-sm) var(--radius-sm) 0;">
+      <span class="en">Mining job vacancies are most concentrated in Western Australia. The certifications listed below use WA as the reference. If you are applying for roles in other states such as Queensland, Northern Territory, or South Australia, please check the specific licence and certification requirements for that state, as they may differ.</span>
+      <span class="zh-content">澳洲礦區職缺以西澳（WA）最為集中，以下證照以西澳規定為例。若你申請的是其他州的礦區職缺，例如昆士蘭（QLD）、北領地（NT）或南澳（SA），請以該州的相關規定與要求為主。</span>
+    </p>
+
+    <div class="cert-group">
+      <div class="group-label">
+        <span class="badge badge-req"><span class="en">Required</span><span class="zh-content">必備</span></span>
+        <span class="group-label-text"><span class="en">Must-have credentials for a Utility role (WA reference)</span><span class="zh-content">Utility 職位的入場門票（以西澳為例）</span></span>
+      </div>
+      <div class="certs-grid">
+        <div class="cert-card">
+          <h4><span class="en">Australian Driver Licence</span><span class="zh-content">澳洲駕照 Australian Driver Licence</span></h4>
+          <p><span class="en">An absolute prerequisite. If you hold a licence from another state, you may be asked to transfer it to a <strong>Western Australian licence</strong> before or shortly after commencing employment.</span><span class="zh-content">必備中的必備。如果你目前持有其他州的駕照，要注意 — 錄取後可能會被要求在入職前轉換成<strong>西澳（WA）駕照</strong>，心裡先有個底。</span></p>
+        </div>
+        <div class="cert-card">
+          <h4><span class="en">RSA: Responsible Service of Alcohol</span><span class="zh-content">RSA 酒類服務證照</span></h4>
+          <p><span class="en">Mining camps typically operate a licensed bar on-site. Ensure you enrol in the RSA course for the state you are applying in — online options are readily available for most states.</span><span class="zh-content">礦區營地通常設有酒吧，因此這張證照是必須的。請報名你所申請州別對應的 RSA 課程，大多數州都有提供線上課程，方便快速完成。</span></p>
+          <span class="cert-cost">~$19–$55 AUD</span>
+        </div>
+        <div class="cert-card">
+          <h4><span class="en">State Police Clearance</span><span class="zh-content">所在州無犯罪紀錄證明 Police Check</span></h4>
+          <p><span class="en">Required across virtually all mining camp positions to maintain site security. Apply through the relevant state police website for the state you are applying in.</span><span class="zh-content">幾乎所有礦區職位都會要求，用以確保場地安全。請至你所申請州別的警局官網提出申請。</span></p>
+          <span class="cert-cost">~$63.70 AUD</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cert-group">
+      <div class="group-label">
+        <span class="badge badge-des"><span class="en">Desirable</span><span class="zh-content">加分</span></span>
+        <span class="group-label-text"><span class="en">Optional extras that give you a genuine edge</span><span class="zh-content">讓你的履歷更有競爭力</span></span>
+      </div>
+      <div class="certs-grid">
+        <div class="cert-card">
+          <h4><span class="en">White Card (Construction Induction)</span><span class="zh-content">白卡 White Card（建築工地安全證）</span></h4>
+          <p><span class="en">A nationally recognised construction induction card and site access pass for many mine operations. Even when listed as optional in job ads, holding it demonstrates professional awareness and broadens the roles available to you.</span><span class="zh-content">全澳通用的建築工地安全認證，也是許多礦區的入場通行證。就算廣告上寫「非必須」，實際上持有白卡能讓你的履歷被更多職位看見。</span></p>
+          <span class="cert-cost">~$44–$100 AUD</span>
+        </div>
+        <div class="cert-card">
+          <h4><span class="en">First Aid Certificate</span><span class="zh-content">急救證書 First Aid Certificate</span></h4>
+          <p><span class="en">Signals that you're capable of responding calmly under pressure — a quality especially valued in remote environments far from emergency services.</span><span class="zh-content">代表你有能力在偏遠環境中應對緊急狀況，這在遠離城市的礦區尤其被重視。</span></p>
+          <span class="cert-cost">~$110–$170 AUD</span>
+        </div>
+        <div class="cert-card">
+          <h4><span class="en">Forklift Licence</span><span class="zh-content">叉車證照 Forklift Licence</span></h4>
+          <p><span class="en">Unlocks warehousing and logistics duties at camp, making you a more versatile hire and opening pathways into Trade Assistant roles.</span><span class="zh-content">能讓你勝任更多倉儲和物流工作，也能開拓 Trade Assistant 的職缺。</span></p>
+          <span class="cert-cost"><span class="en">From </span>~$350 AUD</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- POSITIONS -->
+<section class="positions-section" id="positions">
+  <div class="page-wrap">
+    <div class="section-eyebrow">Roles &amp; Remuneration</div>
+    <h2 class="section-heading"><span class="en">What positions are available — and what they pay</span><span class="zh-content">職位介紹 · 薪資行情</span></h2>
+    <p class="section-lead"><span class="en">FIFO roles span a broad spectrum, from entry-level camp support through to licensed trades.</span><span class="zh-content">FIFO 職位從入門後勤到技術職都有，以下是各職位的清楚說明。</span></p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th><span class="en">Position</span><span class="zh-content">職位</span></th>
+            <th><span class="en">Level</span><span class="zh-content">級別</span></th>
+            <th><span class="en">Key duties</span><span class="zh-content">主要工作內容</span></th>
+            <th><span class="en">Typical roster</span><span class="zh-content">常見班表</span></th>
+            <th><span class="en">Hourly rate</span><span class="zh-content">時薪</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Utility</td>
+            <td><span class="tag tag-entry"><span class="en">Entry</span><span class="zh-content">入門</span></span></td>
+            <td><span class="en">Housekeeping, cleaning, kitchen assistance across camp facilities</span><span class="zh-content">房務、清潔、廚房幫工等營地日常工作</span></td>
+            <td>2:1</td><td>$35–$45</td>
+          </tr>
+          <tr>
+            <td>Trade Assistant</td>
+            <td><span class="tag tag-entry"><span class="en">Entry</span><span class="zh-content">入門</span></span></td>
+            <td><span class="en">Supporting tradies: fetching tools, shifting equipment, keeping worksites tidy</span><span class="zh-content">協助技工遞工具、搬器材、維持現場整潔</span></td>
+            <td><span class="en">Varies</span><span class="zh-content">不固定</span></td><td>$38–$50</td>
+          </tr>
+          <tr>
+            <td>Offsider</td>
+            <td><span class="tag tag-entry"><span class="en">Entry</span><span class="zh-content">入門</span></span></td>
+            <td><span class="en">Assisting drill and exploration crews; physically demanding outdoor work</span><span class="zh-content">協助探勘團隊操作鑽機、搬樣本，體力要求高但薪資優渥</span></td>
+            <td><span class="en">Varies</span><span class="zh-content">不固定</span></td><td>$40–$55</td>
+          </tr>
+          <tr>
+            <td>Chef</td>
+            <td><span class="tag tag-skilled"><span class="en">Skilled</span><span class="zh-content">技術</span></span></td>
+            <td><span class="en">Preparing meals for hundreds of workers daily; fast-paced large-scale catering</span><span class="zh-content">負責數百名工人的伙食，大量備餐節奏快</span></td>
+            <td>2:2 / 2:1</td><td>$40–$65+</td>
+          </tr>
+          <tr>
+            <td>LV Mechanic</td>
+            <td><span class="tag tag-skilled"><span class="en">Skilled</span><span class="zh-content">技術</span></span></td>
+            <td><span class="en">Servicing and maintaining light vehicles including utes, four-wheel drives, camp fleet</span><span class="zh-content">維修保養礦區內皮卡、四輪傳動車等輕型車輛</span></td>
+            <td>8:6 / 2:2</td><td>$50–$75+</td>
+          </tr>
+          <tr>
+            <td>Electrician</td>
+            <td><span class="tag tag-skilled"><span class="en">Skilled</span><span class="zh-content">技術</span></span></td>
+            <td><span class="en">Maintaining electrical infrastructure; A Grade licence required; consistently high demand</span><span class="zh-content">維護電力設備及線路，需持 A Grade 執照，礦區極度短缺</span></td>
+            <td>8:6</td><td>$65–$80+</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note-text"><span class="en">Rates are indicative and referenced from Casual listings on Seek.com.au. Where rosters are stable and hours sufficient, total earnings including night shift allowances can be considerably higher. Actual remuneration may vary depending on prior work experience, English proficiency, and interview outcome. Please refer to the employment contract provided by the mining company or recruitment agency upon a successful offer.</span><span class="zh-content">以上時薪以 Seek.com.au 所列 Casual 職缺為參考。若班表穩定、工時足夠，加計夜班津貼與加班費後，每月實際收入確實相當可觀。實際薪資可能因過往工作經驗、英文能力及面試結果而有所不同，請以礦區公司或仲介提供的工作合約為準。</span></p>
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- FAQ -->
+<section class="faq-section" id="faq">
+  <div class="page-wrap">
+    <div class="section-eyebrow">FAQ</div>
+    <h2 class="section-heading"><span class="en">What you actually want to know</span><span class="zh-content">礦區常見問答</span></h2>
+    <p class="section-lead"><span class="en">The questions that come up again and again, answered plainly.</span><span class="zh-content">那些大家最常問的問題。</span></p>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-n">1</span><span class="en">What does a FIFO roster actually look like?</span><span class="zh-content">FIFO 的班表長什麼樣子？</span></div>
+        <div class="faq-a">
+          <p><span class="en">The most common arrangements are <strong>2:1</strong> (two weeks on, one week home), <strong>1:1</strong> (one week on, one week off), and <strong>8:6</strong> (eight days on, six days off). Standard shifts run to <strong>12 hours</strong> per day. Night shifts are common and attract an additional allowance. Longer rosters such as 3:1 or 4:1 suit people who prefer intensive work blocks followed by extended time off.</span><span class="zh-content">班表因公司和職位而不同，最常見的有 <strong>2:1</strong>（工作 2 週，休 1 週）、<strong>1:1</strong>（工作 1 週，休 1 週）和 <strong>8:6</strong>（工作 8 天，休 6 天）。每日工時通常是 <strong>12 小時</strong>，有時會輪到夜班，但通常有額外的夜班津貼。</span></p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-n">2</span><span class="en">Does the company cover flights, meals, and accommodation?</span><span class="zh-content">機票、住宿、三餐都包嗎？</span></div>
+        <div class="faq-a">
+          <p><span class="en">Yes. While you are on your swing, the employer covers everything: charter flights (from Perth or Brisbane), on-site accommodation, and full meals through the camp mess hall. Breakfast and dinner are buffet-style; lunch is a packed crib from supplied ingredients. Because your living expenses drop to near-zero on swing, FIFO is one of the most efficient ways to build savings.</span><span class="zh-content">是的！只要在班期間（Swing），公司通常全包：包機票（從伯斯或布里斯本出發）、包住（有冷氣和 Wi-Fi 的單人或雙人房）、包吃（早晚自助吧，中午提供材料讓你打包 Crib 便當）。在礦區幾乎花不到什麼錢，這也是 FIFO 存錢效率極高的原因。</span></p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-n">3</span><span class="en">Can I apply with no prior mining experience?</span><span class="zh-content">完全沒有礦區經驗，可以申請嗎？</span></div>
+        <div class="faq-a">
+          <p><span class="en">Absolutely. Entry-level roles are designed for career changers and first-timers. Hiring managers prioritise a positive attitude, strong safety awareness, physical fitness, the required certifications, and a clean resume that meets Australian formatting standards.</span><span class="zh-content">完全可以！Utility、Trade Assistant、Offsider 這些入門職位本來就是為轉職者和新手設計的。礦區人資更看重積極態度、安全意識、體能狀況，以及備齊基本證照和符合澳洲規格的履歷。</span></p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-n">4</span><span class="en">What are the on-site living conditions like?</span><span class="zh-content">礦區的住宿環境怎麼樣？</span></div>
+        <div class="faq-a">
+          <p><span class="en">Modern mining camps are considerably more comfortable than most people expect. Accommodation is typically in single or shared rooms with ensuite facilities, air conditioning, and Wi-Fi. Most sites have a gym, recreational area, and a licensed bar. Think of it as a self-contained remote village rather than roughing it in the outback.</span><span class="zh-content">現代礦區營地比很多人想像的舒適很多。通常是附獨立衛浴的單人或雙人房，有冷氣和 Wi-Fi，還設有健身房、休閒區和酒吧。把它想像成一個自給自足的小型社區，而不是在荒野露營。</span></p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q"><span class="faq-n">5</span><span class="en">How do salaries work across different levels?</span><span class="zh-content">入門職位和技術職位的薪資差多少？</span></div>
+        <div class="faq-a">
+          <ul>
+            <li><span class="en"><strong>Entry level (Utility, TA, Offsider):</strong> $35–$50/hr. Where rosters are stable and hours sufficient, total monthly earnings can be considerably higher with night shift allowances included.</span><span class="zh-content"><strong>入門職位（Utility、TA、Offsider）：</strong>時薪約 $35–$50 AUD。班表穩定、工時足夠的情況下，加計夜班津貼後每月收入相當可觀。</span></li>
+            <li><span class="en"><strong>Skilled trades (Chef, Mechanic, Electrician):</strong> $40–$80+/hr. Australian-licensed tradespeople are consistently among the best-compensated workers on site.</span><span class="zh-content"><strong>技術職位（廚師、Mechanic、電工）：</strong>時薪從 $40 起，高的可到 $80+ AUD。持有澳洲認可執照的技術藍領，是礦區薪資最高的一群。</span></li>
+          </ul>
+          <p class="faq-disclaimer">
+            <span class="en"><strong>Note</strong> — Rates referenced from Casual listings on Seek.com.au, for general estimation purposes only. Actual remuneration may vary based on prior work experience, English proficiency, interview outcome, and employer policy. Please refer to the employment contract provided by the mining company or recruitment agency upon a successful offer.</span>
+            <span class="zh-content"><strong>備註</strong>｜以上時薪以 Seek.com.au 所列 Casual 職缺為參考，僅供求職前初步評估之用。實際薪資可能因過往工作經驗、英文能力、面試結果及雇主政策而有所不同，請以礦區公司或仲介提供的工作合約內容為準。</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTHOR STRIP -->
+<div class="author-strip" id="stories">
+  <div class="page-wrap">
+    <div class="author-strip-top">
+      <div class="section-eyebrow"><span class="en">Real experiences</span><span class="zh-content">真實經歷分享</span></div>
+      <p style="font-size:0.875rem;color:var(--gray-mid);line-height:1.75;margin-top:0.4rem;"><span class="en">A snapshot of journeys from those who have been through the FIFO application process.</span><span class="zh-content">以下是我自己與礦區求職者的求職歷程，提供給正在考慮 FIFO 的你作為參考。</span></p>
+    </div>
+    <div class="author-list">
+
+      <div class="author-row">
+        <div class="author-ident">
+          <div class="author-circle">J</div>
+          <div>
+            <div class="author-role-main">FIFO Utility · WA</div>
+          </div>
+        </div>
+        <p class="author-card-text"><span class="en"><strong>Jan 2024</strong> left the café industry and obtained a First Aid certificate. <strong>Feb</strong> entered the interview process. <strong>Apr</strong> began life on a mining camp.</span><span class="zh-content"><strong>Jan 2024</strong> 決定離開 Cafe 舒適圈，考取 First Aid。<strong>Feb</strong> 進入面試環節，<strong>Apr</strong> 開始體驗礦區工作生活。</span></p>
+      </div>
+
+      <div class="author-row">
+        <div class="author-ident">
+          <div class="author-circle" style="background:var(--navy-mid);">L</div>
+          <div>
+            <div class="author-role-main">FIFO LV Mechanic · WA</div>
+          </div>
+        </div>
+        <p class="author-card-text"><span class="en"><strong>Mar 2023</strong> obtained the required certifications. <strong>One month later</strong>, passed the interview and medical. Commenced on a Casual contract, then transitioned to <strong>Full-time</strong> after a year of consistent shifts.</span><span class="zh-content"><strong>Mar 2023</strong> 考取礦區相關證照，<strong>一個月後</strong>通過面試及體檢，以 Casual 合約正式入職。持續穩定輪班一年後，成功轉為 <strong>Full-time</strong>。</span></p>
+      </div>
+
+      <div class="author-row">
+        <div class="author-ident">
+          <div class="author-circle" style="background:var(--navy-soft);">N</div>
+          <div>
+            <div class="author-role-main">DIDO Utility · QLD</div>
+          </div>
+        </div>
+        <p class="author-card-text"><span class="en">Had the certifications but was uncertain how to approach the application process. <strong>Dec 2025</strong> clarified the job search strategy and prepared the resume. <strong>Jan 2026</strong> began applying, <strong>Feb</strong> entered interviews, <strong>Mar</strong> received a Full-time offer and commenced work the same year.</span><span class="zh-content">已備齊相關證照，但對礦區求職流程感到陌生。<strong>Dec 2025</strong> 擬定求職策略並整理履歷，<strong>Jan 2026</strong> 開始投遞，<strong>Feb</strong> 進入面試，<strong>Mar</strong> 正式拿到 Full-time 合約，同年開始上班。</span></p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="cta-inner">
+    <div class="cta-eyebrow"><span class="en">Ready to get started?</span><span class="zh-content">準備好了嗎？</span></div>
+    <h2>
+      <span class="en">A professional resume is the key to your first mining interview</span>
+      <span class="zh-content">專業的履歷 會帶你進入<br>第一輪礦區面試的關鍵</span>
+    </h2>
+    <p>
+      <span class="en">In the mining job application process, your resume is often the first impression a recruiter forms of you. A well-structured, Australian-standard resume ensures your certifications and experience are presented clearly — significantly improving your chances of reaching the interview stage. If you'd like guidance on your application strategy or resume, the services below may be of help.</span>
+      <span class="zh-content">在礦區求職過程中，履歷往往是人資對你的第一印象。一份結構清晰、格式符合澳洲規範的履歷，能讓你的證照與經歷被正確呈現，大幅提升進入面試階段的機會。若你希望在投遞前確認履歷的完整性，或需要有經驗的人從旁協助規劃整體求職方向，歡迎參考以下服務。</span>
+    </p>
+    <div class="cta-btns">
+      <span class="en">
+        <a href="/job-coaching/" class="btn-cta-solid">Book a 15 Mins Chat</a>
+      </span>
+      <span class="zh-content">
+        <a href="/job-coaching/" class="btn-cta-solid">預約 15 分鐘求職諮詢</a>
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <a href="/">jen.alsojill</a> · <span class="en">All information is provided in good faith for general guidance purposes only.</span><span class="zh-content">本頁所有資訊均為一般性參考，詳細條件依各公司規定為準。</span></p>
+</footer>
+
+<script>
+  window.toggleLang = function() {
+    var body = document.body;
+    var label = document.getElementById('langLabel');
+    var isZh = body.classList.contains('zh');
+    if (isZh) {
+      body.classList.remove('zh');
+      label.textContent = '想讀 : 中文版';
+      document.documentElement.lang = 'en-AU';
+    } else {
+      body.classList.add('zh');
+      label.textContent = 'English';
+      document.documentElement.lang = 'zh-TW';
+    }
+  };
+
+  window.toggleMenu = function() {
+    var btn = document.getElementById('hamburger');
+    var dropdown = document.getElementById('navDropdown');
+    btn.classList.toggle('open');
+    dropdown.classList.toggle('open');
+  };
+
+  window.closeMenu = function() {
+    document.getElementById('hamburger').classList.remove('open');
+    document.getElementById('navDropdown').classList.remove('open');
+  };
+
+  window.addEventListener('scroll', function() {
+    var btn = document.getElementById('backTopBtn');
+    if (window.scrollY > 400) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  });
+</script>
+
+</body>
+</html>

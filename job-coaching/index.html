@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>求職規劃輔導 — jen.alsojill</title>
+<meta name="description" content="礦區(FIFO)與銀行金融方向的求職策略與履歷輔導。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500&family=Noto+Serif+TC:wght@400;500&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sand: #FFFFFF;
+    --card: #F3F5FA;
+    --line: #DDE3E9;
+    --ink: #111111;
+    --ink-soft: #6B6B6B;
+    --clay: #304873;
+    --clay-soft: #22345a;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--sand);
+    color: var(--ink);
+    font-family: 'Noto Sans TC', 'DM Sans', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
+  }
+
+  .back {
+    display: inline-block;
+    color: var(--ink-soft);
+    text-decoration: none;
+    font-size: 0.92rem;
+    margin-bottom: 32px;
+  }
+
+  .back:hover { color: var(--ink); }
+
+  h1 {
+    font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+    font-weight: 500;
+    font-size: 1.9rem;
+    line-height: 1.35;
+    margin: 0 0 16px;
+    max-width: 20ch;
+  }
+
+  .intro {
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+    max-width: 50ch;
+    margin: 0 0 16px;
+  }
+
+  .intro:last-of-type {
+    margin-bottom: 40px;
+  }
+
+  section {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+    font-weight: 500;
+    font-size: 1.25rem;
+    margin: 0 0 20px;
+  }
+
+  /* Testimonials — leave this section commented out until real feedback is ready.
+     To add one later, uncomment and duplicate the .testimonial block below. */
+  .testimonial {
+    display: none;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .testimonial p {
+    margin: 0 0 8px;
+    color: var(--ink);
+  }
+
+  .testimonial span {
+    color: var(--ink-soft);
+    font-size: 0.88rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  label {
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: #fff;
+    color: var(--ink);
+    font-family: 'Noto Sans TC', 'DM Sans', sans-serif;
+    font-size: 0.98rem;
+  }
+
+  input[type="url"] {
+    width: 100%;
+    padding: 18px 16px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: #fff;
+    color: var(--ink);
+    font-family: 'Noto Sans TC', 'DM Sans', sans-serif;
+    font-size: 1.05rem;
+  }
+
+  textarea {
+    min-height: 110px;
+    resize: vertical;
+  }
+
+  input:focus, select:focus, textarea:focus {
+    outline: 2px solid var(--clay);
+    outline-offset: 1px;
+  }
+
+  button {
+    align-self: flex-start;
+    background: var(--clay);
+    color: #fff;
+    border: none;
+    padding: 13px 28px;
+    border-radius: 4px;
+    font-family: 'Noto Sans TC', 'DM Sans', sans-serif;
+    font-size: 0.98rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+
+  button:hover { background: var(--clay-soft); }
+
+  .form-note {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+
+  #form-success {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 24px;
+    color: var(--ink);
+  }
+
+  footer {
+    margin-top: 64px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+
+  footer a { color: var(--ink-soft); }
+
+  @media (max-width: 480px) {
+    .wrap { padding: 40px 20px 56px; }
+    h1 { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <a class="back" href="/">← 回首頁</a>
+
+    <h1>求職規劃輔導</h1>
+    <p class="intro">嗨，我是 J 今今 👋🏻 從 2017 年來到澳洲</p>
+    <p class="intro">一路走過打工度假、餐飲、咖啡師、店經理、礦區後勤，現在成功轉職到澳洲銀行客服。</p>
+    <p class="intro">從 2025 年開始我開始幫助一些人拿到更多面試機會、順利收到礦區 offer。如果你現在卡在不知道怎麼轉職到礦區或是澳洲本地企業體系的工作，歡迎到下方填表，我們約一天線上聊聊 15 分鐘，希望能幫你找到方向 :)</p>
+
+    <!--
+      好評反饋區塊 — 目前先隱藏(display:none),之後有反饋內容時，
+      把 .testimonial 的 display:none 拿掉，並複製區塊填入真實內容即可。
+
+      <section>
+        <h2>過去學員怎麼說</h2>
+        <div class="testimonial" style="display:block;">
+          <p>這裡放實際的反饋文字。</p>
+          <span>— 學員稱呼 / 輔導項目</span>
+        </div>
+      </section>
+    -->
+
+    <section>
+      <h2>填表單，讓我了解你的狀況</h2>
+      <p class="form-note" style="margin-bottom:18px;">以下每一題都需要填寫，這樣我才能在聊之前先掌握你的狀況。</p>
+
+      <!--
+        表單設定說明：
+        1. 到 https://formspree.io 免費註冊，信箱填 hi@jenalsojill.com
+        2. 建立新表單，拿到你專屬的網址，格式像 https://formspree.io/f/xxxxxxxx
+        3. 把下面 action="" 裡的 YOUR_FORM_ID 換成你拿到的那組 ID
+        4. 之後表單送出，會自動寄一封信到你的信箱
+      -->
+      <form id="coach-form" action="https://formspree.io/f/xoeqndjo" method="POST">
+        <div>
+          <label for="name">你的名字</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+
+        <div>
+          <label for="email">Email(方便我回覆你)</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+
+        <div>
+          <label for="track">想諮詢的方向</label>
+          <select id="track" name="想諮詢的方向" required>
+            <option value="" disabled selected>請選擇</option>
+            <option value="FIFO 礦區求職輔導">FIFO 礦區求職輔導</option>
+            <option value="銀行/金融求職輔導">銀行/金融求職輔導</option>
+            <option value="還不確定，想先聊聊">還不確定，想先聊聊</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="visa">目前簽證身份</label>
+          <select id="visa" name="目前簽證身份" required>
+            <option value="" disabled selected>請選擇</option>
+            <option value="打工度假簽證 (WHV)">打工度假簽證 (WHV)</option>
+            <option value="學生簽證">學生簽證</option>
+            <option value="技術移民簽證">技術移民簽證</option>
+            <option value="永久居民 / 公民">永久居民 / 公民</option>
+            <option value="其他 / 還在確認">其他 / 還在確認</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="location">目前所在城市</label>
+          <input type="text" id="location" name="目前所在城市" placeholder="例如：伯斯 Perth" required>
+        </div>
+
+        <div>
+          <label for="timeline">預計開始求職的時間</label>
+          <select id="timeline" name="預計開始求職的時間" required>
+            <option value="" disabled selected>請選擇</option>
+            <option value="1 個月內">1 個月內</option>
+            <option value="1-3 個月內">1-3 個月內</option>
+            <option value="3 個月以上">3 個月以上</option>
+            <option value="還在評估，尚未確定">還在評估，尚未確定</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="resume-link">履歷連結（Google Drive 或 Canva 分享連結）</label>
+          <input type="url" id="resume-link" name="履歷連結" placeholder="https://" required>
+          <p class="form-note">簡單說明：先把履歷傳到 Google Drive 或 Canva，設成「知道連結的人皆可檢視」，再把那個連結貼在這裡。</p>
+        </div>
+
+        <div>
+          <label for="message">簡單自介工作經驗, 已有的證照, 能再補充提供職缺的 Seek 連結更好</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+
+        <button type="submit">送出</button>
+      </form>
+
+      <div id="form-success" style="display:none;">
+        <p style="margin:0;">謝謝你花時間填寫！我收到後會仔細看過，通常會在 1-2 個工作天內用 email 跟你聯絡，安排下一步。</p>
+      </div>
+      <p id="form-error" class="form-note" style="display:none; color:#B3261E;">送出時發生問題，麻煩直接寄信到 <a href="mailto:hi@jenalsojill.com">hi@jenalsojill.com</a>，我一樣會收到。</p>
+    </section>
+
+    <footer>
+      <p>© 2026 jen.alsojill · <a href="mailto:hi@jenalsojill.com">hi@jenalsojill.com</a></p>
+    </footer>
+  </div>
+
+  <script>
+    const coachForm = document.getElementById('coach-form');
+    const successBox = document.getElementById('form-success');
+    const errorMsg = document.getElementById('form-error');
+    const submitBtn = coachForm.querySelector('button[type="submit"]');
+
+    coachForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      errorMsg.style.display = 'none';
+      submitBtn.disabled = true;
+      submitBtn.textContent = '送出中…';
+
+      fetch(coachForm.action, {
+        method: 'POST',
+        body: new FormData(coachForm),
+        headers: { 'Accept': 'application/json' }
+      }).then(function (response) {
+        if (response.ok) {
+          coachForm.style.display = 'none';
+          successBox.style.display = 'block';
+        } else {
+          return response.json().then(function (data) {
+            console.error('Formspree 回傳錯誤：', data);
+            errorMsg.style.display = 'block';
+            submitBtn.disabled = false;
+            submitBtn.textContent = '送出';
+          });
+        }
+      }).catch(function (err) {
+        console.error('送出失敗：', err);
+        errorMsg.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = '送出';
+      });
+    });
+  </script>
+</body>
+</html>
