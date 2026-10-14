@@ -290,6 +290,62 @@
 </head>
 <body>
 
+<!-- ═══════════════════════════════════════════════════════════
+     密碼鎖
+     改密碼：往下找到 var PAGE_PASSWORD = "..." 那一行，換掉引號裡的字
+     要拿掉密碼鎖：把這整個 <div id="gate"> 區塊刪掉，
+     並把下面 <div id="page-content" hidden> 的 hidden 兩個字刪掉，
+     最後把頁尾的 <script> 密碼區塊也刪掉
+     ═══════════════════════════════════════════════════════════ -->
+<div id="gate">
+  <div class="gate-box">
+    <h1>ING 開戶教學</h1>
+    <p class="gate-sub">這個頁面目前需要密碼才能瀏覽</p>
+    <label for="gate-pw">密碼</label>
+    <input type="password" id="gate-pw" autocomplete="off">
+    <button type="button" id="gate-btn">進入</button>
+    <p id="gate-error">密碼不正確，請再試一次。</p>
+    <a class="gate-back" href="/guides/">← 回指南站</a>
+  </div>
+</div>
+
+<style>
+  #gate {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  #gate .gate-box { width: 100%; max-width: 360px; }
+  #gate h1 {
+    font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+    font-size: 1.6rem; font-weight: 500; color: var(--navy);
+    margin-bottom: 6px; letter-spacing: 0.03em;
+  }
+  #gate .gate-sub { font-size: 0.95rem; color: var(--gray-mid); margin-bottom: 28px; }
+  #gate label { display: block; font-size: 0.9rem; color: var(--gray-mid); margin-bottom: 8px; }
+  #gate input {
+    width: 100%; padding: 12px 14px; font-size: 1rem;
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    font-family: inherit; margin-bottom: 14px; background: #fff; color: var(--black);
+  }
+  #gate input:focus { outline: 2px solid var(--navy); outline-offset: 1px; }
+  #gate button {
+    background: var(--navy); color: #fff; border: none;
+    padding: 12px 28px; border-radius: var(--radius-sm);
+    font-size: 0.95rem; font-weight: 500; cursor: pointer; font-family: inherit;
+  }
+  #gate button:hover { background: var(--navy-mid); }
+  #gate-error { display: none; color: #B3261E; font-size: 0.88rem; margin-top: 14px; }
+  #gate .gate-back {
+    display: inline-block; margin-top: 28px;
+    font-size: 0.88rem; color: var(--gray-mid); text-decoration: none;
+  }
+  #gate .gate-back:hover { color: var(--navy); }
+</style>
+
+<div id="page-content" hidden>
+
 <nav>
   <div class="nav-inner">
     <a href="/" class="nav-logo">jen.alsojill</a>
@@ -303,7 +359,7 @@
     <div class="hero-eyebrow">澳洲打工度假 · 銀行開戶</div>
     <h1>ING 開戶教學<br>領取開戶禮金</h1>
     <p class="hero-sub">
-      嗨，在澳洲打工／生活的大家。如果你正在找一個方便又優惠的銀行帳戶，ING 澳洲網路銀行是個很棒的選擇。用專屬連結開戶，完成幾個簡單步驟就能領到新戶開戶禮金。
+      嗨在澳洲打工／生活的大家 👋🏻 如果你正在找一個方便又優惠的銀行帳戶，ING 澳洲網路銀行是個很棒的選擇。用專屬連結開戶，完成幾個簡單步驟就能領到新戶開戶禮金。
     </p>
     <a href="https://www.campaigns.ing.com.au/refer?code=HVA570&p=a" class="btn-white" target="_blank" rel="noopener">點這裡開戶 →</a>
   </div>
@@ -314,7 +370,7 @@
   <div class="page-wrap">
     <div class="section-eyebrow">Step by step</div>
     <h2 class="section-heading">三個步驟，領取開戶禮金</h2>
-    <p class="section-lead">照著下面的順序做，就能順利拿到禮金。</p>
+    <p class="section-lead">照著下面的順序 </p>
 
     <!--
       ⚠️ 提醒：下面的金額與條件是照你提供的截圖寫的（$100 禮金、存入 $1,000、5 筆消費）。
@@ -330,7 +386,7 @@
         <div>
           <h3 class="step-title">用專屬連結開戶，填入推薦碼</h3>
           <p class="step-body">
-            <a href="https://www.campaigns.ing.com.au/refer?code=HVA570&p=a" target="_blank" rel="noopener">點擊連結開戶</a>，選擇「New customer」開始申請。在 Review &amp; next steps 那一頁的 Promotional code 欄位，填入今今的推薦碼：
+            <a href="https://www.campaigns.ing.com.au/refer?code=HVA570&p=a" target="_blank" rel="noopener">點擊連結開戶</a>，選擇「New customer」開始申請。在 Review &amp; next steps 那一頁的 Promotional code 欄位，填入推薦碼：
           </p>
           <div class="step-warn">
             推薦碼 <strong>Hva570</strong>｜大小寫要注意，照這樣填才會生效。
@@ -364,7 +420,7 @@
             開戶後大約 7–14 天會收到 ING 的銀行卡。拿到卡後，在同一個日曆月內用這張卡完成 <strong>5 筆以上已入帳（settled）的消費</strong>。每筆金額不用大，1 AUD 也可以。建議到 Coles 或 Woolworths 這類超市消費，交易紀錄比較不會卡在 Pending 太久。
           </p>
           <div class="step-warn">
-            <strong>最容易踩的雷</strong>｜顯示為「Pending」的消費不算數，一定要等到入帳完成。所以盡量提早幾天刷完，不要壓在月底最後一天。
+            <strong>貼心提醒: </strong>｜顯示為「Pending」的消費不算數，一定要等到入帳完成。所以盡量提早幾天刷完，不要壓在月底最後一天。
           </div>
         </div>
       </div>
@@ -455,7 +511,7 @@
     <p>用下方連結開戶並輸入推薦碼 Hva570，完成三個步驟就能領到 $100。</p>
     <div class="cta-btns">
       <a href="https://www.campaigns.ing.com.au/refer?code=HVA570&p=a" class="btn-cta-solid" target="_blank" rel="noopener">前往開戶</a>
-      <a href="mailto:hi@jenalsojill.com?subject=ING%20%E9%96%8B%E6%88%B6%E5%95%8F%E9%A1%8C%E8%AB%AE%E8%A9%A2" class="btn-cta-border">開戶卡關，寫信問今今</a>
+      <a href="mailto:hi@jenalsojill.com?subject=ING%20%E9%96%8B%E6%88%B6%E5%95%8F%E9%A1%8C%E8%AB%AE%E8%A9%A2" class="btn-cta-border">開戶卡關，寫信問我</a>
     </div>
   </div>
 </section>
@@ -469,6 +525,48 @@
 <footer>
   <p>© 2026 <a href="/">jen.alsojill</a> · <a href="mailto:hi@jenalsojill.com">hi@jenalsojill.com</a></p>
 </footer>
+
+</div><!-- /page-content -->
+
+<script>
+  // ═══ 密碼設定 ═══
+  // 把下面引號裡的 ING2026 換成你想要的密碼
+  var PAGE_PASSWORD = "ING-NOV-2026";
+
+  (function () {
+    var gate    = document.getElementById('gate');
+    var content = document.getElementById('page-content');
+    var input   = document.getElementById('gate-pw');
+    var btn     = document.getElementById('gate-btn');
+    var error   = document.getElementById('gate-error');
+
+    function unlock() {
+      gate.style.display = 'none';
+      content.hidden = false;
+      try { sessionStorage.setItem('ing-unlocked', '1'); } catch (e) {}
+    }
+
+    function check() {
+      if (input.value === PAGE_PASSWORD) {
+        unlock();
+      } else {
+        error.style.display = 'block';
+        input.select();
+      }
+    }
+
+    // 同一次瀏覽中輸入過就不用再輸入
+    try {
+      if (sessionStorage.getItem('ing-unlocked') === '1') unlock();
+    } catch (e) {}
+
+    btn.addEventListener('click', check);
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') check();
+    });
+    input.focus();
+  })();
+</script>
 
 </body>
 </html>
