@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>使用心得與反饋 · jen.alsojill</title>
+<meta name="description" content="澳洲求職服務使用心得分享，以及服務反饋表單。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500&family=Noto+Serif+TC:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:       #304873;
+    --navy-mid:   #3d5a8f;
+    --navy-soft:  #4e6ea8;
+    --navy-pale:  #e8edf5;
+    --navy-tint:  #f3f5fa;
+    --white:      #FFFFFF;
+    --ink:        #111111;
+    --ink-soft:   #6B6B6B;
+    --border:     #DDE3E9;
+    --border-soft:#EEF1F4;
+    --radius:     10px;
+    --radius-sm:  5px;
+  }
+
+  body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: 'Noto Sans TC', 'DM Sans', sans-serif;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .nav-inner {
+    max-width: 780px; margin: 0 auto; padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+    font-size: 1.1rem; color: var(--navy); text-decoration: none;
+  }
+  .nav-back { font-size: 0.82rem; color: var(--ink-soft); text-decoration: none; }
+  .nav-back:hover { color: var(--navy); }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy); color: #fff;
+    padding: 4.5rem 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::after {
+    content: ''; position: absolute;
+    bottom: -1px; left: 0; right: 0; height: 60px;
+    background: var(--white);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+  .hero-inner { max-width: 680px; margin: 0 auto; position: relative; }
+  .hero-eyebrow {
+    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.16em;
+    color: rgba(255,255,255,0.4); margin-bottom: 1.1rem;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+    font-size: clamp(1.9rem, 4.5vw, 2.8rem);
+    line-height: 1.35; margin-bottom: 1rem;
+    color: #fff; font-weight: 500; letter-spacing: 0.03em;
+  }
+  .hero p {
+    font-size: 1rem; font-weight: 300;
+    color: rgba(255,255,255,0.6); max-width: 480px;
+  }
+
+  /* ── SECTION COMMONS ── */
+  .page-wrap { max-width: 780px; margin: 0 auto; padding: 0 2rem; }
+  section { padding: 3.5rem 0; }
+  .section-eyebrow {
+    font-size: 0.67rem; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--navy-soft); margin-bottom: 0.5rem;
+  }
+  .section-heading {
+    font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--navy); line-height: 1.4;
+    margin-bottom: 0.7rem; font-weight: 500; letter-spacing: 0.04em;
+  }
+  .section-lead { font-size: 0.95rem; color: var(--ink-soft); max-width: 560px; }
+
+  /* ═══════════════════════════════════════════════════════
+     滾動心得牆
+     要新增一則：複製一整個 <figure class="t-card"> ... </figure>
+     貼在 track-a 和 track-b 兩個地方（兩份內容要一樣，動畫才會接得順）
+     ═══════════════════════════════════════════════════════ */
+  .wall { padding-bottom: 3.5rem; }
+  .wall-head { max-width: 780px; margin: 0 auto 1.75rem; padding: 0 2rem; }
+
+  .marquee {
+    position: relative;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  }
+  .marquee-inner { display: flex; width: max-content; animation: slide 46s linear infinite; }
+  .marquee:hover .marquee-inner,
+  .marquee:focus-within .marquee-inner { animation-play-state: paused; }
+  @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  .track { display: flex; gap: 1rem; padding: 0.4rem 0.5rem; }
+
+  .t-card {
+    flex: 0 0 300px;
+    background: var(--navy-tint);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.6rem;
+    display: flex; flex-direction: column;
+    margin: 0;
+  }
+  .t-quote {
+    font-size: 0.92rem; color: var(--ink);
+    line-height: 1.95; margin-bottom: 1.1rem; flex: 1;
+  }
+  .t-meta {
+    display: flex; align-items: center; gap: 0.7rem;
+    border-top: 1px solid var(--border); padding-top: 0.9rem;
+  }
+  .t-avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: var(--navy); color: #fff; flex-shrink: 0;
+    font-family: 'Cormorant Garamond', serif; font-size: 0.95rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .t-svc { font-size: 0.82rem; color: var(--ink-soft); }
+
+  .wall-note {
+    max-width: 780px; margin: 1.5rem auto 0; padding: 0 2rem;
+    font-size: 0.82rem; color: var(--ink-soft);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-inner { animation: none; }
+    .marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+  }
+
+  /* ── 完整分享（長文）── */
+  .featured { padding-top: 0; }
+  .long-card {
+    background: var(--navy-tint);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem 2.2rem;
+    margin-top: 2rem;
+  }
+  .long-head {
+    display: flex; align-items: center; gap: 0.8rem;
+    padding-bottom: 1.3rem; margin-bottom: 1.4rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .long-card p { font-size: 0.94rem; line-height: 2; color: var(--ink); margin-bottom: 1.1rem; }
+  .long-card p:last-child { margin-bottom: 0; }
+  .long-card strong { color: var(--navy); font-weight: 500; }
+
+  .long-more { margin: 0.4rem 0 1.4rem; }
+  .long-more summary {
+    cursor: pointer; list-style: none;
+    display: inline-flex; align-items: center; gap: 0.45rem;
+    font-size: 0.88rem; font-weight: 500; color: var(--navy);
+    padding: 9px 18px; border: 1px solid var(--border);
+    border-radius: 999px; background: #fff;
+    transition: border-color 0.15s;
+  }
+  .long-more summary::-webkit-details-marker { display: none; }
+  .long-more summary::after { content: '＋'; font-size: 0.9rem; }
+  .long-more[open] summary::after { content: '－'; }
+  .long-more summary:hover { border-color: var(--navy-soft); }
+  .long-more[open] summary { margin-bottom: 1.3rem; }
+
+  .long-outcome {
+    background: #fff; border-left: 3px solid var(--navy);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 1.1rem 1.3rem; margin-top: 1.5rem !important;
+  }
+
+  /* ── FORM ── */
+  .form-section { background: var(--navy-tint); }
+  form { display: flex; flex-direction: column; gap: 1.6rem; margin-top: 2rem; }
+  .field label.q {
+    display: block; font-size: 0.95rem; font-weight: 500;
+    color: var(--ink); margin-bottom: 0.3rem;
+  }
+  .field .hint { font-size: 0.84rem; color: var(--ink-soft); margin-bottom: 0.7rem; }
+
+  input[type="email"],
+  input[type="text"] {
+    width: 100%; padding: 13px 15px; font-size: 1rem;
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    background: #fff; color: var(--ink); font-family: inherit;
+  }
+  input:focus, textarea:focus { outline: 2px solid var(--navy); outline-offset: 1px; }
+
+  /* 選項 */
+  .opts { display: flex; flex-direction: column; gap: 0.55rem; }
+  .opt {
+    display: flex; align-items: flex-start; gap: 0.7rem;
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 12px 15px;
+    cursor: pointer; transition: border-color 0.15s, background 0.15s;
+  }
+  .opt:hover { border-color: var(--navy-soft); }
+  .opt input { width: 17px; height: 17px; accent-color: var(--navy); flex-shrink: 0; margin-top: 3px; }
+  .opt span { font-size: 0.94rem; line-height: 1.6; }
+  .opt:has(input:checked) { border-color: var(--navy); background: var(--navy-pale); }
+
+  #nick-wrap { margin-top: 0.55rem; }
+
+  /* 大格心得 */
+  textarea {
+    width: 100%; min-height: 260px; resize: vertical;
+    padding: 16px 18px; font-size: 1rem; line-height: 1.95;
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    background: #fff; color: var(--ink); font-family: inherit;
+  }
+  textarea::placeholder { color: #A8AFB8; line-height: 1.95; }
+
+  .prompts {
+    background: #fff; border-left: 3px solid var(--navy);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 1rem 1.2rem; margin-bottom: 0.9rem;
+  }
+  .prompts p { font-size: 0.84rem; color: var(--navy); font-weight: 500; margin-bottom: 0.5rem; }
+  .prompts ul { list-style: none; }
+  .prompts li {
+    font-size: 0.86rem; color: var(--ink-soft);
+    padding: 3px 0 3px 1rem; position: relative; line-height: 1.8;
+  }
+  .prompts li::before {
+    content: '·'; position: absolute; left: 0.15rem;
+    color: var(--navy-soft); font-size: 1.3rem; line-height: 1;
+  }
+
+  button[type="submit"] {
+    align-self: flex-start;
+    background: var(--navy); color: #fff; border: none;
+    padding: 14px 34px; border-radius: var(--radius-sm);
+    font-size: 1rem; font-weight: 500; cursor: pointer; font-family: inherit;
+  }
+  button[type="submit"]:hover { background: var(--navy-mid); }
+  button[type="submit"]:disabled { opacity: 0.6; cursor: default; }
+
+  #form-success {
+    display: none;
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2rem; margin-top: 2rem;
+  }
+  #form-success p { font-size: 1rem; color: var(--ink); }
+  #form-error {
+    display: none; color: #B3261E; font-size: 0.88rem; margin-top: 0.8rem;
+  }
+  #form-error a { color: #B3261E; }
+
+  /* ── FOOTER ── */
+  footer { background: #1c2c47; padding: 1.75rem 2rem; text-align: center; }
+  footer p { font-size: 0.77rem; color: rgba(255,255,255,0.25); }
+  footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
+  footer a:hover { color: rgba(255,255,255,0.65); }
+
+  @media (max-width: 600px) {
+    .hero { padding: 3.5rem 1.25rem 3.5rem; }
+    .page-wrap, .wall-head, .wall-note { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .nav-inner { padding: 0 1.25rem; }
+    section { padding: 2.75rem 0; }
+    .t-card { flex-basis: 268px; }
+    .long-card { padding: 1.5rem 1.4rem; }
+    .long-head { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    textarea { min-height: 220px; }
+    button[type="submit"] { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">jen.alsojill</a>
+    <a href="/" class="nav-back">← 回首頁</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Reviews &amp; Feedback</div>
+    <h1>使用心得與反饋</h1>
+    <p>看看其他人走過的求職路，也歡迎留下你的經驗，讓後面的人少走一點冤枉路。</p>
+  </div>
+</section>
+
+<!-- ═══ 滾動心得牆 ═══ -->
+<div class="wall">
+  <div class="wall-head">
+    <div class="section-eyebrow">What people say</div>
+    <h2 class="section-heading">他們的求職歷程</h2>
+    <p class="section-lead">卡片會自動滾動，停在上面或用手指滑動都可以慢慢讀。</p>
+  </div>
+
+  <div class="marquee">
+    <div class="marquee-inner">
+
+      <!-- ── 第一份（track-a）── -->
+      <div class="track" id="track-a">
+
+        <figure class="t-card">
+          <p class="t-quote">陪跑過程很有溫度，不是只告訴你履歷該怎麼改怎麼做後就完全放手不管你，而是很積極的去了解你並提供客製化建議，陪你一步一腳印往前走。⋯⋯關心求職進度方面也不會給人壓迫感，很像是朋友那樣關心你的狀況、在你低落的時候幫你打氣，打起精神後和你一起衝刺。</p>
+          <figcaption class="t-meta">
+            <span class="t-avatar">C</span>
+            <span class="t-svc">礦區求職陪跑</span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <p class="t-quote">簡歷方面有提出實質且確切的建議，加上也有分享求職方面的一些技巧，也能聽到目前在澳洲工作的人相關的經驗分享⋯⋯都是實際的經驗分享而不是空談，覺得是很棒的活動。</p>
+          <figcaption class="t-meta">
+            <span class="t-avatar" style="background:var(--navy-mid);">U</span>
+            <span class="t-svc">履歷小班健檢</span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <p class="t-quote">尤其是在履歷健診時有提到很多我沒有想過的改進方式，這些都讓我眼前一亮，十分感謝今今的幫忙！</p>
+          <figcaption class="t-meta">
+            <span class="t-avatar" style="background:var(--navy-soft);">H</span>
+            <span class="t-svc">澳打履歷健檢 · 視訊</span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <p class="t-quote">給我很多建議，也幫我分析目前處境，對於我的提問都很有耐心的解答，也提供我很多資訊；目前找不到工作的我很大的幫助，也給予我鼓勵與安慰，超讚！</p>
+          <figcaption class="t-meta">
+            <span class="t-avatar">A</span>
+            <span class="t-svc">履歷健檢 · 視訊</span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <p class="t-quote">諮詢過程輕鬆又專業，原本以為只是一般的諮詢！結果，我獲得了好多網路上查不到的實際修改履歷的專業建議，和許多也在找工作的夥伴會面臨的到問題分享！</p>
+          <figcaption class="t-meta">
+            <span class="t-avatar" style="background:var(--navy-mid);">J</span>
+            <span class="t-svc">履歷健檢 · 視訊</span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <p class="t-quote">謝謝老師不辭辛苦的撥空幫忙健檢履歷，並且給出改善建議，也給予了很多初期可能不會注意到的細節，給第一次打工度假的新包很多幫助。</p>
+          <figcaption class="t-meta">
+            <span class="t-avatar" style="background:var(--navy-soft);">J</span>
+            <span class="t-svc">澳打履歷健檢 · 視訊</span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <p class="t-quote">讓我對於履歷更改更有方向，辛苦妳了，祝福妳一切順利！</p>
+          <figcaption class="t-meta">
+            <span class="t-avatar">B</span>
+            <span class="t-svc">客製履歷</span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <p class="t-quote">超級有幫助～引導我如何調整自己的履歷，讓原本有點無從下手的地方，找到出口！超級感謝 🥹</p>
+          <figcaption class="t-meta">
+            <span class="t-avatar" style="background:var(--navy-mid);">P</span>
+            <span class="t-svc">履歷健檢</span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <p class="t-quote">給的意見都非常具體有幫助，讓我可以在出發前有所準備，並且可以先考證照，希望可以帶著今今的祝福，順利拿到 Offer。</p>
+          <figcaption class="t-meta">
+            <span class="t-avatar" style="background:var(--navy-soft);">Y</span>
+            <span class="t-svc">履歷健檢</span>
+          </figcaption>
+        </figure>
+
+      </div>
+
+      <!-- ── 第二份（track-b）：內容與上面完全相同，滾動才會無縫 ── -->
+      <div class="track" id="track-b" aria-hidden="true">
+
+        <figure class="t-card">
+          <p class="t-quote">陪跑過程很有溫度，不是只告訴你履歷該怎麼改怎麼做後就完全放手不管你，而是很積極的去了解你並提供客製化建議，陪你一步一腳印往前走。⋯⋯關心求職進度方面也不會給人壓迫感，很像是朋友那樣關心你的狀況、在你低落的時候幫你打氣，打起精神後和你一起衝刺。</p>
+          <figcaption class="t-meta">
+            <span class="t-avatar">C</span>
+            <span class="t-svc">礦區求職陪跑</span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <p class="t-quote">簡歷方面有提出實質且確切的建議，加上也有分享求職方面的一些技巧，也能聽到目前在澳洲工作的人相關的經驗分享⋯⋯都是實際的經驗分享而不是空談，覺得是很棒的活動。</p>
+          <figcaption class="t-meta">
+            <span class="t-avatar" style="background:var(--navy-mid);">U</span>
+            <span class="t-svc">履歷小班健檢</span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <p class="t-quote">尤其是在履歷健診時有提到很多我沒有想過的改進方式，這些都讓我眼前一亮，十分感謝今今的幫忙！</p>
+          <figcaption class="t-meta">
+            <span class="t-avatar" style="background:var(--navy-soft);">H</span>
+            <span class="t-svc">澳打履歷健檢 · 視訊</span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <p class="t-quote">給我很多建議，也幫我分析目前處境，對於我的提問都很有耐心的解答，也提供我很多資訊；目前找不到工作的我很大的幫助，也給予我鼓勵與安慰，超讚！</p>
+          <figcaption class="t-meta">
+            <span class="t-avatar">A</span>
+            <span class="t-svc">履歷健檢 · 視訊</span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <p class="t-quote">諮詢過程輕鬆又專業，原本以為只是一般的諮詢！結果，我獲得了好多網路上查不到的實際修改履歷的專業建議，和許多也在找工作的夥伴會面臨的到問題分享！</p>
+          <figcaption class="t-meta">
+            <span class="t-avatar" style="background:var(--navy-mid);">J</span>
+            <span class="t-svc">履歷健檢 · 視訊</span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <p class="t-quote">謝謝老師不辭辛苦的撥空幫忙健檢履歷，並且給出改善建議，也給予了很多初期可能不會注意到的細節，給第一次打工度假的新包很多幫助。</p>
+          <figcaption class="t-meta">
+            <span class="t-avatar" style="background:var(--navy-soft);">J</span>
+            <span class="t-svc">澳打履歷健檢 · 視訊</span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <p class="t-quote">讓我對於履歷更改更有方向，辛苦妳了，祝福妳一切順利！</p>
+          <figcaption class="t-meta">
+            <span class="t-avatar">B</span>
+            <span class="t-svc">客製履歷</span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <p class="t-quote">超級有幫助～引導我如何調整自己的履歷，讓原本有點無從下手的地方，找到出口！超級感謝 🥹</p>
+          <figcaption class="t-meta">
+            <span class="t-avatar" style="background:var(--navy-mid);">P</span>
+            <span class="t-svc">履歷健檢</span>
+          </figcaption>
+        </figure>
+
+        <figure class="t-card">
+          <p class="t-quote">給的意見都非常具體有幫助，讓我可以在出發前有所準備，並且可以先考證照，希望可以帶著今今的祝福，順利拿到 Offer。</p>
+          <figcaption class="t-meta">
+            <span class="t-avatar" style="background:var(--navy-soft);">Y</span>
+            <span class="t-svc">履歷健檢</span>
+          </figcaption>
+        </figure>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="wall-note">以上皆為服務使用者自行填寫並同意公開分享的內容。</p>
+</div>
+
+<!-- ═══ 完整分享（長文）═══ -->
+<section class="featured">
+  <div class="page-wrap">
+    <div class="section-eyebrow">In their own words</div>
+    <h2 class="section-heading">一段完整的求職歷程</h2>
+    <p class="section-lead">從 Vic 開車六天到 WA 找吊掛作業的工作，備齊證照卻一年投不到對應職位。</p>
+
+    <article class="long-card">
+      <div class="long-head">
+        <span class="t-avatar">Y</span>
+        <span class="t-svc">藍領技術職履歷代寫 · 礦區履歷健檢 + Cover Letter + 面試 QA</span>
+      </div>
+
+      <p>我在財政年末從 Vic 出發到 WA 找吊掛作業的工作，雖然過去有水手（乙級船員）經驗，但在沒有澳洲相關行業背景下投履歷都沒有回應。</p>
+
+      <p>來澳洲以來考了 White card／WAH／Confined space entry／LF／DG／RB／RI。剛開始持有相對應的證照卻在 1 年內找不到對應 high risk licence class 的工作，因為我投的工作屬於高風險，招募單位也是以比較嚴謹的條件在審查履歷。</p>
+
+      <details class="long-more">
+        <summary>展開完整分享</summary>
+
+        <p>因為我開車 6 天每天都天亮出門天黑睡覺，今今特地讓我安插在我到達 Perth 前的空檔第一次視訊，在我抵達一週後考到 HRWL 時今今也把第一版履歷初稿做好了。</p>
+
+        <p>視訊跟我討論，因為我有很多自己的堅持，今今會一步一步跟我拆解他認為原本履歷可能降低能見度和不是人資優先選擇的原因，即使我最後還是選擇想要保持自己的特色、和我工作背景的特殊性，今今也在符合我意願的情況下幫我把用字改成澳式職位用語。</p>
+
+        <p>初版履歷改完以後今今也在 1 天內寄給我 cover letter 模板，使用 AI 和 Canvas 聽起來可能很簡單，但我不願意我的履歷或 Cover letter 有 AI 經手，所以選擇今今的修改，<strong>人寫的不那麼刻板完美還會帶一點溫度，是真的有差。</strong>同時今今也準備了我希望應徵職位的 QA，讓我能更有系統的準備面試。</p>
+
+        <p>跟身邊的朋友分享過，90% 他們都覺得很貴，確實對我來說也是一個很大的支出，但因為我想要躋身的職位行業特殊，雖然不是絕對建築工地或礦區而是吊車公司，但我覺得這項服務對我很有幫助。也像其他人說的，在鼓勵、問你的進展時其實不會很有壓力，就有點像是 induction 的某個步驟，今今的來信就有點像是一個待辦事項，一步一步達成共識和需求！</p>
+
+        <p>網路上其實能找到很多澳洲當地的履歷服務，但我當初比較了很多間，我真的是覺得一樣要花這個錢那我真的想給台灣人做，他也不容易！再加上澳洲人他們不懂我們遇到的限制、名字的拼法被先入為主擋在門外、工作經驗看起來很不當地等等的。</p>
+
+        <p>如果你也跟我一樣擁有相關工作經驗、正在考慮要踏入下一個行業或 upskill，而遲遲沒有收到面試邀約，可以考慮預約討論，你不需要在討論時就付費，會花一點時間讓你知道具體服務內容是什麼。</p>
+
+        <p>謝謝今今的努力和用心，也祝所有在找工作的人都如願！</p>
+      </details>
+
+      <p class="long-outcome">我在漫長的投履歷和偶爾有機會面試、非常多的 walk-in、call-in，實際開到好幾個偏遠小鎮（Perth 出發 1–9 小時距離）walk-in、試工後，<strong>已找到理想工作。</strong></p>
+    </article>
+  </div>
+</section>
+
+<!-- ═══ 反饋表單 ═══ -->
+<section class="form-section">
+  <div class="page-wrap">
+    <div class="section-eyebrow">Share your experience</div>
+    <h2 class="section-heading">留下你的使用心得</h2>
+    <p class="section-lead">如果你使用過下面任何一項服務，歡迎花幾分鐘寫下你的經驗。你的分享會幫助到正在猶豫的人。</p>
+
+    <!--
+      ⚠️ 表單設定
+      下面 action 的 YOUR_FEEDBACK_FORM_ID 要換成你的 Formspree 表單 ID。
+      建議到 formspree.io 另外開一個新表單（取名 Feedback），
+      這樣反饋跟求職諮詢的資料不會混在一起。
+      拿到的網址長得像 https://formspree.io/f/abcdwxyz，把 abcdwxyz 貼進去即可。
+    -->
+    <form id="fb-form" action="https://formspree.io/f/YOUR_FEEDBACK_FORM_ID" method="POST">
+
+      <!-- 1. Email -->
+      <div class="field">
+        <label class="q" for="email">你的 Email</label>
+        <p class="hint">只用來確認身分，不會公開，也不會寄廣告給你。</p>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <!-- 2. 署名方式 -->
+      <div class="field">
+        <span class="q">心得公開時，你想怎麼署名？</span>
+        <p class="hint">不管選哪個，你的 Email 都不會出現在網站上。</p>
+        <div class="opts">
+          <label class="opt">
+            <input type="radio" name="署名方式" value="匿名" checked>
+            <span>匿名就好</span>
+          </label>
+          <label class="opt">
+            <input type="radio" name="署名方式" value="使用代稱" id="use-nick">
+            <span>我想用一個代稱</span>
+          </label>
+        </div>
+        <div id="nick-wrap" hidden>
+          <input type="text" id="nickname" name="代稱" maxlength="20"
+            placeholder="例如：C、小陳、Jen">
+          <p class="hint" style="margin:0.5rem 0 0;">只留一個英文字母也完全可以。</p>
+        </div>
+      </div>
+
+      <!-- 3. 使用過的服務 -->
+      <div class="field">
+        <span class="q">你使用過哪些服務？</span>
+        <p class="hint">可以複選。</p>
+        <div class="opts">
+          <label class="opt"><input type="checkbox" name="使用過的服務" value="澳洲履歷健檢"><span>澳洲履歷健檢</span></label>
+          <label class="opt"><input type="checkbox" name="使用過的服務" value="代寫礦區履歷"><span>代寫礦區履歷</span></label>
+          <label class="opt"><input type="checkbox" name="使用過的服務" value="代寫藍領履歷"><span>代寫藍領履歷</span></label>
+          <label class="opt"><input type="checkbox" name="使用過的服務" value="陪跑求職礦區"><span>陪跑求職礦區</span></label>
+        </div>
+      </div>
+
+      <!-- 4. 從哪裡知道的 -->
+      <div class="field">
+        <span class="q">你是從哪裡知道這些服務的？</span>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="從哪裡知道" value="Threads 脆" required><span>Threads 脆</span></label>
+          <label class="opt"><input type="radio" name="從哪裡知道" value="IG Post / Story"><span>IG Post / Story</span></label>
+          <label class="opt"><input type="radio" name="從哪裡知道" value="朋友介紹"><span>有朋友介紹</span></label>
+          <label class="opt"><input type="radio" name="從哪裡知道" value="其他"><span>其他</span></label>
+        </div>
+      </div>
+
+      <!-- 5. 心得 -->
+      <div class="field">
+        <label class="q" for="story">你的使用心得與求職歷程</label>
+        <div class="prompts">
+          <p>不知道從哪裡寫起的話，可以參考這幾個方向：</p>
+          <ul>
+            <li>當初是在什麼情況下決定找人幫忙的？</li>
+            <li>花了多久時間終於上岸？過程中最卡的是哪一關？</li>
+            <li>履歷健檢或陪跑的過程中，哪一個環節對你幫助最大？</li>
+            <li>如果要推薦給跟你當初情況一樣的人，你會說什麼？</li>
+          </ul>
+        </div>
+        <textarea id="story" name="使用心得" required
+          placeholder="寫多寫少都可以，真實的經驗比漂亮的句子更有幫助 :)"></textarea>
+      </div>
+
+      <button type="submit">送出心得</button>
+      <p id="form-error">送出時發生問題，麻煩直接寄信到 <a href="mailto:hi@jenalsojill.com">hi@jenalsojill.com</a>，我一樣會收到。</p>
+    </form>
+
+    <div id="form-success">
+      <p>謝謝你花時間寫下這些 🙏 你的經驗會幫助到正在猶豫、不知道怎麼開始的人。如果之後想把你的心得放上這個頁面，我會先寫信跟你確認過再公開。</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <a href="/">jen.alsojill</a> · <a href="mailto:hi@jenalsojill.com">hi@jenalsojill.com</a></p>
+</footer>
+
+<script>
+  (function () {
+    var form    = document.getElementById('fb-form');
+    var success = document.getElementById('form-success');
+    var error   = document.getElementById('form-error');
+    var btn     = form.querySelector('button[type="submit"]');
+    var nickWrap = document.getElementById('nick-wrap');
+    var nickIn   = document.getElementById('nickname');
+
+    // 選「我想用一個代稱」才顯示輸入框
+    form.querySelectorAll('input[name="署名方式"]').forEach(function (r) {
+      r.addEventListener('change', function () {
+        var wantNick = document.getElementById('use-nick').checked;
+        nickWrap.hidden = !wantNick;
+        if (wantNick) nickIn.focus(); else nickIn.value = '';
+      });
+    });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // 選了代稱卻沒填
+      if (document.getElementById('use-nick').checked && !nickIn.value.trim()) {
+        error.textContent = '麻煩填一下你想用的代稱，或改選「匿名就好」。';
+        error.style.display = 'block';
+        nickIn.focus();
+        return;
+      }
+
+      // 至少要勾一項服務
+      if (!form.querySelector('input[name="使用過的服務"]:checked')) {
+        error.textContent = '麻煩至少勾選一項你使用過的服務。';
+        error.style.display = 'block';
+        return;
+      }
+
+      error.style.display = 'none';
+      btn.disabled = true;
+      btn.textContent = '送出中…';
+
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(function (res) {
+        if (res.ok) {
+          form.style.display = 'none';
+          success.style.display = 'block';
+          success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          return res.json().then(function (d) {
+            console.error('Formspree 回傳錯誤：', d);
+            throw new Error('bad response');
+          });
+        }
+      }).catch(function (err) {
+        console.error('送出失敗：', err);
+        error.innerHTML = '送出時發生問題，麻煩直接寄信到 <a href="mailto:hi@jenalsojill.com">hi@jenalsojill.com</a>，我一樣會收到。';
+        error.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = '送出心得';
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
