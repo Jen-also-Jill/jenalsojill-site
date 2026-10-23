@@ -105,16 +105,19 @@
   .wall { padding-bottom: 3.5rem; }
   .wall-head { max-width: 780px; margin: 0 auto 1.75rem; padding: 0 2rem; }
 
+  /* 可以用手指／滑鼠自由滑動，同時由 JS 驅動自動捲動 */
   .marquee {
     position: relative;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
             mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
   }
-  .marquee-inner { display: flex; width: max-content; animation: slide 46s linear infinite; }
-  .marquee:hover .marquee-inner,
-  .marquee:focus-within .marquee-inner { animation-play-state: paused; }
-  @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee::-webkit-scrollbar { display: none; }
+  .marquee-inner { display: flex; width: max-content; }
 
   .track { display: flex; gap: 1rem; padding: 0.4rem 0.5rem; }
 
@@ -149,8 +152,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .marquee-inner { animation: none; }
-    .marquee { overflow-x: auto; -webkit-mask-image: none; mask-image: none; }
+    .marquee { -webkit-mask-image: none; mask-image: none; }
   }
 
   /* ── 完整分享（長文）── */
@@ -302,7 +304,7 @@
   <div class="hero-inner">
     <div class="hero-eyebrow">Reviews &amp; Feedback</div>
     <h1>使用心得與反饋</h1>
-    <p>看看其他人心路歷程，也歡迎留下你的經驗，希望能幫助到正在找工作的人。</p>
+    <p>看看其他人走過的求職路，也歡迎留下你的經驗，讓後面的人少走一點冤枉路。</p>
   </div>
 </section>
 
@@ -530,7 +532,7 @@
       這樣反饋跟求職諮詢的資料不會混在一起。
       拿到的網址長得像 https://formspree.io/f/abcdwxyz，把 abcdwxyz 貼進去即可。
     -->
-    <form id="fb-form" action="https://formspree.io/f/xeaajwdq" method="POST">
+    <form id="fb-form" action="https://formspree.io/f/YOUR_FEEDBACK_FORM_ID" method="POST">
 
       <!-- 1. Email -->
       <div class="field">
@@ -541,7 +543,7 @@
 
       <!-- 2. 署名方式 -->
       <div class="field">
-        <span class="q">心得公開時，你的名字或代稱？</span>
+        <span class="q">心得公開時，你想怎麼署名？</span>
         <p class="hint">不管選哪個，你的 Email 都不會出現在網站上。</p>
         <div class="opts">
           <label class="opt">
@@ -589,14 +591,14 @@
         <div class="prompts">
           <p>不知道從哪裡寫起的話，可以參考這幾個方向：</p>
           <ul>
-            <li>當初是在什麼情況下決定找 Jen 幫忙的？</li>
+            <li>當初是在什麼情況下決定找人幫忙的？</li>
             <li>花了多久時間終於上岸？過程中最卡的是哪一關？</li>
             <li>履歷健檢或陪跑的過程中，哪一個環節對你幫助最大？</li>
             <li>如果要推薦給跟你當初情況一樣的人，你會說什麼？</li>
           </ul>
         </div>
         <textarea id="story" name="使用心得" required
-          placeholder="寫多寫少都可以，真實的經驗對正在找工作的人有幫助 :)"></textarea>
+          placeholder="寫多寫少都可以，真實的經驗比漂亮的句子更有幫助 :)"></textarea>
       </div>
 
       <button type="submit">送出心得</button>
@@ -604,7 +606,7 @@
     </form>
 
     <div id="form-success">
-      <p>謝謝你花時間寫下這些 🙏🏻 你的經驗會幫助到正在猶豫、不知道怎麼開始的人。</p>
+      <p>謝謝你花時間寫下這些 🙏 你的經驗會幫助到正在猶豫、不知道怎麼開始的人。如果之後想把你的心得放上這個頁面，我會先寫信跟你確認過再公開。</p>
     </div>
   </div>
 </section>
@@ -614,6 +616,63 @@
 </footer>
 
 <script>
+  /* ── 心得牆：自動捲動，碰到就讓給使用者 ── */
+  (function () {
+    var box = document.querySelector('.marquee');
+    if (!box) return;
+
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var SPEED   = 0.45;   // 每幀前進的像素，想快一點就調大
+    var RESUME  = 2500;   // 手放開後多久恢復自動捲動（毫秒）
+    var paused  = reduced;
+    var timer   = null;
+
+    function half() { return box.scrollWidth / 2; }   // 內容有兩份，捲過一半就回頭
+
+    // scrollLeft 會被瀏覽器取整，所以位置自己用變數累加，再寫回去
+    var pos = 0;
+
+    function tick() {
+      if (!paused) {
+        pos += SPEED;
+        if (pos >= half()) pos -= half();
+        box.scrollLeft = pos;
+      } else {
+        pos = box.scrollLeft;   // 使用者自己滑過，從他停下的位置接續
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function hold()  { paused = true; clearTimeout(timer); }
+    function release(delay) {
+      clearTimeout(timer);
+      if (!reduced) timer = setTimeout(function () { paused = false; }, delay);
+    }
+
+    // 滑鼠移上去暫停、移開繼續
+    // 只在真的有滑鼠的裝置綁定：手機點一下也會觸發 mouseenter，
+    // 但手指移開不會觸發 mouseleave，綁了會永遠卡在暫停
+    if (window.matchMedia('(hover: hover)').matches) {
+      box.addEventListener('mouseenter', hold);
+      box.addEventListener('mouseleave', function () { release(300); });
+    }
+
+    // 手指滑動時交給使用者，放開 2.5 秒後再繼續
+    box.addEventListener('touchstart', hold, { passive: true });
+    box.addEventListener('touchend',   function () { release(RESUME); }, { passive: true });
+    box.addEventListener('touchcancel',function () { release(RESUME); }, { passive: true });
+
+    // 滑鼠滾輪／觸控板橫向捲動也算使用者操作
+    box.addEventListener('wheel', function () { hold(); release(RESUME); }, { passive: true });
+
+    // 用鍵盤 Tab 進卡片時暫停，方便閱讀
+    box.addEventListener('focusin',  hold);
+    box.addEventListener('focusout', function () { release(300); });
+
+    if (!reduced) requestAnimationFrame(tick);
+  })();
+
+  /* ── 反饋表單 ── */
   (function () {
     var form    = document.getElementById('fb-form');
     var success = document.getElementById('form-success');
