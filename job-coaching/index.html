@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>澳洲求職規劃諮詢 — jen.alsojill</title>
-<meta name="description" content="礦區(FIFO)|咖啡|客服求職與履歷輔導。">
+<title>求職規劃輔導 — jen.alsojill</title>
+<meta name="description" content="礦區(FIFO)與銀行金融方向的求職策略與履歷輔導。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500&family=Noto+Serif+TC:wght@400;500&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
@@ -81,24 +81,52 @@
 
   /* Testimonials — leave this section commented out until real feedback is ready.
      To add one later, uncomment and duplicate the .testimonial block below. */
-  .testimonial {
-    display: none;
+  /* ═══ 心得牆（可自動捲動 + 手指滑動）═══ */
+  .wall { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); }
+  .wall-note { font-size: 0.82rem; color: var(--ink-soft); margin-top: 14px; }
+
+  .marquee {
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    margin: 0 -24px;
+    padding: 0 24px;
+    /* 右側淡出，提示還可以往右滑 */
+    -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent);
+            mask-image: linear-gradient(90deg, #000 85%, transparent);
+  }
+  .marquee::-webkit-scrollbar { display: none; }
+  .marquee-inner { display: flex; width: max-content; }
+  .track { display: flex; gap: 14px; padding: 4px 0; }
+
+  .t-card {
+    flex: 0 0 272px;
     background: var(--card);
     border: 1px solid var(--line);
-    border-radius: 4px;
-    padding: 20px;
-    margin-bottom: 16px;
+    border-radius: 6px;
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
   }
-
-  .testimonial p {
-    margin: 0 0 8px;
-    color: var(--ink);
+  .t-quote {
+    font-size: 0.9rem; color: var(--ink);
+    line-height: 1.95; margin: 0 0 16px; flex: 1;
   }
-
-  .testimonial span {
-    color: var(--ink-soft);
-    font-size: 0.88rem;
+  .t-meta {
+    display: flex; align-items: center; gap: 10px;
+    border-top: 1px solid var(--line); padding-top: 14px;
   }
+  .t-avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--clay); color: #fff; flex-shrink: 0;
+    font-family: 'Cormorant Garamond', serif; font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .t-svc { font-size: 0.8rem; color: var(--ink-soft); }
 
   form {
     display: flex;
@@ -170,6 +198,30 @@
     margin-top: 4px;
   }
 
+  /* ── 複選／單選服務項目 ── */
+  .q-label {
+    display: block;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  .opts { display: flex; flex-direction: column; gap: 8px; }
+  .opt {
+    display: flex; align-items: flex-start; gap: 11px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 13px 15px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .opt:hover { border-color: var(--clay); }
+  .opt:has(input:checked) { border-color: var(--clay); background: var(--card); }
+  .opt input { width: 17px; height: 17px; accent-color: var(--clay); flex-shrink: 0; margin-top: 3px; }
+  .opt span { display: flex; flex-direction: column; gap: 2px; }
+  .opt strong { font-size: 0.95rem; font-weight: 500; color: var(--ink); }
+  .opt em { font-style: normal; font-size: 0.82rem; color: var(--ink-soft); }
+
   #form-success {
     background: var(--card);
     border: 1px solid var(--line);
@@ -191,6 +243,10 @@
   @media (max-width: 480px) {
     .wrap { padding: 40px 20px 56px; }
     h1 { font-size: 1.5rem; }
+    /* 手機版 wrap 的 padding 是 20px，心得牆要跟著對齊，
+       不然會多突出 4px 讓整頁可以左右晃 */
+    .marquee { margin: 0 -20px; padding: 0 20px; }
+    .t-card { flex-basis: 258px; }
   }
 </style>
 </head>
@@ -199,26 +255,117 @@
     <a class="back" href="/">← 回首頁</a>
 
     <h1>求職規劃輔導</h1>
-    <p class="intro"> 我們從 10 年前來到澳洲</p>
-    <p class="intro">一路走過農場、咖啡師、礦區後勤，現在成功轉職到澳洲白領職位 & 技術職位 。</p>
-    <p class="intro">從 2025 年開始幫助身邊的人拿到更多面試機會、順利收到礦區 offer。如果你現在卡在不知道怎麼轉職到礦區或是澳洲本地企業體系的工作，歡迎到下方填表，我們約一天線上聊聊 15 分鐘，希望能幫你找到方向 :)</p>
+    <p class="intro">嗨 👋🏻 我從 2017 年來到澳洲</p>
+    <p class="intro">一路走過打工度假、餐飲、咖啡師、店經理、礦區後勤，現在成功轉職到澳洲銀行客服。</p>
+    <p class="intro">從 2025 年開始我開始幫助一些人拿到更多面試機會、順利收到礦區 offer。如果你現在卡在不知道怎麼轉職到礦區或是澳洲本地企業體系的工作，歡迎到下方填表，我們約一天線上聊聊 15 分鐘，希望能幫你找到方向 :)</p>
 
-    <!--
-      好評反饋區塊 — 目前先隱藏(display:none),之後有反饋內容時，
-      把 .testimonial 的 display:none 拿掉，並複製區塊填入真實內容即可。
-
-      <section>
-        <h2>過去學員怎麼說</h2>
-        <div class="testimonial" style="display:block;">
-          <p>這裡放實際的反饋文字。</p>
-          <span>— 學員稱呼 / 輔導項目</span>
-        </div>
-      </section>
+    <!-- ═══ 心得牆 ═══
+         要新增一則：複製一整個 <figure class="t-card"> ... </figure>，
+         貼到 track-a 和 track-b 兩個地方（兩份必須一模一樣，滾動才會無縫接上）
     -->
+    <div class="wall">
+      <h2>他們後來怎麼了</h2>
+
+      <div class="marquee">
+        <div class="marquee-inner">
+
+          <div class="track" id="track-a">
+
+            <figure class="t-card">
+              <p class="t-quote">⋯⋯人寫的不那麼刻板完美還會帶一點溫度，是真的有差。我在漫長的投履歷和非常多的 walk-in、call-in、試工後，已找到理想工作。</p>
+              <figcaption class="t-meta">
+                <span class="t-avatar">Y</span>
+                <span class="t-svc">藍領技術職履歷代寫</span>
+              </figcaption>
+            </figure>
+
+            <figure class="t-card">
+              <p class="t-quote">陪跑過程很有溫度，不是只告訴你履歷該怎麼改怎麼做後就完全放手不管你，而是很積極的去了解你並提供客製化建議⋯⋯讓我拿到一直很想嘗試看看的工作。</p>
+              <figcaption class="t-meta">
+                <span class="t-avatar" style="background:var(--clay-soft);">C</span>
+                <span class="t-svc">礦區求職陪跑</span>
+              </figcaption>
+            </figure>
+
+            <figure class="t-card">
+              <p class="t-quote">原本以為只是一般的諮詢！結果，我獲得了好多網路上查不到的實際修改履歷的專業建議，和許多也在找工作的夥伴會面臨的到問題分享！</p>
+              <figcaption class="t-meta">
+                <span class="t-avatar" style="background:#4e6ea8;">J</span>
+                <span class="t-svc">履歷健檢 · 視訊</span>
+              </figcaption>
+            </figure>
+
+            <figure class="t-card">
+              <p class="t-quote">給我很多建議，也幫我分析目前處境，對於我的提問都很有耐心的解答；目前找不到工作的我很大的幫助，也給予我鼓勵與安慰。</p>
+              <figcaption class="t-meta">
+                <span class="t-avatar">A</span>
+                <span class="t-svc">履歷健檢 · 視訊</span>
+              </figcaption>
+            </figure>
+
+            <figure class="t-card">
+              <p class="t-quote">超級有幫助～引導我如何調整自己的履歷，讓原本有點無從下手的地方，找到出口！</p>
+              <figcaption class="t-meta">
+                <span class="t-avatar" style="background:var(--clay-soft);">P</span>
+                <span class="t-svc">履歷健檢</span>
+              </figcaption>
+            </figure>
+
+          </div>
+
+          <div class="track" id="track-b" aria-hidden="true">
+
+            <figure class="t-card">
+              <p class="t-quote">⋯⋯人寫的不那麼刻板完美還會帶一點溫度，是真的有差。我在漫長的投履歷和非常多的 walk-in、call-in、試工後，已找到理想工作。</p>
+              <figcaption class="t-meta">
+                <span class="t-avatar">Y</span>
+                <span class="t-svc">藍領技術職履歷代寫</span>
+              </figcaption>
+            </figure>
+
+            <figure class="t-card">
+              <p class="t-quote">陪跑過程很有溫度，不是只告訴你履歷該怎麼改怎麼做後就完全放手不管你，而是很積極的去了解你並提供客製化建議⋯⋯讓我拿到一直很想嘗試看看的工作。</p>
+              <figcaption class="t-meta">
+                <span class="t-avatar" style="background:var(--clay-soft);">C</span>
+                <span class="t-svc">礦區求職陪跑</span>
+              </figcaption>
+            </figure>
+
+            <figure class="t-card">
+              <p class="t-quote">原本以為只是一般的諮詢！結果，我獲得了好多網路上查不到的實際修改履歷的專業建議，和許多也在找工作的夥伴會面臨的到問題分享！</p>
+              <figcaption class="t-meta">
+                <span class="t-avatar" style="background:#4e6ea8;">J</span>
+                <span class="t-svc">履歷健檢 · 視訊</span>
+              </figcaption>
+            </figure>
+
+            <figure class="t-card">
+              <p class="t-quote">給我很多建議，也幫我分析目前處境，對於我的提問都很有耐心的解答；目前找不到工作的我很大的幫助，也給予我鼓勵與安慰。</p>
+              <figcaption class="t-meta">
+                <span class="t-avatar">A</span>
+                <span class="t-svc">履歷健檢 · 視訊</span>
+              </figcaption>
+            </figure>
+
+            <figure class="t-card">
+              <p class="t-quote">超級有幫助～引導我如何調整自己的履歷，讓原本有點無從下手的地方，找到出口！</p>
+              <figcaption class="t-meta">
+                <span class="t-avatar" style="background:var(--clay-soft);">P</span>
+                <span class="t-svc">履歷健檢</span>
+              </figcaption>
+            </figure>
+
+          </div>
+
+        </div>
+      </div>
+
+      <p class="wall-note">以上皆為服務使用者自行填寫並同意公開分享的內容。</p>
+    </div>
 
     <section>
-      <h2>填表單，分享你目前的情況</h2>
-      <p class="form-note" style="margin-bottom:18px;">以下每一題都需要填寫，能幫助我們聊之前先了解你的需求。</p>
+      <h2>填表單，讓我了解你的狀況</h2>
+      <p class="form-note" style="margin-bottom:18px;">以下每一題都需要填寫，這樣我才能在聊之前先掌握你的狀況。</p>
 
       <!--
         表單設定說明：
@@ -234,7 +381,7 @@
         </div>
 
         <div>
-          <label for="email">Email(建議留Gmail 比較不會漏信)</label>
+          <label for="email">Email(方便我回覆你)</label>
           <input type="email" id="email" name="email" required>
         </div>
 
@@ -242,11 +389,54 @@
           <label for="track">想諮詢的方向</label>
           <select id="track" name="想諮詢的方向" required>
             <option value="" disabled selected>請選擇</option>
-            <option value="FIFO 礦區/汽修求職輔導">FIFO 礦區/汽修求職</option>
-            <option value="咖啡/客服/白領輔導">咖啡/客服/白領求職</option>
+            <option value="FIFO 礦區求職輔導">FIFO 礦區求職輔導</option>
+            <option value="銀行/金融求職輔導">銀行/金融求職輔導</option>
             <option value="還不確定，想先聊聊">還不確定，想先聊聊</option>
           </select>
         </div>
+
+        <div>
+          <span class="q-label">你可能需要哪一項服務？</span>
+          <p class="form-note" style="margin:0 0 10px;">可以複選，不確定的話勾最後一項就好，我們視訊時再一起討論。</p>
+          <div class="opts">
+            <label class="opt">
+              <input type="checkbox" name="需要的服務" value="澳洲履歷優化輔導（90 分鐘）">
+              <span><strong>澳洲履歷優化輔導</strong><em>90 分鐘線上視訊</em></span>
+            </label>
+            <label class="opt">
+              <input type="checkbox" name="需要的服務" value="礦區藍領履歷代寫（3–5 天交件）">
+              <span><strong>礦區藍領履歷代寫</strong><em>3–5 天交件</em></span>
+            </label>
+            <label class="opt">
+              <input type="checkbox" name="需要的服務" value="礦區求職陪跑服務（3–6 個月）">
+              <span><strong>礦區求職陪跑服務</strong><em>3–6 個月時程</em></span>
+            </label>
+            <label class="opt">
+              <input type="checkbox" name="需要的服務" value="還不確定，想先了解各項服務內容">
+              <span><strong>還不確定</strong><em>想先了解各項服務的內容</em></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════
+             預算欄位（目前關閉）
+
+             如果之後想在表單就問預算，把這行下面的 ──開始── 到 ──結束──
+             之間那段的註解符號拿掉就會出現。
+
+             ──開始──
+        <div>
+          <span class="q-label">你心中的預算範圍？</span>
+          <p class="form-note" style="margin:0 0 10px;">只是先了解方向，實際報價會在視訊時依你的狀況說明。</p>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="預算範圍" value="$149–189 AUD"><span><strong>$149 – 189 AUD</strong></span></label>
+            <label class="opt"><input type="radio" name="預算範圍" value="$590–899 AUD"><span><strong>$590 – 899 AUD</strong></span></label>
+            <label class="opt"><input type="radio" name="預算範圍" value="$1290–1690 AUD"><span><strong>$1290 – 1690 AUD</strong></span></label>
+            <label class="opt"><input type="radio" name="預算範圍" value="還沒有概念，想先了解服務內容"><span><strong>還沒有概念</strong><em>想先了解服務內容</em></span></label>
+          </div>
+        </div>
+             ──結束──
+             ═══════════════════════════════════════════════════════════ -->
 
         <div>
           <label for="visa">目前簽證身份</label>
@@ -277,7 +467,7 @@
         </div>
 
         <div>
-          <label for="resume-link">履歷連結（Google Drive 或 Canva 分享公開連結）</label>
+          <label for="resume-link">履歷連結（Google Drive 或 Canva 分享連結）</label>
           <input type="url" id="resume-link" name="履歷連結" placeholder="https://" required>
           <p class="form-note">簡單說明：先把履歷傳到 Google Drive 或 Canva，設成「知道連結的人皆可檢視」，再把那個連結貼在這裡。</p>
         </div>
@@ -291,9 +481,9 @@
       </form>
 
       <div id="form-success" style="display:none;">
-        <p style="margin:0;">謝謝填寫！我們收到後會，通常會在 1-2 個工作天內用 email 跟你聯絡，安排日期。</p>
+        <p style="margin:0;">謝謝你花時間填寫！我收到後會仔細看過，通常會在 1-2 個工作天內用 email 跟你聯絡，安排下一步。</p>
       </div>
-      <p id="form-error" class="form-note" style="display:none; color:#B3261E;">送出時若發生問題，麻煩直接寄信到 <a href="mailto:hi@jenalsojill.com">hi@jenalsojill.com</a>，我一樣會收到。</p>
+      <p id="form-error" class="form-note" style="display:none; color:#B3261E;">送出時發生問題，麻煩直接寄信到 <a href="mailto:hi@jenalsojill.com">hi@jenalsojill.com</a>，我一樣會收到。</p>
     </section>
 
     <footer>
@@ -302,6 +492,54 @@
   </div>
 
   <script>
+    /* ── 心得牆：自動捲動，碰到就讓給使用者 ── */
+    (function () {
+      var box = document.querySelector('.marquee');
+      if (!box) return;
+
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var SPEED  = 0.45;   // 每幀前進的像素
+      var RESUME = 2500;   // 手放開後多久恢復自動捲動（毫秒）
+      var paused = reduced;
+      var timer  = null;
+      var pos    = 0;      // scrollLeft 會被取整，位置自己累加
+
+      function half() { return box.scrollWidth / 2; }
+
+      function tick() {
+        if (!paused) {
+          pos += SPEED;
+          if (pos >= half()) pos -= half();
+          box.scrollLeft = pos;
+        } else {
+          pos = box.scrollLeft;
+        }
+        requestAnimationFrame(tick);
+      }
+
+      function hold() { paused = true; clearTimeout(timer); }
+      function release(delay) {
+        clearTimeout(timer);
+        if (!reduced) timer = setTimeout(function () { paused = false; }, delay);
+      }
+
+      // 只在真的有滑鼠的裝置綁 hover：手機點一下也會觸發 mouseenter，
+      // 但手指移開不會觸發 mouseleave，綁了會永遠卡在暫停
+      if (window.matchMedia('(hover: hover)').matches) {
+        box.addEventListener('mouseenter', hold);
+        box.addEventListener('mouseleave', function () { release(300); });
+      }
+      box.addEventListener('touchstart',  hold, { passive: true });
+      box.addEventListener('touchend',    function () { release(RESUME); }, { passive: true });
+      box.addEventListener('touchcancel', function () { release(RESUME); }, { passive: true });
+      box.addEventListener('wheel', function () { hold(); release(RESUME); }, { passive: true });
+      box.addEventListener('focusin',  hold);
+      box.addEventListener('focusout', function () { release(300); });
+
+      if (!reduced) requestAnimationFrame(tick);
+    })();
+
+    /* ── 表單 ── */
     const coachForm = document.getElementById('coach-form');
     const successBox = document.getElementById('form-success');
     const errorMsg = document.getElementById('form-error');
@@ -309,6 +547,14 @@
 
     coachForm.addEventListener('submit', function (e) {
       e.preventDefault();
+
+      // 至少要勾一項服務
+      if (!coachForm.querySelector('input[name="需要的服務"]:checked')) {
+        errorMsg.textContent = '麻煩至少勾選一項服務，不確定的話勾「還不確定」就可以。';
+        errorMsg.style.display = 'block';
+        return;
+      }
+
       errorMsg.style.display = 'none';
       submitBtn.disabled = true;
       submitBtn.textContent = '送出中…';
