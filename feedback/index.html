@@ -541,7 +541,7 @@
         <input type="email" id="email" name="email" required>
       </div>
 
-      <!-- 2. 署名方式 -->
+   <!-- 2. 署名方式 -->
       <div class="field">
         <span class="q">心得公開時，你想怎麼署名？</span>
         <p class="hint">不論選哪個，你的 Email 都不會出現在網站上。</p>
@@ -550,15 +550,18 @@
             <input type="radio" name="署名方式" value="使用代稱" id="use-nick">
             <span>我想用一個代稱</span>
           </label>
+ 
+          <!-- 輸入框放在「代稱」這一項的正下方，選了之後才展開 -->
+          <div id="nick-wrap" hidden>
+            <input type="text" id="nickname" name="代稱" maxlength="20"
+              placeholder="例如：C、Jen">
+            <p class="hint" style="margin:0.5rem 0 0;">只留一個英文字母也可以。</p>
+          </div>
+ 
           <label class="opt">
-      <input type="radio" name="署名方式" value="匿名" checked>
+            <input type="radio" name="署名方式" value="匿名" checked>
             <span>匿名分享就好</span>
           </label>
-        </div>
-        <div id="nick-wrap" hidden>
-          <input type="text" id="nickname" name="代稱" maxlength="20"
-            placeholder="例如：C、Jen">
-          <p class="hint" style="margin:0.5rem 0 0;">只留一個英文字母也可以。</p>
         </div>
       </div>
 
