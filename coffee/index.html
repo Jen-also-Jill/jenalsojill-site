@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" id="htmlRoot">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coffee Perth WA · jen.alsojill</title>
+<meta name="description" content="西澳伯斯咖啡課 — 1 on 1 一對一教學與 Cafe 實地小班，從基礎咖啡到進階拉花。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500&family=Noto+Serif+TC:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* 深咖啡色系：從深焙豆到奶泡 */
+    --navy:       #4A3428;   /* 深焙  主色 */
+    --navy-mid:   #6B4A35;   /* 中焙 */
+    --navy-soft:  #8A6550;   /* 淺焙  標籤文字 */
+    --navy-pale:  #F0E7E0;   /* Crema 淺底 */
+    --navy-tint:  #FAF6F2;   /* 奶泡  區塊底 */
+    --white:      #FFFFFF;
+    --ink:        #1E1714;   /* 偏暖的近黑 */
+    --ink-soft:   #6E6058;
+    --border:     #E5DAD1;
+    --border-soft:#F2EBE5;
+    --radius:     10px;
+    --radius-sm:  5px;
+  }
+
+  body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: 'Noto Sans TC', 'DM Sans', sans-serif;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .nav-inner {
+    max-width: 820px; margin: 0 auto; padding: 0 2rem;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 56px;
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+    font-size: 1.1rem; color: var(--navy); text-decoration: none;
+  }
+  .nav-back { font-size: 0.82rem; color: var(--ink-soft); text-decoration: none; }
+  .nav-back:hover { color: var(--navy); }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy); color: #fff;
+    padding: 4.5rem 2rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero::after {
+    content: ''; position: absolute;
+    bottom: -1px; left: 0; right: 0; height: 60px;
+    background: var(--white);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+  .hero-inner { max-width: 700px; margin: 0 auto; position: relative; }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.1rem, 5.5vw, 3.2rem);
+    line-height: 1.2; margin-bottom: 0.9rem;
+    color: #fff; font-weight: 500; letter-spacing: 0.02em;
+  }
+  .hero p {
+    font-size: 1.05rem; font-weight: 300;
+    color: rgba(255,255,255,0.65); letter-spacing: 0.03em;
+  }
+
+  /* ── 共用 ── */
+  .page-wrap { max-width: 820px; margin: 0 auto; padding: 0 2rem; }
+  section { padding: 3.5rem 0; }
+  .section-eyebrow {
+    font-size: 0.67rem; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--navy-soft); margin-bottom: 0.5rem;
+  }
+  .section-heading {
+    font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--navy); line-height: 1.4;
+    margin-bottom: 0.7rem; font-weight: 500; letter-spacing: 0.04em;
+  }
+  .section-lead { font-size: 0.95rem; color: var(--ink-soft); max-width: 560px; }
+
+  /* ═══════════════════════════════════════════════════════
+     課程圖片（可左右滑動，5 張）
+     換圖：把 images 資料夾裡的 c1.jpg ～ c5.jpg 換成你的照片，
+     檔名保持一樣就不用改程式碼。
+     ═══════════════════════════════════════════════════════ */
+  .gallery-wrap { padding-top: 2.5rem; }
+  .gallery {
+    display: flex; gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 0 2rem 0.5rem;
+    max-width: 820px; margin: 0 auto;
+  }
+  .gallery::-webkit-scrollbar { display: none; }
+  .gallery figure {
+    flex: 0 0 min(66vw, 320px);
+    scroll-snap-align: center;
+    margin: 0;
+  }
+  .gallery img {
+    display: block; width: 100%; height: auto; aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--navy-tint);
+  }
+  .gallery figcaption {
+    font-size: 0.82rem; color: var(--ink-soft);
+    margin-top: 0.6rem; text-align: center;
+  }
+  .gallery-hint {
+    max-width: 820px; margin: 0.9rem auto 0; padding: 0 2rem;
+    font-size: 0.82rem; color: var(--ink-soft); text-align: center;
+  }
+  /* 圖片還沒放時顯示的佔位樣式 */
+  .ph {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; aspect-ratio: 4 / 5;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+    background: var(--navy-tint);
+    color: #A8AFB8; font-size: 0.88rem;
+  }
+
+  /* ── 評價格子 ── */
+  .reviews-section { background: var(--navy-tint); }
+  .review-grid {
+    columns: 2;
+    column-gap: 1rem;
+    margin-top: 2rem;
+  }
+  .r-card {
+    break-inside: avoid;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.4rem 1.5rem;
+    margin: 0 0 1rem;
+  }
+  .r-card blockquote {
+    font-size: 0.92rem; color: var(--ink);
+    line-height: 2; margin: 0 0 1rem;
+  }
+  .r-who {
+    display: flex; align-items: center; gap: 0.6rem;
+    border-top: 1px solid var(--border-soft); padding-top: 0.85rem;
+  }
+  .r-letter {
+    width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+    background: var(--navy); color: #fff;
+    font-family: 'Cormorant Garamond', serif; font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .r-svc { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.5; }
+
+  /* ── 課程 ── */
+  .location-note {
+    background: var(--navy-pale);
+    border-left: 3px solid var(--navy);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    padding: 1.1rem 1.3rem; margin: 1.75rem 0 2.25rem;
+    font-size: 0.92rem; color: var(--ink);
+  }
+  .location-note strong { color: var(--navy); font-weight: 500; }
+
+  .course-list { display: flex; flex-direction: column; gap: 1.1rem; }
+  .course {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.7rem 1.8rem;
+    background: #fff;
+  }
+  .course.group { background: var(--navy-tint); }
+  .course-head {
+    display: flex; align-items: baseline; flex-wrap: wrap;
+    gap: 0.4rem 0.8rem; margin-bottom: 1.1rem;
+    padding-bottom: 0.9rem; border-bottom: 1px solid var(--border-soft);
+  }
+  .course-name {
+    font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+    font-size: 1.3rem; font-weight: 500; color: var(--navy);
+    letter-spacing: 0.02em;
+  }
+  .course-dur {
+    font-size: 0.82rem; color: #fff; background: var(--navy);
+    padding: 3px 12px; border-radius: 999px; white-space: nowrap;
+  }
+  .course-tag {
+    font-size: 0.78rem; color: var(--navy-mid);
+    background: var(--navy-pale); border: 1px solid var(--border);
+    padding: 3px 12px; border-radius: 999px; white-space: nowrap;
+  }
+  .course ul { list-style: none; }
+  .course li {
+    font-size: 0.93rem; color: var(--ink); line-height: 1.9;
+    padding: 0.35rem 0 0.35rem 1.6rem; position: relative;
+  }
+  .course li::before {
+    content: '✓'; position: absolute; left: 0;
+    color: var(--navy-soft); font-weight: 600;
+  }
+  .course li .sub {
+    display: block; font-size: 0.86rem; color: var(--ink-soft);
+    padding-left: 0.1rem;
+  }
+
+  /* ── 常見 QA ── */
+  .qa-list { display: flex; flex-direction: column; gap: 0.7rem; margin-top: 2rem; }
+  .qa {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+  }
+  .qa summary {
+    cursor: pointer; list-style: none;
+    display: flex; align-items: flex-start; gap: 0.9rem;
+    padding: 1.1rem 1.4rem;
+    font-size: 0.98rem; font-weight: 500; color: var(--navy);
+    line-height: 1.7;
+  }
+  .qa summary::-webkit-details-marker { display: none; }
+  .qa summary::before {
+    content: '＋'; flex-shrink: 0;
+    color: var(--navy-soft); font-size: 1rem; line-height: 1.7;
+  }
+  .qa[open] summary::before { content: '－'; }
+  .qa summary:hover { background: var(--navy-tint); }
+  .qa[open] summary { border-bottom: 1px solid var(--border-soft); }
+  .qa-body { padding: 1.3rem 1.4rem 1.5rem 3.2rem; }
+  .qa-body p { font-size: 0.93rem; color: var(--ink); line-height: 2; margin-bottom: 0.9rem; }
+  .qa-body p:last-child { margin-bottom: 0; }
+  .qa-body strong { color: var(--navy); font-weight: 500; }
+  .qa-body ul { list-style: none; margin: 0.4rem 0 1rem; }
+  .qa-body li {
+    font-size: 0.91rem; color: var(--ink); line-height: 1.9;
+    padding: 0.3rem 0 0.3rem 1rem; position: relative;
+  }
+  .qa-body li::before {
+    content: '·'; position: absolute; left: 0.1rem;
+    color: var(--navy-soft); font-size: 1.3rem; line-height: 1;
+  }
+  .qa-body ul.slots li, .qa-body ul.price li {
+    background: var(--navy-tint); border-radius: var(--radius-sm);
+    padding: 0.6rem 0.9rem; margin-bottom: 0.4rem;
+  }
+  .qa-body ul.slots li::before, .qa-body ul.price li::before { content: none; }
+  .qa-body ul.price li {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  }
+  .qa-body ul.price b { color: var(--navy); font-weight: 600; white-space: nowrap; }
+  .price-note { font-size: 0.84rem !important; color: var(--ink-soft) !important; }
+
+  /* ── 預約表單 ── */
+  .form-section { background: var(--navy-tint); }
+  form { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
+  .field label.q, .field span.q {
+    display: block; font-size: 0.95rem; font-weight: 500;
+    color: var(--ink); margin-bottom: 0.3rem;
+  }
+  .field .hint { font-size: 0.84rem; color: var(--ink-soft); margin-bottom: 0.7rem; }
+  input[type="text"], input[type="email"] {
+    width: 100%; padding: 13px 15px; font-size: 1rem;
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    background: #fff; color: var(--ink); font-family: inherit;
+  }
+  textarea {
+    width: 100%; min-height: 130px; resize: vertical;
+    padding: 14px 16px; font-size: 1rem; line-height: 1.9;
+    border: 1px solid var(--border); border-radius: var(--radius-sm);
+    background: #fff; color: var(--ink); font-family: inherit;
+  }
+  input:focus, textarea:focus { outline: 2px solid var(--navy); outline-offset: 1px; }
+
+  .opts { display: flex; flex-direction: column; gap: 0.55rem; }
+  .opt {
+    display: flex; align-items: flex-start; gap: 0.75rem;
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 12px 15px;
+    cursor: pointer; transition: border-color 0.15s, background 0.15s;
+  }
+  .opt:hover { border-color: var(--navy-soft); }
+  .opt:has(input:checked) { border-color: var(--navy); background: var(--navy-pale); }
+  .opt input { width: 17px; height: 17px; accent-color: var(--navy); flex-shrink: 0; margin-top: 3px; }
+  .opt span { display: flex; flex-direction: column; gap: 2px; font-size: 0.94rem; line-height: 1.6; }
+  .opt strong { font-weight: 500; color: var(--ink); }
+  .opt em { font-style: normal; font-size: 0.83rem; color: var(--ink-soft); }
+
+  button[type="submit"] {
+    align-self: flex-start;
+    background: var(--navy); color: #fff; border: none;
+    padding: 14px 34px; border-radius: var(--radius-sm);
+    font-size: 1rem; font-weight: 500; cursor: pointer; font-family: inherit;
+  }
+  button[type="submit"]:hover { background: var(--navy-mid); }
+  button[type="submit"]:disabled { opacity: 0.6; cursor: default; }
+
+  #form-success {
+    display: none; background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2rem; margin-top: 2rem;
+  }
+  #form-success p { font-size: 1rem; color: var(--ink); }
+  #form-error { display: none; color: #B3261E; font-size: 0.88rem; margin-top: 0.8rem; }
+  #form-error a { color: #B3261E; }
+
+  .alt-contact {
+    margin-top: 1.6rem; font-size: 0.9rem; color: var(--ink-soft); text-align: center;
+  }
+  .alt-contact a { color: var(--navy); }
+
+  /* ── CTA ── */
+  .cta { background: var(--navy); padding: 4rem 2rem; text-align: center; }
+  .cta-inner { max-width: 520px; margin: 0 auto; }
+  .cta h2 {
+    font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
+    font-size: clamp(1.5rem, 3.5vw, 2rem);
+    color: #fff; font-weight: 500; margin-bottom: 0.8rem; letter-spacing: 0.03em;
+  }
+  .cta p { font-size: 0.93rem; color: rgba(255,255,255,0.5); margin-bottom: 1.9rem; }
+  .btn {
+    display: inline-block;
+    background: #fff; color: var(--navy);
+    padding: 0.9rem 2.1rem; border-radius: var(--radius-sm);
+    font-size: 0.95rem; font-weight: 500; text-decoration: none;
+    transition: opacity 0.18s;
+  }
+  .btn:hover { opacity: 0.85; }
+
+
+  /* ── 中英切換 ── */
+  .en { display: none; }
+  body.en-mode .en { display: block; }
+  body.en-mode .zh { display: none; }
+  span.en, li.en, b.en { display: none; }
+  body.en-mode span.en { display: inline; }
+  body.en-mode li.en { display: list-item; }
+  body.en-mode b.en { display: inline; }
+  body.en-mode span.zh, body.en-mode li.zh, body.en-mode b.zh { display: none; }
+
+  /* ── 右上浮動按鈕 ── */
+  .float-btns {
+    position: fixed; top: 70px; right: 1.25rem; z-index: 200;
+    display: flex; flex-direction: column; gap: 0.55rem; align-items: flex-end;
+  }
+  .fbtn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 9px 18px; border-radius: 999px;
+    font-family: inherit; font-size: 0.82rem; font-weight: 500;
+    border: none; cursor: pointer; text-decoration: none;
+    white-space: nowrap; min-width: 108px; justify-content: center;
+    box-shadow: 0 3px 14px rgba(74,52,40,0.22);
+    transition: transform 0.15s, background 0.18s;
+  }
+  .fbtn:hover { transform: translateY(-1px); }
+  .fbtn-lang { background: var(--navy-mid); color: #fff; }
+  .fbtn-lang:hover { background: var(--navy); }
+  .fbtn-book { background: #fff; color: var(--navy); border: 1px solid var(--border); }
+  .fbtn-book:hover { background: var(--navy-pale); }
+
+  @media (max-width: 600px) {
+    .float-btns { top: 64px; right: 0.85rem; gap: 0.45rem; }
+    .fbtn { font-size: 0.78rem; padding: 8px 15px; min-width: 96px; }
+  }
+
+  /* ── FOOTER ── */
+  footer { background: #2F2019; padding: 1.75rem 2rem; text-align: center; }
+  footer p { font-size: 0.77rem; color: rgba(255,255,255,0.25); }
+  footer a { color: rgba(255,255,255,0.4); text-decoration: none; }
+  footer a:hover { color: rgba(255,255,255,0.65); }
+
+  @media (max-width: 600px) {
+    .hero { padding: 3.5rem 1.25rem 3.5rem; }
+    .page-wrap, .gallery, .gallery-hint { padding-left: 1.25rem; padding-right: 1.25rem; }
+    .nav-inner { padding: 0 1.25rem; }
+    section { padding: 2.75rem 0; }
+    .course { padding: 1.4rem 1.4rem; }
+    .cta { padding: 3rem 1.25rem; }
+    .btn { width: 100%; }
+    .review-grid { columns: 1; }
+    .qa summary { padding: 1rem 1.1rem; font-size: 0.95rem; }
+    .qa-body { padding: 1.1rem 1.1rem 1.3rem 2.6rem; }
+    button[type="submit"] { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ 右上角浮動按鈕 ═══ -->
+<div class="float-btns">
+  <button type="button" class="fbtn fbtn-lang" id="langBtn">English</button>
+  <a href="#book" class="fbtn fbtn-book">
+    <span class="zh">如何報名</span><span class="en">How to book</span>
+  </a>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">jen.alsojill</a>
+    <a href="/" class="nav-back">
+      <span class="zh">← 回首頁</span><span class="en">← Home</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Coffee Perth WA<br>by Jen.co</h1>
+    <p>
+      <span class="zh">西澳伯斯咖啡課　1 on 1 或 Cafe Group</span>
+      <span class="en">Barista classes in Perth WA　1 on 1 or Cafe Group</span>
+    </p>
+  </div>
+</section>
+
+<!-- ═══ 課程圖片（8 張，可左右滑動）═══
+     換圖方法：照片放在這個頁面旁邊的 images 資料夾，
+     檔名 c1.jpg ～ c8.jpg。想換圖就直接覆蓋同名檔案，
+     程式碼完全不用動。想增減張數就加一行或刪一行 <figure>。
+     照片比例是 4:5 直式。
+-->
+<div class="gallery-wrap">
+  <div class="gallery">
+    <figure><img src="images/c1.jpg" alt="課程照片" loading="lazy" width="675" height="844"></figure>
+    <figure><img src="images/c2.jpg" alt="課程照片" loading="lazy" width="675" height="844"></figure>
+    <figure><img src="images/c3.jpg" alt="課程照片" loading="lazy" width="675" height="844"></figure>
+    <figure><img src="images/c4.jpg" alt="課程照片" loading="lazy" width="675" height="844"></figure>
+    <figure><img src="images/c5.jpg" alt="課程照片" loading="lazy" width="675" height="844"></figure>
+    <figure><img src="images/c6.jpg" alt="課程照片" loading="lazy" width="675" height="844"></figure>
+    <figure><img src="images/c7.jpg" alt="課程照片" loading="lazy" width="675" height="844"></figure>
+    <figure><img src="images/c8.jpg" alt="課程照片" loading="lazy" width="675" height="844"></figure>
+  </div>
+  <p class="gallery-hint"><span class="zh">← 左右滑動看更多 →</span><span class="en">← Swipe for more →</span></p>
+</div>
+
+<!-- ═══ 課後評價 ═══
+     要新增一則：複製一整個 <figure class="r-card"> ... </figure> 貼上即可。
+     沒有課程名稱的話，把 <span class="r-svc">…</span> 整段刪掉就好。
+-->
+<section class="reviews-section">
+  <div class="page-wrap">
+    <div class="section-eyebrow">Reviews</div>
+    <h2 class="section-heading"><span class="zh">上過課的人怎麼說</span><span class="en">What students say</span></h2>
+    <p class="section-lead"><span class="zh">以下皆為學員課後自行填寫並同意公開分享的內容。</span><span class="en">Written by students after class and shared with their permission. Reviews are kept in the language they were originally written in.</span></p>
+
+    <div class="review-grid">
+
+      <figure class="r-card">
+        <blockquote>超級棒👍🏻👍🏻👍🏻<br>解鎖了更多拉花款式，今今講解的很詳細，給妳幾霸昏！</blockquote>
+        <figcaption class="r-who"><span class="r-letter">C</span><span class="r-svc">1 對 2 和朋友 2 小時的咖啡進階課</span></figcaption>
+      </figure>
+
+      <figure class="r-card">
+        <blockquote>這堂課學到很多咖啡相關的知識（克數、打牛奶的溫度）還有拉花技巧！而且老師很有趣超級好玩！</blockquote>
+        <figcaption class="r-who"><span class="r-letter">E</span></figcaption>
+      </figure>
+
+      <figure class="r-card">
+        <blockquote>很開心自己的一些問題得到解答。從磨豆，克重，咖啡萃取等等都有基礎知識。上完課後，也大概知道自己需要改進或注意的部分，只要在上班時加強訓練一下，應該可以掌握90%的咖啡製作。：）而且還有講義可以複習，真的很棒！</blockquote>
+        <figcaption class="r-who"><span class="r-letter">T</span></figcaption>
+      </figure>
+
+      <figure class="r-card">
+        <blockquote>我想回饋今日課程的整體流程安排得很不錯！有實際操作到每一步非常踏實且有收穫 100分<br>很開心能有機會在澳洲學習到一個新技能 以及兩位老師具體並化繁為簡的教學 讓我能漸入佳境 獲得寶貴的經驗</blockquote>
+        <figcaption class="r-who"><span class="r-letter">H</span><span class="r-svc">Cafe Group 小班</span></figcaption>
+      </figure>
+
+      <figure class="r-card">
+        <blockquote>很感謝jen悉心教導💕 我覺得節奏很好！我在想如果有時間的話 能否能介紹一下怎能跟澳洲人network 說他們的「language」融入他們。但是咖啡是真的教的很棒！謝謝❤️ 一個很棒的network 還有鼓勵❤️</blockquote>
+        <figcaption class="r-who"><span class="r-letter">H</span><span class="r-svc">Cafe Group 小班</span></figcaption>
+      </figure>
+
+      <figure class="r-card">
+        <blockquote>謝謝今今的咖啡體驗課，第一次接觸咖啡機和拉花，大概對澳洲的咖啡有點概念了，很適合初學者體驗看看！</blockquote>
+        <figcaption class="r-who"><span class="r-letter">Y</span></figcaption>
+      </figure>
+
+      <figure class="r-card">
+        <blockquote>去體驗了咖啡課，一直擔心過程會很尷尬的情況完全不會出現！今今詳細的教學，咖啡的種類、奶泡的差別及控制以及如何拉花，加上適時的鼓勵全程非常開心且實用。(和朋友一起報名上課)</blockquote>
+        <figcaption class="r-who"><span class="r-letter">W</span></figcaption>
+      </figure>
+
+      <figure class="r-card">
+        <blockquote>今天去體驗了咖啡課，意外地很好玩也很實用。先跟我介紹了澳洲常見的咖啡種類，之後還親自教我怎麼打奶泡、拉花。原本以為時間很短，結果內容滿滿的，覺得學到不少。整體感覺很輕鬆，也讓我更想繼續試著做做看。</blockquote>
+        <figcaption class="r-who"><span class="r-letter">I</span></figcaption>
+      </figure>
+
+      <figure class="r-card">
+        <blockquote>上了今今老師的基礎入門課<br>竟然成功拉出愛心拉花了！😭☕️<br><br>真的非常感謝今今老師 超级无敌細心 + 耐心<br>((超愛這種鼓勵型老師<br><br>每個細節都會拆開來講清楚 還會讓你一直上手練到會為止 完全不會趕時間！不管是研磨咖啡豆 還是打奶泡 所有細節都教的一清二楚 比起像是老師 更像是朋友邊和你聊天邊教你～ 對新手小白來說真的超級友好 學得很安心也很開心💛</blockquote>
+        <figcaption class="r-who"><span class="r-letter">A</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 課程介紹 ═══ -->
+<section id="courses">
+  <div class="page-wrap">
+    <div class="section-eyebrow">Courses</div>
+    <h2 class="section-heading"><span class="zh">Jen Co 咖啡課程方案</span><span class="en">Jen Co Coffee Course Plan</span></h2>
+
+    <div class="location-note">
+      <span class="zh"><strong>上課地點</strong>｜靠近 Murdoch Station，可以開車，或是從 Murdoch 搭 <strong>516 公車</strong>直達上課地點。</span><span class="en"><strong>Location</strong>｜Near Murdoch Station. Drive, or take the <strong>516 bus</strong> from Murdoch straight to the venue.</span>
+    </div>
+
+    <div class="course-list">
+
+      <article class="course">
+        <div class="course-head">
+          <span class="course-name"><span class="zh">Entry 基礎咖啡</span><span class="en">Entry · Coffee Basics</span></span>
+          <span class="course-dur"><span class="zh">70 分鐘</span><span class="en">70 min</span></span>
+          <span class="course-tag">1 on 1</span>
+        </div>
+        <ul>
+          <li class="zh">學習 Flat white、Latte、Cappuccino</li>
+          <li class="en">Learn Flat White, Latte and Cappuccino</li>
+          <li class="zh">基礎奶泡打發技巧 &amp; 學習愛心拉花</li>
+          <li class="en">Basic milk steaming &amp; your first heart latte art</li>
+          <li class="zh">包含課程實體講義、完課證書護貝版</li>
+          <li class="en">Printed course notes and a laminated certificate included</li>
+        </ul>
+      </article>
+
+      <article class="course">
+        <div class="course-head">
+          <span class="course-name"><span class="zh">Latte Art 入門拉花</span><span class="en">Latte Art · Beginner</span></span>
+          <span class="course-dur"><span class="zh">90 分鐘</span><span class="en">90 min</span></span>
+          <span class="course-tag">1 on 1</span>
+        </div>
+        <ul>
+          <li class="zh">學習 Flat white、Latte、Cappuccino</li>
+          <li class="en">Learn Flat White, Latte and Cappuccino</li>
+          <li class="zh">掌握奶泡打發技巧 &amp; 愛心和推心拉花</li>
+          <li class="en">Master milk steaming, heart and tulip latte art</li>
+          <li class="zh">包含課程實體講義、完課證書護貝版</li>
+          <li class="en">Printed course notes and a laminated certificate included</li>
+        </ul>
+      </article>
+
+      <article class="course">
+        <div class="course-head">
+          <span class="course-name"><span class="zh">Advanced 咖啡師進階</span><span class="en">Advanced · Barista Skills</span></span>
+          <span class="course-dur"><span class="zh">130 分鐘</span><span class="en">130 min</span></span>
+          <span class="course-tag">1 on 1</span>
+        </div>
+        <ul>
+          <li class="zh">六種澳洲咖啡店常見飲品
+            <span class="sub">Flat white、Latte、Cappuccino、Long Mac、Short Mac、Long Black、Piccolo</span>
+          </li>
+          <li class="en">The drinks every Australian cafe serves
+            <span class="sub">Flat White, Latte, Cappuccino, Long Mac, Short Mac, Long Black, Piccolo</span>
+          </li>
+          <li class="zh">掌握奶泡打發技巧 &amp; 愛心和進階拉花技巧</li>
+          <li class="en">Master milk steaming plus advanced latte art</li>
+          <li class="zh">客製版咖啡課實體講義</li>
+          <li class="en">Course notes tailored to you</li>
+          <li class="zh">咖啡課完課證書護貝版</li>
+          <li class="en">Laminated certificate on completion</li>
+          <li class="zh">求職咖啡師電子書
+            <span class="sub">面試 QA ／ 履歷健檢</span>
+          </li>
+          <li class="en">Barista job-hunting e-book
+            <span class="sub">Interview Q&amp;A ／ resume review</span>
+          </li>
+        </ul>
+      </article>
+
+      <article class="course group">
+        <div class="course-head">
+          <span class="course-name">Cafe Group</span>
+          <span class="course-dur"><span class="zh">季節限定</span><span class="en">Seasonal</span></span>
+          <span class="course-tag">Jan 2027</span>
+        </div>
+        <ul>
+          <li class="zh">Cafe 實地實操，中英授課小班制</li>
+          <li class="en">Hands-on in a real cafe, small group, taught in English and Mandarin</li>
+          <li class="zh">全程課程側拍可下載複習</li>
+          <li class="en">Photos from the session, downloadable afterwards</li>
+          <li class="zh">講義教材 &amp; 線上講義</li>
+          <li class="en">Printed and online course notes</li>
+          <li class="zh">咖啡課完課證書護貝版</li>
+          <li class="en">Laminated certificate on completion</li>
+        </ul>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 常見 QA ═══ -->
+<section class="qa-section">
+  <div class="page-wrap">
+    <div class="section-eyebrow">FAQ</div>
+    <h2 class="section-heading"><span class="zh">Jen Co 西澳伯斯咖啡課常見 QA</span><span class="en">Frequently asked questions</span></h2>
+    <p class="section-lead"><span class="zh">點開看詳細說明，有其他問題也歡迎私訊問。</span><span class="en">Tap to expand. Any other questions, just send a DM.</span></p>
+
+    <div class="qa-list">
+
+      <details class="qa">
+        <summary><span class="zh">目前提供的咖啡課內容實際在上什麼？</span><span class="en">What do the classes actually cover?</span></summary>
+        <div class="qa-body">
+          <div class="zh"><p>不是看老師示範、你在旁邊拍照的那種課。整堂課你會一直站在機器前面自己做。</p>
+          <p>從認識濃縮咖啡的萃取標準開始，接著花大量時間練習打奶泡 —— 用手感受鋼杯的溫度，知道幾度該停。然後實際拉出圖案。</p>
+          <p>依照你選的課程，會做到不同程度：</p>
+          <ul>
+            <li><strong>Entry（70 分鐘）</strong>：Flat white、Latte、Cappuccino，基礎奶泡與愛心拉花</li>
+            <li><strong>Latte Art（90 分鐘）</strong>：同上，加上推心拉花</li>
+            <li><strong>Advanced（130 分鐘）</strong>：澳洲咖啡店常見的六種飲品，進階拉花技巧，另附求職咖啡師電子書</li>
+          </ul>
+          <p>每一堂都含實體講義和完課證書護貝版，回家之後還能照著練。</p></div>
+          <div class="en"><p>This isn&rsquo;t a class where you watch and take photos. You&rsquo;re standing at the machine making coffee the whole time.</p>
+          <p>We start with what a good espresso extraction looks like, then spend most of the session on milk &mdash; feeling the jug with your hand so you know when to stop. Then you pour.</p>
+          <p>How far you get depends on the class:</p>
+          <ul>
+            <li><strong>Entry (70 min)</strong>: Flat White, Latte, Cappuccino, basic milk and a heart</li>
+            <li><strong>Latte Art (90 min)</strong>: the above plus tulips</li>
+            <li><strong>Advanced (130 min)</strong>: the six drinks Australian cafes serve daily, advanced latte art, plus a barista job-hunting e-book</li>
+          </ul>
+          <p>Every class comes with printed notes and a laminated certificate, so you can keep practising at home.</p></div>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="zh">英文不好或中文不好，會影響上課嗎？</span><span class="en">Will it be a problem if my English or Mandarin isn&rsquo;t strong?</span></summary>
+        <div class="qa-body">
+          <div class="zh"><p>不會。中英雙語授課，你聽哪一種順就用哪一種。</p>
+          <p>而且 1 on 1 就只有你一個人，不用擔心聽不懂又不好意思打斷，想問幾次都可以，沒有人在旁邊等你。</p>
+          <p>很多來上課的人就是因為在英文環境裡不好意思一直問，才選擇先用自己熟悉的語言把基礎打穩。</p></div>
+          <div class="en"><p>No. Classes are taught in both English and Mandarin &mdash; whichever you&rsquo;re comfortable with.</p>
+          <p>And in a 1 on 1 it&rsquo;s just you. No need to worry about missing something and feeling awkward about interrupting. Ask as many times as you like; nobody is waiting on you.</p>
+          <p>A lot of people book precisely because they didn&rsquo;t feel comfortable asking questions over and over in an English-speaking workplace.</p></div>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="zh">對咖啡 0 概念、完全不喝咖啡，也能上嗎？</span><span class="en">I know nothing about coffee and I don&rsquo;t even drink it. Can I still come?</span></summary>
+        <div class="qa-body">
+          <div class="zh"><p>可以。Entry 基礎咖啡本來就是為零基礎設計的，不需要任何先備知識。</p>
+          <p>不喝咖啡也完全沒問題 —— 做咖啡跟喝咖啡是兩件事。課堂上會教你怎麼用看的、用聽的、用手去判斷，不是靠味覺。實際上也有學員是為了工作需要或單純想學一項技能而來的。</p></div>
+          <div class="en"><p>Yes. Entry is built for people starting from zero &mdash; no prior knowledge needed.</p>
+          <p>Not drinking coffee is fine too; making it and drinking it are different things. You&rsquo;ll learn to judge by sight, sound and touch rather than taste. Some students come purely because they need it for work, or just want a new skill.</p></div>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="zh">在台灣學過咖啡，還建議要報名上課嗎？</span><span class="en">I&rsquo;ve learnt coffee back home. Is this still worth booking?</span></summary>
+        <div class="qa-body">
+          <div class="zh"><p>看你的目的。如果是想在澳洲的咖啡店工作，那差異其實不小。</p>
+          <p>澳洲咖啡店的飲品品項跟台灣不一樣 —— Flat white、Long Mac、Short Mac、Piccolo 這些在台灣少見，但在這裡是每天都要出的基本款。份量、奶泡厚度、出杯節奏也都有當地的標準。</p>
+          <p>有基礎的人我通常會建議直接上 <strong>Advanced</strong>，把六種澳洲常見飲品一次補齊，拉花也練到能上線的程度。如果你本來就會拉花，那更適合把時間花在澳洲吧台的實際節奏上。</p></div>
+          <div class="en"><p>Depends what you&rsquo;re after. If you want to work in an Australian cafe, the gap is bigger than you&rsquo;d think.</p>
+          <p>The menu here is different &mdash; Flat White, Long Mac, Short Mac and Piccolo are everyday orders in Australia but rare elsewhere. Volumes, foam texture and the pace behind the bar all follow local standards.</p>
+          <p>If you already have a base, <strong>Advanced</strong> is usually the better fit: you cover all six Australian staples in one session and get your latte art to a level you can use on shift.</p></div>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="zh">目前可以安排的上課時段是什麼時候？</span><span class="en">What times are available?</span></summary>
+        <div class="qa-body">
+          <div class="zh"><p>固定開放這三個時段：</p>
+          <ul class="slots">
+            <li>週五　5:15 pm</li>
+            <li>週六　10:00 am</li>
+            <li>週六　3:00 pm</li>
+          </ul>
+          <p>這三個時段都不方便的話，可以私訊 IG 詢問其他時間，會盡量配合安排。</p></div>
+          <div class="en"><p>Three regular slots:</p>
+          <ul class="slots">
+            <li>Friday　5:15 pm</li>
+            <li>Saturday　10:00 am</li>
+            <li>Saturday　3:00 pm</li>
+          </ul>
+          <p>If none of these work, send a DM on Instagram and I&rsquo;ll do my best to find another time.</p></div>
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary><span class="zh">要如何報名？咖啡課程費用怎麼算？</span><span class="en">How do I book, and what does it cost?</span></summary>
+        <div class="qa-body">
+          <div class="zh"><p>報名方式有兩種：<strong>填下方的預約表單（最快）</strong>，或是私訊 Instagram。</p>
+          <p>課程費用：</p>
+          <ul class="price">
+            <li><span>1 對 1　Entry 基礎咖啡</span><b>$169</b></li>
+            <li><span>1 對 1　Latte Art 入門拉花</span><b>$189</b></li>
+            <li><span>1 對 1　Advanced 咖啡師進階</span><b>$269</b></li>
+            <li><span>Cafe Group 小班</span><b>$199</b></li>
+          </ul>
+          <p class="price-note">報價效期至 2026 年 12 月 20 日。</p></div>
+          <div class="en"><p>Two ways: <strong>fill in the form below (fastest)</strong>, or send a DM on Instagram.</p>
+          <p>Pricing:</p>
+          <ul class="price">
+            <li><span>1 on 1　Entry · Coffee Basics</span><b>$169</b></li>
+            <li><span>1 on 1　Latte Art · Beginner</span><b>$189</b></li>
+            <li><span>1 on 1　Advanced · Barista Skills</span><b>$269</b></li>
+            <li><span>Cafe Group</span><b>$199</b></li>
+          </ul>
+          <p class="price-note">Prices valid until 20 December 2026.</p></div>
+        </div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 預約表單 ═══ -->
+<section class="form-section" id="book">
+  <div class="page-wrap">
+    <div class="section-eyebrow">Book a class</div>
+    <h2 class="section-heading"><span class="zh">預約咖啡課</span><span class="en">Book a coffee class</span></h2>
+    <p class="section-lead"><span class="zh">留下資料，我會用 Email 跟你確認時間與細節。還在考慮、想先問問題也可以填。</span><span class="en">Leave your details and I&rsquo;ll email you to confirm a time. Still deciding or just have questions? Feel free to use this form too.</span></p>
+
+    <!--
+      ⚠️ 表單設定
+      這個表單送到 Formspree 的 mzeejgyo（咖啡課專用）。
+      注意：Formspree 後台的 reCAPTCHA 一定要保持 Disabled，
+      開啟的話這個表單會直接壞掉，客人按送出會看到紅色錯誤訊息。
+    -->
+    <form id="coffee-form" action="https://formspree.io/f/mzeejgyo" method="POST">
+
+      <input type="hidden" id="langField" name="瀏覽語言" value="中文">
+
+      <div class="field">
+        <label class="q" for="name"><span class="zh">你的名字</span><span class="en">Your name</span></label>
+        <input type="text" id="name" name="名字" required>
+      </div>
+
+      <div class="field">
+        <label class="q" for="email">Email</label>
+        <p class="hint"><span class="zh">我會用這個信箱跟你確認課程細節。</span><span class="en">I&rsquo;ll use this to confirm the details with you.</span></p>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="field">
+        <span class="q"><span class="zh">想上哪一堂課？</span><span class="en">Which class are you interested in?</span></span>
+        <p class="hint"><span class="zh">還不確定的話勾最後一項就好。</span><span class="en">Not sure yet? Just pick the last option.</span></p>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="想上的課程" value="Entry 基礎咖啡 $169" required><span><strong><span class="zh">Entry 基礎咖啡</span><span class="en">Entry · Coffee Basics</span></strong><em><span class="zh">70 分鐘 · $169</span><span class="en">70 min · $169</span></em></span></label>
+          <label class="opt"><input type="radio" name="想上的課程" value="Latte Art 入門拉花 $189"><span><strong><span class="zh">Latte Art 入門拉花</span><span class="en">Latte Art · Beginner</span></strong><em><span class="zh">90 分鐘 · $189</span><span class="en">90 min · $189</span></em></span></label>
+          <label class="opt"><input type="radio" name="想上的課程" value="Advanced 咖啡師進階 $269"><span><strong><span class="zh">Advanced 咖啡師進階</span><span class="en">Advanced · Barista Skills</span></strong><em><span class="zh">130 分鐘 · $269</span><span class="en">130 min · $269</span></em></span></label>
+          <label class="opt"><input type="radio" name="想上的課程" value="Cafe Group 小班 $199"><span><strong>Cafe Group</strong><em><span class="zh">季節限定 Jan 2027 · $199</span><span class="en">Seasonal, Jan 2027 · $199</span></em></span></label>
+          <label class="opt"><input type="radio" name="想上的課程" value="還不確定，想先討論"><span><strong><span class="zh">還不確定</span><span class="en">Not sure yet</span></strong><em><span class="zh">想先討論看看哪一堂適合我</span><span class="en">I&rsquo;d like help choosing</span></em></span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <span class="q"><span class="zh">方便的時段</span><span class="en">Times that suit you</span></span>
+        <p class="hint"><span class="zh">可以複選，都不方便的話勾最後一項。</span><span class="en">Pick as many as you like. If none work, choose the last one.</span></p>
+        <div class="opts">
+          <label class="opt"><input type="checkbox" name="方便的時段" value="週五 5:15 pm"><span><span class="zh">週五　5:15 pm</span><span class="en">Friday　5:15 pm</span></span></label>
+          <label class="opt"><input type="checkbox" name="方便的時段" value="週六 10:00 am"><span><span class="zh">週六　10:00 am</span><span class="en">Saturday　10:00 am</span></span></label>
+          <label class="opt"><input type="checkbox" name="方便的時段" value="週六 3:00 pm"><span><span class="zh">週六　3:00 pm</span><span class="en">Saturday　3:00 pm</span></span></label>
+          <label class="opt"><input type="checkbox" name="方便的時段" value="都不方便，想問其他時間"><span><span class="zh">都不方便，想問其他時間</span><span class="en">None of these &mdash; can we find another time?</span></span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="q" for="note"><span class="zh">想補充的事（選填）</span><span class="en">Anything else (optional)</span></label>
+        <p class="hint"><span class="zh">例如：有沒有咖啡經驗、想學的目的、任何想先問的問題。</span><span class="en">For example: any coffee experience, what you&rsquo;re hoping to get out of it, or questions you&rsquo;d like answered first.</span></p>
+        <textarea id="note" name="備註"></textarea>
+      </div>
+
+      <button type="submit"><span class="zh">送出預約</span><span class="en">Send booking request</span></button>
+      <p id="form-error">送出時發生問題，麻煩直接私訊 <a href="https://www.instagram.com/hi.jen.co/" target="_blank" rel="noopener">Instagram</a>，我一樣會收到。</p>
+    </form>
+
+    <div id="form-success">
+      <p><span class="zh">收到了，謝謝你 🙏🏻 我會在 1–2 天內用 Email 跟你聯絡，一起確認時間和課程內容。</span><span class="en">Got it, thank you 🙏🏻 I&rsquo;ll email you within 1&ndash;2 days to confirm a time and go over the class.</span></p>
+    </div>
+
+    <p class="alt-contact"><span class="zh">或是直接私訊 </span><span class="en">Or send a DM on </span><a href="https://www.instagram.com/hi.jen.co/" target="_blank" rel="noopener">Instagram @hi.jen.co</a></p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 <a href="/">jen.alsojill</a> · <a href="mailto:hi@jenalsojill.com">hi@jenalsojill.com</a></p>
+</footer>
+
+<script>
+  /* ── 中英切換 ── */
+  (function () {
+    var btn  = document.getElementById('langBtn');
+    var root = document.getElementById('htmlRoot');
+    btn.addEventListener('click', function () {
+      var toEn = !document.body.classList.contains('en-mode');
+      document.body.classList.toggle('en-mode', toEn);
+      btn.textContent = toEn ? '中文' : 'English';
+      root.setAttribute('lang', toEn ? 'en-AU' : 'zh-Hant');
+      // 送出時一併記錄對方看的是哪個語言版本
+      var f = document.getElementById('langField');
+      if (f) f.value = toEn ? 'English' : '中文';
+    });
+  })();
+
+  /* ── 預約表單 ── */
+  (function () {
+    var form    = document.getElementById('coffee-form');
+    var success = document.getElementById('form-success');
+    var error   = document.getElementById('form-error');
+    var btn     = form.querySelector('button[type="submit"]');
+    // 按鈕裡面是中英兩個 span，送出中途要換字，之後得原樣還回去，
+    // 不然語言切換會失效
+    var btnHTML = btn.innerHTML;
+
+    // 防機器人：送出得太快一定是機器人。
+    // 誤判時只請對方再按一次，不會假裝成功讓資料無聲消失。
+    var loadedAt = Date.now();
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // 錯誤訊息跟著頁面語言走
+      var en = document.body.classList.contains('en-mode');
+
+      if (Date.now() - loadedAt < 3000) {
+        error.textContent = en
+          ? 'Still loading — just tap Send once more and you’re done.'
+          : '系統還在載入，麻煩再按一次「送出預約」就可以了。';
+        error.style.display = 'block';
+        return;
+      }
+
+      if (!form.querySelector('input[name="方便的時段"]:checked')) {
+        error.textContent = en
+          ? 'Please tick at least one time slot. If none suit you, just tick the last option.'
+          : '麻煩至少勾選一個時段，都不方便的話勾最後一項就好。';
+        error.style.display = 'block';
+        return;
+      }
+
+      error.style.display = 'none';
+      btn.disabled = true;
+      btn.innerHTML = '<span class="zh">送出中…</span><span class="en">Sending…</span>';
+
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(function (res) {
+        if (res.ok) {
+          form.style.display = 'none';
+          success.style.display = 'block';
+          success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          return res.json().then(function (d) {
+            console.error('Formspree 回傳錯誤：', d);
+            throw new Error('bad response');
+          });
+        }
+      }).catch(function (err) {
+        console.error('送出失敗：', err);
+        error.innerHTML = en
+          ? 'Something went wrong. Please DM me on <a href="https://www.instagram.com/hi.jen.co/" target="_blank" rel="noopener">Instagram</a> instead — I’ll get it either way.'
+          : '送出時發生問題，麻煩直接私訊 <a href="https://www.instagram.com/hi.jen.co/" target="_blank" rel="noopener">Instagram</a>，我一樣會收到。';
+        error.style.display = 'block';
+        btn.disabled = false;
+        btn.innerHTML = btnHTML;
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
