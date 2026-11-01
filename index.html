@@ -215,11 +215,16 @@
       grid-template-columns: 1fr;
       gap: 0.85rem;
     }
-    .service { aspect-ratio: 2 / 1; }
-    .s-head { padding: 0.9rem 1rem; }
-    .service .cta { padding: 0 1.1rem 0.9rem; }
+    .service { aspect-ratio: 5 / 3; }
+    .s-head { padding: 1rem 1.1rem; }
+    .service .cta { padding: 0 1.2rem 1rem; }
+    /* 手機上一格就佔整個寬度，字可以放大很多才好讀。
+       這三行就是格子裡的字級，想再大就直接改數字 */
+    .s-head h2          { font-size: 1.6rem; }
+    .s-head .zh-subtitle{ font-size: 1.08rem; }
+    .service .cta       { font-size: 1.12rem; }
     .float-btns { top: 0.9rem; right: 0.9rem; }
-    .fbtn { padding: 8px 15px; font-size: 0.8rem; }
+    .fbtn { padding: 10px 18px; font-size: 0.95rem; }
   }
 
   /* 螢幕真的很窄時，橫式格子再壓扁一點 */
@@ -271,7 +276,7 @@
     <a class="service" href="/job-coaching/">
       <div class="s-head">
         <h2>Career Consultation</h2>
-        <p class="zh-subtitle">求職礦區 or 銀行客服 諮詢</p>
+        <p class="zh-subtitle">求職礦區 銀行客服 諮詢</p>
       </div>
       <span class="cta">1 on 1 →</span>
     </a>
