@@ -38,11 +38,18 @@
   }
 
   /* ── HERO ── */
+  /* 做成一張有圓角、有陰影的卡片，四周留一點白，
+     才不會跟下半部的白底硬碰硬接在一起 */
   .hero {
     background: var(--navy);
     color: #fff;
-    /* 下方是平的，不再有圓弧。最後一個數字是副標題下方的留白，大約兩行 */
-    padding: 5rem 2rem 5rem;
+    /* 最後一個數字是副標題下方的留白，大約一行 */
+    padding: 3.5rem 2.25rem 2rem;
+    /* 寬度跟下面的格子對齊，整頁變成一條置中的直欄 */
+    max-width: 640px;
+    margin: 1rem auto;
+    border-radius: 20px;
+    box-shadow: 0 12px 34px rgba(19, 39, 63, 0.22);
     position: relative;
     overflow: hidden;
   }
@@ -76,8 +83,8 @@
   .services-section { padding: 3.5rem 2rem 4.5rem; }
   /* 四個服務排成 2×2 的正方形格子 */
   .services {
-    /* 格子窄一點，裡面的留白就不會那麼空 */
-    max-width: 560px;
+    /* 跟上面的 hero 卡片同寬 */
+    max-width: 640px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -196,19 +203,27 @@
   footer a:hover { color: rgba(255,255,255,0.7); }
 
   @media (max-width: 600px) {
-    .hero { padding: 3.5rem 1.25rem 4rem; }
-    .services-section { padding: 2.5rem 1.25rem 3.5rem; }
-    .services { gap: 0.75rem; }
-    /* 手機上維持正方形，標題字多的話格子會自己往下長一點 */
-    .s-head { padding: 0.9rem 0.7rem; }
-    .service .cta { padding: 0 0.9rem 0.9rem; }
+    .hero {
+      padding: 2.75rem 1.4rem 1.75rem;
+      margin: 0.75rem 0.75rem 0;
+      border-radius: 16px;
+    }
+    .services-section { padding: 2rem 1.25rem 3rem; }
+    /* 手機上一行只放一格，兩格並排太擠。
+       格子改成橫式長方形，不然四個正方形疊起來頁面會很長 */
+    .services {
+      grid-template-columns: 1fr;
+      gap: 0.85rem;
+    }
+    .service { aspect-ratio: 2 / 1; }
+    .s-head { padding: 0.9rem 1rem; }
+    .service .cta { padding: 0 1.1rem 0.9rem; }
     .float-btns { top: 0.9rem; right: 0.9rem; }
     .fbtn { padding: 8px 15px; font-size: 0.8rem; }
   }
 
-  /* 螢幕真的很窄時，正方形會擠到放不下標題，改成一欄 */
+  /* 螢幕真的很窄時，橫式格子再壓扁一點 */
   @media (max-width: 360px) {
-    .services { grid-template-columns: 1fr; }
     .service { aspect-ratio: 16 / 9; }
   }
 
@@ -256,7 +271,7 @@
     <a class="service" href="/job-coaching/">
       <div class="s-head">
         <h2>Career Consultation</h2>
-        <p class="zh-subtitle">求職礦區 銀行客服 諮詢</p>
+        <p class="zh-subtitle">求職礦區 or 銀行客服 諮詢</p>
       </div>
       <span class="cta">1 on 1 →</span>
     </a>
