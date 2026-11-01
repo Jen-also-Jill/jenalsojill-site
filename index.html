@@ -12,11 +12,14 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --navy:       #304873;
+    --navy:       #13273F;   /* Pantone 7546C Mystic Navy */
     --navy-mid:   #3d5a8f;
     --navy-soft:  #4e6ea8;
     --navy-pale:  #e8edf5;
     --navy-tint:  #f3f5fa;
+    --blue-pale:  #ACC0DA;   /* Pantone 13-4014 Whispy Blue */
+    --blue-ink:   #3A4A61;   /* 淺藍底上的副標題顏色 */
+    --brown:      #4A3428;   /* 深焙咖啡色，跟咖啡課頁面同一個色 */
     --white:      #FFFFFF;
     --ink:        #111111;
     --ink-soft:   #6B6B6B;
@@ -38,17 +41,10 @@
   .hero {
     background: var(--navy);
     color: #fff;
-    padding: 5rem 2rem 4.5rem;
+    /* 下方是平的，不再有圓弧。最後一個數字是副標題下方的留白，大約兩行 */
+    padding: 5rem 2rem 5rem;
     position: relative;
     overflow: hidden;
-  }
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: -1px; left: 0; right: 0;
-    height: 60px;
-    background: var(--white);
-    clip-path: ellipse(55% 100% at 50% 100%);
   }
   .hero-inner { max-width: 640px; margin: 0 auto; position: relative; }
   .brand {
@@ -78,22 +74,28 @@
 
   /* ── SERVICES ── */
   .services-section { padding: 3.5rem 2rem 4.5rem; }
+  /* 四個服務排成 2×2 的正方形格子 */
   .services {
-    max-width: 640px;
+    /* 格子窄一點，裡面的留白就不會那麼空 */
+    max-width: 560px;
     margin: 0 auto;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
 
   .service {
-    display: block;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
     background: var(--white);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 1.6rem 1.75rem;
+    padding: 0;                /* 藍色區塊要貼齊格子邊緣，所以留白寫在裡層 */
+    overflow: hidden;          /* 讓藍色區塊跟著圓角切齊 */
     text-decoration: none;
     color: inherit;
+    text-align: center;
     transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
   }
   .service:hover {
@@ -106,36 +108,86 @@
     outline-offset: 2px;
   }
 
-  .service:nth-child(odd) { background: var(--navy-tint); }
+  /* 格子頂部的色塊。改 min-height 就能調整色塊佔格子多少比例 */
+  .s-head {
+    flex-shrink: 0;
+    min-height: 65%;
+    background: var(--navy);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem 0.9rem;
+  }
+  /* 上面兩格：淺藍底。底色淺，字一定要用深色，白字在這個底上完全看不清楚 */
+  .service:nth-child(1) .s-head,
+  .service:nth-child(2) .s-head { background: var(--blue-pale); }
+  .service:nth-child(1) .s-head h2,
+  .service:nth-child(2) .s-head h2 { color: var(--navy); }
+  .service:nth-child(1) .s-head .zh-subtitle,
+  .service:nth-child(2) .s-head .zh-subtitle { color: var(--blue-ink); }
 
-  .service h2 {
+  /* 下面兩格：深咖啡色，連按鈕文字也一起換色才不會藍咖混在一起 */
+  .service:nth-child(3) .s-head,
+  .service:nth-child(4) .s-head { background: var(--brown); }
+  .service:nth-child(3) .cta,
+  .service:nth-child(4) .cta { color: var(--brown); }
+
+  .s-head h2 {
     font-family: 'Cormorant Garamond', 'Noto Serif TC', serif;
     font-weight: 500;
-    font-size: 1.45rem;
-    color: var(--navy);
+    font-size: clamp(1.02rem, 3.5vw, 1.35rem);
+    line-height: 1.25;
+    color: #fff;
     letter-spacing: 0.02em;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
   }
-  .service .zh-subtitle {
-    font-size: 0.9rem;
-    color: var(--ink-soft);
-    margin-bottom: 0.7rem;
+  .s-head .zh-subtitle {
+    font-size: clamp(0.74rem, 2.3vw, 0.86rem);
+    line-height: 1.5;
+    color: rgba(255,255,255,0.82);
   }
-  .service h2 + p.desc { margin-top: 0.7rem; }
-  .service p.desc {
-    color: var(--ink-soft);
-    font-size: 0.92rem;
-    margin-bottom: 0.9rem;
-  }
+  /* 下面三分之二只放按鈕，按鈕固定在右下角 */
   .service .cta {
+    margin-top: auto;
+    align-self: flex-end;
+    padding: 0 1.2rem 1.1rem;
     color: var(--navy-mid);
     font-weight: 500;
-    font-size: 0.92rem;
+    font-size: clamp(0.82rem, 2.6vw, 0.95rem);
+  }
+
+  /* ── 右上角浮動按鈕 ── */
+  .float-btns {
+    position: fixed;
+    top: 1.25rem; right: 1.25rem;
+    z-index: 200;
+  }
+  .fbtn {
+    display: inline-block;
+    background: var(--white);
+    color: var(--navy);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 9px 18px;
+    font-size: 0.86rem;
+    font-weight: 500;
+    text-decoration: none;
+    box-shadow: 0 2px 10px rgba(28,44,71,0.18);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .fbtn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(28,44,71,0.25);
+  }
+  .fbtn:focus-visible {
+    outline: 2px solid var(--white);
+    outline-offset: 2px;
   }
 
   /* ── FOOTER ── */
   footer {
-    background: #1c2c47;
+    background: #0D1B2C;   /* 比 hero 再深一階 */
     padding: 2rem;
     text-align: center;
   }
@@ -146,16 +198,32 @@
   @media (max-width: 600px) {
     .hero { padding: 3.5rem 1.25rem 4rem; }
     .services-section { padding: 2.5rem 1.25rem 3.5rem; }
-    .service { padding: 1.4rem 1.4rem; }
+    .services { gap: 0.75rem; }
+    /* 手機上維持正方形，標題字多的話格子會自己往下長一點 */
+    .s-head { padding: 0.9rem 0.7rem; }
+    .service .cta { padding: 0 0.9rem 0.9rem; }
+    .float-btns { top: 0.9rem; right: 0.9rem; }
+    .fbtn { padding: 8px 15px; font-size: 0.8rem; }
+  }
+
+  /* 螢幕真的很窄時，正方形會擠到放不下標題，改成一欄 */
+  @media (max-width: 360px) {
+    .services { grid-template-columns: 1fr; }
+    .service { aspect-ratio: 16 / 9; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .service { transition: none; }
-    .service:hover { transform: none; }
+    .service, .fbtn { transition: none; }
+    .service:hover, .fbtn:hover { transform: none; }
   }
 </style>
 </head>
 <body>
+
+<!-- 右上角浮動按鈕：捲到哪裡都看得到 -->
+<div class="float-btns">
+  <a href="/feedback/" class="fbtn">求職服務反饋</a>
+</div>
 
 <section class="hero">
   <div class="hero-inner">
@@ -170,37 +238,35 @@
   <div class="services">
 
     <a class="service" href="https://jenalsojill.kit.com/0e63bbae66" target="_blank" rel="noopener">
-      <h2>Resume Template</h2>
-      <p class="zh-subtitle">履歷模板下載</p>
-      <p class="desc">登記領取 1000⁺人領取的澳洲履歷模板 </p>
-      <span class="cta">我想領 ✨ →</span>
+      <div class="s-head">
+        <h2>Resume Template</h2>
+        <p class="zh-subtitle">澳洲履歷模板下載</p>
+      </div>
+      <span class="cta">我需要 →</span>
     </a>
 
     <a class="service" href="/guides/">
-      <h2>Job &amp; Life Guides</h2>
-      <p class="zh-subtitle">澳洲求職/礦區指南站</p>
-      <p class="desc">整理給打工背包客與新移民的求職與生活資訊。</p>
-      <span class="cta">進去逛 →</span>
+      <div class="s-head">
+        <h2>Job &amp; Life Support</h2>
+        <p class="zh-subtitle">澳洲求職 &amp; 生活補給站</p>
+      </div>
+      <span class="cta">去看看 →</span>
     </a>
 
     <a class="service" href="/job-coaching/">
-      <h2>Career Coaching</h2>
-      <p class="zh-subtitle">求職規劃輔導</p>
-      <p class="desc">礦區 or 白領客服求職與履歷諮詢</p>
-      <span class="cta">求職 or 履歷諮詢 →</span>
+      <div class="s-head">
+        <h2>Career Consultation</h2>
+        <p class="zh-subtitle">求職礦區 銀行客服 諮詢</p>
+      </div>
+      <span class="cta">1 on 1 →</span>
     </a>
 
     <a class="service" href="/coffee/">
-      <h2>Aus Barista Coffee Class</h2>
-      <p class="desc"> Perth 西澳咖啡拉花入門課  </p>
-      <span class="cta">點我看課程 info →</span>
-    </a>
-
-    <a class="service" href="/feedback/">
-      <h2>Reviews &amp; Feedback</h2>
-      <p class="zh-subtitle">使用心得與反饋</p>
-      <p class="desc">真實的求職歷程，看看大家經歷了什麼</p>
-      <span class="cta">點我閱讀更多 →</span>
+      <div class="s-head">
+        <h2>Perth Coffee Class</h2>
+        <p class="zh-subtitle">西澳伯斯咖啡師課程</p>
+      </div>
+      <span class="cta">Course →</span>
     </a>
 
   </div>
