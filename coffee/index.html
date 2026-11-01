@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Coffee Perth WA · jen.alsojill</title>
-<meta name="description" content="西澳伯斯咖啡課 — 1 on 1 一對一教學與 Cafe 實地小班，從基礎咖啡到進階拉花。">
+<title>Coffee Class Perth WA · jen.alsojill</title>
+<meta name="description" content="西澳伯斯咖啡課 — 1 on 1 教學與 Cafe 實地小班，從基礎咖啡到進階拉花。">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=DM+Sans:wght@400;500&family=Noto+Serif+TC:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
@@ -57,14 +57,16 @@
   /* ── HERO ── */
   .hero {
     background: var(--navy); color: #fff;
-    padding: 4.5rem 2rem 4rem;
+    /* 下方留白加大，副標題不會被曲線壓到 */
+    padding: 4.5rem 2rem 7.5rem;
     position: relative; overflow: hidden;
   }
-  .hero::after {
-    content: ''; position: absolute;
-    bottom: -1px; left: 0; right: 0; height: 60px;
-    background: var(--white);
-    clip-path: ellipse(55% 100% at 50% 100%);
+  /* 底部 S 形曲線。想調整弧度就改下面 SVG 裡 path 的 d 值 */
+  .hero-wave {
+    position: absolute;
+    bottom: -1px; left: 0;
+    width: 100%; height: 80px;
+    display: block;
   }
   .hero-inner { max-width: 700px; margin: 0 auto; position: relative; }
   .hero h1 {
@@ -385,7 +387,8 @@
   footer a:hover { color: rgba(255,255,255,0.65); }
 
   @media (max-width: 600px) {
-    .hero { padding: 3.5rem 1.25rem 3.5rem; }
+    .hero { padding: 3.5rem 1.25rem 6rem; }
+    .hero-wave { height: 56px; }
     .page-wrap, .gallery, .gallery-hint { padding-left: 1.25rem; padding-right: 1.25rem; }
     .nav-inner { padding: 0 1.25rem; }
     section { padding: 2.75rem 0; }
@@ -427,6 +430,10 @@
       <span class="en">Barista classes in Perth WA　1 on 1 or Cafe Group</span>
     </p>
   </div>
+
+  <svg class="hero-wave" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path d="M0,16 C300,74 620,76 880,38 C1090,8 1260,14 1440,44 L1440,80 L0,80 Z" fill="#FFFFFF"></path>
+  </svg>
 </section>
 
 <!-- ═══ 課程圖片（8 張，可左右滑動）═══
@@ -457,53 +464,53 @@
   <div class="page-wrap">
     <div class="section-eyebrow">Reviews</div>
     <h2 class="section-heading"><span class="zh">上過課的人怎麼說</span><span class="en">What students say</span></h2>
-    <p class="section-lead"><span class="zh">以下皆為學員課後自行填寫並同意公開分享的內容。</span><span class="en">Written by students after class and shared with their permission. Reviews are kept in the language they were originally written in.</span></p>
+    <p class="section-lead"><span class="zh">以下皆為學員課後自行填寫並同意公開分享的內容。</span><span class="en">Written by students after class and shared with their permission. They were written in Chinese; the English here is a translation.</span></p>
 
     <div class="review-grid">
 
       <figure class="r-card">
-        <blockquote>超級棒👍🏻👍🏻👍🏻<br>解鎖了更多拉花款式，今今講解的很詳細，給妳幾霸昏！</blockquote>
-        <figcaption class="r-who"><span class="r-letter">C</span><span class="r-svc">1 對 2 和朋友 2 小時的咖啡進階課</span></figcaption>
+        <blockquote><span class="zh">超級棒👍🏻👍🏻👍🏻<br>解鎖了更多拉花款式，今今講解的很詳細，給妳幾霸昏！</span><span class="en">Absolutely brilliant 👍🏻👍🏻👍🏻<br>Unlocked more latte art patterns — Jen explains everything in real detail. You totally nailed it!</span></blockquote>
+        <figcaption class="r-who"><span class="r-letter">C</span><span class="r-svc"><span class="zh">1 對 2 和朋友 2 小時的咖啡進階課</span><span class="en">1 on 2 with a friend · 2-hour advanced class</span></span></figcaption>
       </figure>
 
       <figure class="r-card">
-        <blockquote>這堂課學到很多咖啡相關的知識（克數、打牛奶的溫度）還有拉花技巧！而且老師很有趣超級好玩！</blockquote>
-        <figcaption class="r-who"><span class="r-letter">E</span></figcaption>
+        <blockquote><span class="zh">這堂課學到很多咖啡相關的知識（克數、打牛奶的溫度）還有拉花技巧！而且老師很有趣超級好玩！</span><span class="en">Learned so much about coffee in this class (dose in grams, milk steaming temperature) plus latte art technique! And the teacher is funny — it was so much fun!</span></blockquote>
+        <figcaption class="r-who"><span class="r-letter">E</span><span class="r-svc"><span class="zh">1 on 1 澳洲咖啡入門課</span><span class="en">1 on 1 Entry coffee class</span></span></figcaption>
       </figure>
 
       <figure class="r-card">
-        <blockquote>很開心自己的一些問題得到解答。從磨豆，克重，咖啡萃取等等都有基礎知識。上完課後，也大概知道自己需要改進或注意的部分，只要在上班時加強訓練一下，應該可以掌握90%的咖啡製作。：）而且還有講義可以複習，真的很棒！</blockquote>
-        <figcaption class="r-who"><span class="r-letter">T</span></figcaption>
+        <blockquote><span class="zh">很開心自己的一些問題得到解答。從磨豆，克重，咖啡萃取等等都有基礎知識。上完課後，也大概知道自己需要改進或注意的部分，只要在上班時加強訓練一下，應該可以掌握90%的咖啡製作。：）而且還有講義可以複習，真的很棒！</span><span class="en">Really glad to get some of my own questions answered. We covered the fundamentals — grinding, dose, extraction and so on. After the class I had a good idea of what I need to improve and watch out for; with a bit more practice at work I should be able to handle 90% of the coffee making. :) And there are handouts to review afterwards, which is great!</span></blockquote>
+        <figcaption class="r-who"><span class="r-letter">T</span><span class="r-svc"><span class="zh">1 on 1 澳洲咖啡入門課</span><span class="en">1 on 1 Entry coffee class</span></span></figcaption>
       </figure>
 
       <figure class="r-card">
-        <blockquote>我想回饋今日課程的整體流程安排得很不錯！有實際操作到每一步非常踏實且有收穫 100分<br>很開心能有機會在澳洲學習到一個新技能 以及兩位老師具體並化繁為簡的教學 讓我能漸入佳境 獲得寶貴的經驗</blockquote>
-        <figcaption class="r-who"><span class="r-letter">H</span><span class="r-svc">Cafe Group 小班</span></figcaption>
+        <blockquote><span class="zh">我想回饋今日課程的整體流程安排得很不錯！有實際操作到每一步非常踏實且有收穫 100分<br>很開心能有機會在澳洲學習到一個新技能 以及兩位老師具體並化繁為簡的教學 讓我能漸入佳境 獲得寶貴的經驗</span><span class="en">I want to say that the whole flow of today’s class was really well put together! Getting hands-on with every step felt solid and rewarding — 100 out of 100.<br>So happy to have the chance to learn a new skill in Australia, and both teachers taught in a concrete way that made complicated things simple, so I gradually found my stride and came away with valuable experience.</span></blockquote>
+        <figcaption class="r-who"><span class="r-letter">H</span><span class="r-svc"><span class="zh">Cafe Group 小班</span><span class="en">Cafe Group class</span></span></figcaption>
       </figure>
 
       <figure class="r-card">
-        <blockquote>很感謝jen悉心教導💕 我覺得節奏很好！我在想如果有時間的話 能否能介紹一下怎能跟澳洲人network 說他們的「language」融入他們。但是咖啡是真的教的很棒！謝謝❤️ 一個很棒的network 還有鼓勵❤️</blockquote>
-        <figcaption class="r-who"><span class="r-letter">H</span><span class="r-svc">Cafe Group 小班</span></figcaption>
+        <blockquote><span class="zh">很感謝jen悉心教導💕 我覺得節奏很好！我在想如果有時間的話 能否能介紹一下怎能跟澳洲人network 說他們的「language」融入他們。但是咖啡是真的教的很棒！謝謝❤️ 一個很棒的network 還有鼓勵❤️</span><span class="en">So grateful for Jen’s attentive teaching 💕 I thought the pacing was great! I was wondering, if there’s time, whether you could cover how to network with Australians — speaking their “language” and fitting in with them. But the coffee really is taught brilliantly! Thank you ❤️ A wonderful network, and encouragement too ❤️</span></blockquote>
+        <figcaption class="r-who"><span class="r-letter">H</span><span class="r-svc"><span class="zh">Cafe Group 小班</span><span class="en">Cafe Group class</span></span></figcaption>
       </figure>
 
       <figure class="r-card">
-        <blockquote>謝謝今今的咖啡體驗課，第一次接觸咖啡機和拉花，大概對澳洲的咖啡有點概念了，很適合初學者體驗看看！</blockquote>
-        <figcaption class="r-who"><span class="r-letter">Y</span></figcaption>
+        <blockquote><span class="zh">謝謝今今的咖啡體驗課，第一次接觸咖啡機和拉花，大概對澳洲的咖啡有點概念了，很適合初學者體驗看看！</span><span class="en">Thank you Jen for the coffee taster class. It was my first time with an espresso machine and latte art, and I now have a rough idea of how coffee works in Australia. Really good for beginners to come and try!</span></blockquote>
+        <figcaption class="r-who"><span class="r-letter">Y</span><span class="r-svc"><span class="zh">1 on 1 澳洲咖啡入門課</span><span class="en">1 on 1 Entry coffee class</span></span></figcaption>
       </figure>
 
       <figure class="r-card">
-        <blockquote>去體驗了咖啡課，一直擔心過程會很尷尬的情況完全不會出現！今今詳細的教學，咖啡的種類、奶泡的差別及控制以及如何拉花，加上適時的鼓勵全程非常開心且實用。(和朋友一起報名上課)</blockquote>
-        <figcaption class="r-who"><span class="r-letter">W</span></figcaption>
+        <blockquote><span class="zh">去體驗了咖啡課，一直擔心過程會很尷尬的情況完全不會出現！今今詳細的教學，咖啡的種類、奶泡的差別及控制以及如何拉花，加上適時的鼓勵全程非常開心且實用。(和朋友一起報名上課)</span><span class="en">I went and tried the coffee class, and the awkwardness I’d been worrying about never happened at all! Jen teaches in detail — the types of coffee, the differences in milk foam and how to control it, and how to pour latte art — plus encouragement at just the right moments. The whole thing was enjoyable and practical. (Booked the class together with a friend)</span></blockquote>
+        <figcaption class="r-who"><span class="r-letter">W</span><span class="r-svc"><span class="zh">1 on 1 澳洲咖啡入門課</span><span class="en">1 on 1 Entry coffee class</span></span></figcaption>
       </figure>
 
       <figure class="r-card">
-        <blockquote>今天去體驗了咖啡課，意外地很好玩也很實用。先跟我介紹了澳洲常見的咖啡種類，之後還親自教我怎麼打奶泡、拉花。原本以為時間很短，結果內容滿滿的，覺得學到不少。整體感覺很輕鬆，也讓我更想繼續試著做做看。</blockquote>
-        <figcaption class="r-who"><span class="r-letter">I</span></figcaption>
+        <blockquote><span class="zh">今天去體驗了咖啡課，意外地很好玩也很實用。先跟我介紹了澳洲常見的咖啡種類，之後還親自教我怎麼打奶泡、拉花。原本以為時間很短，結果內容滿滿的，覺得學到不少。整體感覺很輕鬆，也讓我更想繼續試著做做看。</span><span class="en">Went and tried the coffee class today — unexpectedly fun, and really practical. She started by introducing the coffee types you commonly see in Australia, then taught me hands-on how to steam milk and pour latte art. I thought the time would be short, but it was packed with content and I felt I learned a lot. The whole thing felt relaxed, and it’s made me want to keep trying it myself.</span></blockquote>
+        <figcaption class="r-who"><span class="r-letter">I</span><span class="r-svc"><span class="zh">1 on 1 澳洲咖啡入門課</span><span class="en">1 on 1 Entry coffee class</span></span></figcaption>
       </figure>
 
       <figure class="r-card">
-        <blockquote>上了今今老師的基礎入門課<br>竟然成功拉出愛心拉花了！😭☕️<br><br>真的非常感謝今今老師 超级无敌細心 + 耐心<br>((超愛這種鼓勵型老師<br><br>每個細節都會拆開來講清楚 還會讓你一直上手練到會為止 完全不會趕時間！不管是研磨咖啡豆 還是打奶泡 所有細節都教的一清二楚 比起像是老師 更像是朋友邊和你聊天邊教你～ 對新手小白來說真的超級友好 學得很安心也很開心💛</blockquote>
-        <figcaption class="r-who"><span class="r-letter">A</span></figcaption>
+        <blockquote><span class="zh">上了今今老師的基礎入門課<br>竟然成功拉出愛心拉花了！😭☕️<br><br>真的非常感謝今今老師 超级无敌細心 + 耐心<br>((超愛這種鼓勵型老師<br><br>每個細節都會拆開來講清楚 還會讓你一直上手練到會為止 完全不會趕時間！不管是研磨咖啡豆 還是打奶泡 所有細節都教的一清二楚 比起像是老師 更像是朋友邊和你聊天邊教你～ 對新手小白來說真的超級友好 學得很安心也很開心💛</span><span class="en">Took Jen’s entry-level class<br>and actually managed to pour a heart! 😭☕️<br><br>Huge thanks to Jen — unbelievably thorough + patient<br>((I love this encouraging kind of teacher<br><br>Every detail gets broken down and explained clearly, and she lets you keep practising until you’ve really got it — never rushing you! Whether it’s grinding the beans or steaming the milk, every detail is taught crystal clear. Less like a teacher, more like a friend chatting with you while she teaches ~ Really welcoming for a complete beginner; I felt relaxed and happy learning 💛</span></blockquote>
+        <figcaption class="r-who"><span class="r-letter">A</span><span class="r-svc"><span class="zh">1 on 1 澳洲咖啡入門課</span><span class="en">1 on 1 Entry coffee class</span></span></figcaption>
       </figure>
     </div>
   </div>
@@ -639,9 +646,9 @@
       <details class="qa">
         <summary><span class="zh">英文不好或中文不好，會影響上課嗎？</span><span class="en">Will it be a problem if my English or Mandarin isn&rsquo;t strong?</span></summary>
         <div class="qa-body">
-          <div class="zh"><p>不會。中英雙語授課，你聽哪一種順就用哪一種。</p>
-          <p>而且 1 on 1 就只有你一個人，不用擔心聽不懂又不好意思打斷，想問幾次都可以，沒有人在旁邊等你。</p>
-          <p>很多來上課的人就是因為在英文環境裡不好意思一直問，才選擇先用自己熟悉的語言把基礎打穩。</p></div>
+          <div class="zh"><p>不會。中英雙語皆可授課，你需要哪一種我們上課就用哪一種。</p>
+          <p>而且 1 on 1 就只有你一個人，不用擔心聽不懂又不好意思問，想問幾次都可以，時間很充裕。</p>
+          <p>有來上課的人就是因為在英文團課裡學得不夠，後來又追加1 on 1 咖啡課。</p></div>
           <div class="en"><p>No. Classes are taught in both English and Mandarin &mdash; whichever you&rsquo;re comfortable with.</p>
           <p>And in a 1 on 1 it&rsquo;s just you. No need to worry about missing something and feeling awkward about interrupting. Ask as many times as you like; nobody is waiting on you.</p>
           <p>A lot of people book precisely because they didn&rsquo;t feel comfortable asking questions over and over in an English-speaking workplace.</p></div>
@@ -649,10 +656,10 @@
       </details>
 
       <details class="qa">
-        <summary><span class="zh">對咖啡 0 概念、完全不喝咖啡，也能上嗎？</span><span class="en">I know nothing about coffee and I don&rsquo;t even drink it. Can I still come?</span></summary>
+        <summary><span class="zh">對咖啡 0 基礎、完全不喝咖啡，也能上嗎？</span><span class="en">I know nothing about coffee and I don&rsquo;t even drink it. Can I still come?</span></summary>
         <div class="qa-body">
-          <div class="zh"><p>可以。Entry 基礎咖啡本來就是為零基礎設計的，不需要任何先備知識。</p>
-          <p>不喝咖啡也完全沒問題 —— 做咖啡跟喝咖啡是兩件事。課堂上會教你怎麼用看的、用聽的、用手去判斷，不是靠味覺。實際上也有學員是為了工作需要或單純想學一項技能而來的。</p></div>
+          <div class="zh"><p>可以。Entry Level 基礎咖啡是為零基礎設計的，不需要任何先備知識。</p>
+          <p>不喝咖啡也完全沒問題 —— 做咖啡跟喝咖啡是兩件事。課堂上會教你怎麼用眼睛觀察、用耳朵聽的、用手判斷。也有人來上課單純想學一項技能而來的。</p></div>
           <div class="en"><p>Yes. Entry is built for people starting from zero &mdash; no prior knowledge needed.</p>
           <p>Not drinking coffee is fine too; making it and drinking it are different things. You&rsquo;ll learn to judge by sight, sound and touch rather than taste. Some students come purely because they need it for work, or just want a new skill.</p></div>
         </div>
@@ -661,9 +668,9 @@
       <details class="qa">
         <summary><span class="zh">在台灣學過咖啡，還建議要報名上課嗎？</span><span class="en">I&rsquo;ve learnt coffee back home. Is this still worth booking?</span></summary>
         <div class="qa-body">
-          <div class="zh"><p>看你的目的。如果是想在澳洲的咖啡店工作，那差異其實不小。</p>
+          <div class="zh"><p>看每個人上課的需求。如果是想在澳洲的咖啡店工作，那麽上課會帶你了解澳洲咖啡和台灣咖啡的差別。</p>
           <p>澳洲咖啡店的飲品品項跟台灣不一樣 —— Flat white、Long Mac、Short Mac、Piccolo 這些在台灣少見，但在這裡是每天都要出的基本款。份量、奶泡厚度、出杯節奏也都有當地的標準。</p>
-          <p>有基礎的人我通常會建議直接上 <strong>Advanced</strong>，把六種澳洲常見飲品一次補齊，拉花也練到能上線的程度。如果你本來就會拉花，那更適合把時間花在澳洲吧台的實際節奏上。</p></div>
+          <p>有基礎的人可以直接報名進階課會幫助你求職 <strong>Advanced</strong>，把澳洲常見飲品一次補齊，拉花也練到能上線的程度。如果你本來就會拉花，那更適合把時間花在澳洲吧台的實際節奏上。</p></div>
           <div class="en"><p>Depends what you&rsquo;re after. If you want to work in an Australian cafe, the gap is bigger than you&rsquo;d think.</p>
           <p>The menu here is different &mdash; Flat White, Long Mac, Short Mac and Piccolo are everyday orders in Australia but rare elsewhere. Volumes, foam texture and the pace behind the bar all follow local standards.</p>
           <p>If you already have a base, <strong>Advanced</strong> is usually the better fit: you cover all six Australian staples in one session and get your latte art to a level you can use on shift.</p></div>
@@ -783,7 +790,7 @@
       <p><span class="zh">收到了，謝謝你 🙏🏻 我會在 1–2 天內用 Email 跟你聯絡，一起確認時間和課程內容。</span><span class="en">Got it, thank you 🙏🏻 I&rsquo;ll email you within 1&ndash;2 days to confirm a time and go over the class.</span></p>
     </div>
 
-    <p class="alt-contact"><span class="zh">或是直接私訊 </span><span class="en">Or send a DM on </span><a href="https://www.instagram.com/hi.jen.co/" target="_blank" rel="noopener">Instagram @hi.jen.co</a></p>
+    <p class="alt-contact"><span class="zh">或是直接私訊 IG </span><span class="en">Or send a DM on </span><a href="https://www.instagram.com/hi.jen.co/" target="_blank" rel="noopener">Instagram @hi.jen.co</a></p>
   </div>
 </section>
 
