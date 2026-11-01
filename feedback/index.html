@@ -549,7 +549,8 @@
            只要這格有值，Formspree 就會直接把整筆丟掉。千萬不要刪掉。 -->
       <div class="hp-field" aria-hidden="true">
         <label for="hp-a">請略過這一欄</label>
-        <input type="text" id="hp-a" name="_gotcha" tabindex="-1" autocomplete="off">
+        <input type="text" id="hp-a" name="_gotcha" tabindex="-1"
+          autocomplete="off" data-lpignore="true" data-1p-ignore data-form-type="other">
       </div>
 
       <!-- 1. Email -->
@@ -714,14 +715,24 @@
     // 防機器人第二層：記下頁面載入時間
     var loadedAt = Date.now();
 
+    // 瀏覽器或密碼管理工具（Chrome 自動填入、1Password、LastPass）有時會把
+    // 頁面上所有輸入框都填滿，包括這個隱藏的蜜罐，害真人的心得被誤判成機器人。
+    // 所以在使用者開始填表前後反覆清空它，真正的機器人是在按送出那一刻才填的。
+    // 只在載入後的頭幾秒清空（自動填入都發生在這個時間點），
+    // 之後就不再清 —— 機器人是在按送出那一刻才填的，所以仍然抓得到。
+    var hp = form.querySelector('input[name="_gotcha"]');
+    function clearHoneypot() { if (hp) hp.value = ''; }
+    [0, 300, 800, 1500, 2500].forEach(function (ms) { setTimeout(clearHoneypot, ms); });
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      // 送出得太快一定是機器人（真人填完這張表至少要幾十秒）
-      // 不報錯，直接顯示成功畫面但不送出，機器人就不會重試
+      // 送出得太快幾乎一定是機器人（真人光打完 email 就要 2 秒以上）。
+      // 這裡「不」假裝成功，而是請對方再按一次 —— 萬一誤判到真人，
+      // 他可以再送一次就會成功，心得不會無聲消失。
       if (Date.now() - loadedAt < 3000) {
-        form.style.display = 'none';
-        success.style.display = 'block';
+        error.textContent = '系統還在載入，麻煩再按一次「送出心得」就可以了。';
+        error.style.display = 'block';
         return;
       }
 
