@@ -288,6 +288,16 @@
     textarea { min-height: 220px; }
     button[type="submit"] { width: 100%; }
   }
+
+  /* 蜜罐欄位：移到畫面外，真人看不到也 Tab 不到 */
+  .hp-field {
+    position: absolute !important;
+    left: -9999px !important;
+    top: auto !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+  }
 </style>
 </head>
 <body>
@@ -534,6 +544,14 @@
     -->
     <form id="fb-form" action="https://formspree.io/f/xeaajwdq" method="POST">
 
+      <!-- ═══ 防機器人：蜜罐欄位 ═══
+           真人看不到也不會填，機器人會自動填。
+           只要這格有值，Formspree 就會直接把整筆丟掉。千萬不要刪掉。 -->
+      <div class="hp-field" aria-hidden="true">
+        <label for="hp-a">請略過這一欄</label>
+        <input type="text" id="hp-a" name="_gotcha" tabindex="-1" autocomplete="off">
+      </div>
+
       <!-- 1. Email -->
       <div class="field">
         <label class="q" for="email">你的 Email</label>
@@ -693,8 +711,26 @@
       });
     });
 
+    // 防機器人第二層：記下頁面載入時間
+    var loadedAt = Date.now();
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+
+      // 送出得太快一定是機器人（真人填完這張表至少要幾十秒）
+      // 不報錯，直接顯示成功畫面但不送出，機器人就不會重試
+      if (Date.now() - loadedAt < 3000) {
+        form.style.display = 'none';
+        success.style.display = 'block';
+        return;
+      }
+
+      // 蜜罐有值 = 機器人，同樣假裝成功
+      if (form.querySelector('input[name="_gotcha"]').value) {
+        form.style.display = 'none';
+        success.style.display = 'block';
+        return;
+      }
 
       // 選了代稱卻沒填
       if (document.getElementById('use-nick').checked && !nickIn.value.trim()) {
